@@ -1,0 +1,27 @@
+frame_id: ""
+channel_name: ""
+header_frame_id: ""
+header_channel_name: ""
+stricted_max_time_gap: 50000 # us
+latest_max_time_gap: 500000 # us
+priotiry: -15
+
+blind_zone {
+    delete_point: true
+    min_x: 0
+    max_x: 0
+    min_y: 0
+    max_y: 0
+    min_z: 0
+    max_z: 0
+}
+
+compoment_config {
+    sensor_position_id: 1
+    frame_id: ""
+    channel_name: ""
+    raw_data_channel_name: ""
+    priotiry: -15
+    stricted_bundle: true
+    config_file: "param/lidar/test/test.prototxt"
+}
