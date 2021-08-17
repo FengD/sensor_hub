@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+import "modules/common/proto/header.proto";
+import "modules/common/proto/pose.proto";
+
+message Gps {
+  optional crdc.airi.Header header = 1;
+
+  // Localization message: from GPS or localization
+  optional crdc.airi.Pose localization = 2;
+}
