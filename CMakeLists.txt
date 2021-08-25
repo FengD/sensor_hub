@@ -13,5 +13,4 @@ if (TEST_ENABLE)
 endif()
 
 include_directories(modules)
-
 add_subdirectory(modules)

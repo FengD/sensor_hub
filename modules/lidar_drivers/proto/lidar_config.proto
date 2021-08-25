@@ -1,0 +1,55 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+message SocketConfig {}
+
+message FileConfig {}
+
+message CyberConfig {}
+
+message InputConfig {
+    optional string name = 1;
+    optional int32 pool_size = 2;
+    optional int32 packet_size = 3;
+    optional int32 lidar_port = 4;
+    optional int32 gps_port = 5;
+    oneof input {
+        SocketConfig socket_config = 11;
+        FileConfig file_config = 12;
+        CyberConfig cyber_config = 13;
+    };
+}
+
+message LidarPacketConfig {
+    optional int32 size = 1;
+    optional int32 check_sum = 2;
+    optional int32 blocks = 3;
+    optional int32 block_offset = 4;
+    optional int32 block_size = 5;
+    optional int32 block_check_sum = 6;
+    optional int32 firing_offset = 7;
+    optional int32 lasers = 8;
+    optional int32 point_size = 9;
+}
+
+message GpsPacketConfig {
+    optional int32 size = 1;
+    optional int32 check_sum = 2;
+}
+
+message ParserConfig {
+    optional string name = 1;
+    optional int32 pool_size = 2;
+    optional int32 split_azimuth = 5;
+    optional int32 time_zone = 6;
+    optional int32 max_points = 7;
+    optional bool use_local_time = 8;
+    optional LidarPacketConfig lidar_packet_config = 9;
+    optional GpsPacketConfig gps_packet_config = 10;
+}
+
+message LidarConfig {
+    optional InputConfig input_config = 1;
+    optional ParserConfig parser_config = 2;
+}

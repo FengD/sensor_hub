@@ -16,7 +16,7 @@ blind_zone {
     max_z: 0
 }
 
-compoment_config {
+component_config {
     sensor_position_id: 1
     frame_id: ""
     channel_name: ""
