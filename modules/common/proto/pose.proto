@@ -18,7 +18,7 @@
 
  package crdc.airi;
  
- import "modules/common/proto/geometry.proto";
+ import "geometry.proto";
  
  message Pose {
    // Position of the vehicle reference point (VRP) in the map reference frame.

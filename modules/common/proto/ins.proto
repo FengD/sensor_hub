@@ -2,8 +2,8 @@ syntax = "proto2";
 
 package crdc.airi;
 
-import "modules/common/proto/header.proto";
-import "modules/common/proto/geometry.proto";
+import "header.proto";
+import "geometry.proto";
 
 message InsStat {
   optional crdc.airi.Header header = 1;

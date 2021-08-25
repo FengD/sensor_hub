@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package crdc.airi;
 
-import "modules/common/proto/header.proto";
+import "header.proto";
 
 message Ultrasonic {
   //
