@@ -24,3 +24,8 @@ message PointCloud {
   optional uint32 width = 6;
   optional uint32 height = 7;
 }
+
+message PointClouds {
+  optional crdc.airi.Header header = 1;
+  repeated PointCloud cloud = 2;
+}
