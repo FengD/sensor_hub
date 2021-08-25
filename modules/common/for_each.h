@@ -23,8 +23,8 @@
   template <typename T>                                          \
   constexpr bool name<T>::value;
 
-namespace itd {
-namespace common {
+namespace crdc {
+namespace airi {
 
 DEFINE_TYPE_TRAIT(HasLess, operator<)  // NOLINT
 
@@ -44,7 +44,7 @@ LessThan(const Value& val, const End& end) {
 
 #define FOR_EACH(i, begin, end)           \
   for (auto i = (true ? (begin) : (end)); \
-    itd::common::LessThan(i, (end)); ++i)
+    crdc::airi::LessThan(i, (end)); ++i)
 
-}  // namespace common
-}  // namespace itd
+}  // namespace airi
+}  // namespace crdc

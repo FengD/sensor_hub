@@ -1,3 +1,8 @@
+// Copyright (C) 2021 Hirain Technologies
+// License: Modified BSD Software License Agreement
+// Author: Feng DING
+// Description: thread
+
 #pragma once
 
 #include <unistd.h>
@@ -8,13 +13,15 @@
 #include <string>
 #include "common/macros.h"
 
-namespace itd {
-namespace common {
+namespace crdc {
+namespace airi {
 
 class Thread {
  public:
   explicit Thread(bool joinable = false, const std::string& name = "Thread")
     : tid_(0), started_(false), joinable_(joinable), priority_(0), thread_name_(name) {}
+  
+  virtual ~Thread() = default;
 
   pthread_t tid() const {
     return tid_;
@@ -47,7 +54,7 @@ class Thread {
   }
 
  protected:
-  virtual void run() = 0;
+  virtual void run();
 
   static void* thread_runner(void* arg) {
     Thread* t = reinterpret_cast<Thread*>(arg);
@@ -67,5 +74,5 @@ class Thread {
   DISALLOW_COPY_AND_ASSIGN(Thread);
 };
 
-}  // namespace common
-}  // namespace itd
+}  // namespace airi
+}  // namespace crdc

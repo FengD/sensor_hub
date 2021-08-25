@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-project(common_proto)
+project(sensor_common_proto)
 
 find_package(Protobuf REQUIRED)
 if(PROTOBUF_FOUND)
@@ -12,7 +12,6 @@ endif()
 file(GLOB proto_srcs *.proto)
 set(Protobuf_USE_STATIC_LIBS on)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/../../../ ${PROTOBUF_INCLUDE_DIRS})
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${proto_srcs})
 
 add_library(${PROJECT_NAME} ${PROTO_SRCS} ${PROTO_HDRS})

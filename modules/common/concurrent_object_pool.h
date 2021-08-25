@@ -14,8 +14,8 @@
 #include <utility>
 #include "common/for_each.h"
 
-namespace itd {
-namespace common {
+namespace crdc {
+namespace airi {
 template <typename T>
 class CCObjectPool : public std::enable_shared_from_this<CCObjectPool<T>> {
  public:
@@ -130,5 +130,5 @@ void CCObjectPool<T>::ReleaseObject(T *object) {
                                              std::memory_order_acquire));
 }
 
-}  // namespace common
-}  // namespace itd
+}  // namespace airi
+}  // namespace crdc

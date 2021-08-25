@@ -6,8 +6,8 @@
 #pragma once
 
 #include <pthread.h>
-namespace itd {
-namespace common {
+namespace crdc {
+namespace airi {
 
 // @brief Thread-safe, no-manual destroy Singleton template
 template <typename T>
@@ -46,12 +46,12 @@ pthread_once_t Singleton<T>::p_once_ = PTHREAD_ONCE_INIT;
 template <typename T>
 T* Singleton<T>::instance_ = NULL;
 
-}  // namespace common
-}  // namespace itd
+}  // namespace airi
+}  // namespace crdc
 
 // put this in the private
 #define MAKE_SINGLETON(Type) \
  private:                    \
   Type() {}                  \
   ~Type() {}                 \
-  friend class ::itd::common::Singleton<Type>
+  friend class ::crdc::airi::Singleton<Type>

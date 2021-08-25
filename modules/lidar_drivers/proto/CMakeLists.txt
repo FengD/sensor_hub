@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-project(lidar_config_proto)
+project(lidar_drivers_proto)
 
 find_package(Protobuf REQUIRED)
 if(PROTOBUF_FOUND)

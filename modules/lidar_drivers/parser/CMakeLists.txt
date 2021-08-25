@@ -1,4 +1,4 @@
-project(lidar_parser)
+project(lidar_drivers_parser)
 
 add_subdirectory(hesai)
 add_subdirectory(innoviz)

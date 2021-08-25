@@ -1,9 +1,15 @@
+// Copyright (C) 2021 Hirain Technologies
+// License: Modified BSD Software License Agreement
+// Author: Feng DING
+// Description: thread
+
+
 #include <signal.h>
 #include <glog/logging.h>
 #include "common/thread.h"
 
-namespace itd {
-namespace common {
+namespace crdc {
+namespace airi {
 void Thread::start() {
   std::lock_guard<std::mutex> lock(mutex_);
   CHECK(!started_) << thread_name_ << " start twice";
@@ -61,5 +67,5 @@ void Thread::set_priority(int priority) {
   priority_ = priority;
 }
 
-}  // namespace common
-}  // namespace itd
+}  // namespace airi
+}  // namespace crdc

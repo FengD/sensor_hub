@@ -14,8 +14,8 @@
 #include <vector>
 #include <boost/algorithm/string/case_conv.hpp>
 
-namespace itd {
-namespace common {
+namespace crdc {
+namespace airi {
 
 static inline std::string to_upper(const std::string& a) {
   return boost::to_upper_copy<std::string>(a);
@@ -186,5 +186,5 @@ class ComponentRegisterer {
   std::shared_ptr<com> create_##com##_##type() { return std::shared_ptr<com>(new type()); } \
   static com##Registerer g_registerer_##com##type(#type, create_##com##_##type)
 
-}  // namespace common
-}  // namespace itd
+}  // namespace airi
+}  // namespace crdc

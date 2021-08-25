@@ -12,5 +12,5 @@ if (TEST_ENABLE)
     enable_testing()
 endif()
 
-include_directories(modules)
+include_directories(modules ${CMAKE_CURRENT_BINARY_DIR}/modules)
 add_subdirectory(modules)

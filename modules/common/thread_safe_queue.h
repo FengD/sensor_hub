@@ -11,8 +11,8 @@
 #include <thread>
 #include <utility>
 
-namespace itd {
-namespace common {
+namespace crdc {
+namespace airi {
 
 template <typename T>
 class ThreadSafeQueue {
@@ -97,5 +97,5 @@ class ThreadSafeQueue {
   std::condition_variable cv_;
 };
 
-}  // namespace common
-}  // namespace itd
+}  // namespace airi
+}  // namespace crdc
