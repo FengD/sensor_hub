@@ -15,7 +15,7 @@
 #include "lidar_drivers/parser/parser.h"
 #include "lidar_drivers/proto/lidar_config.pb.h"
 #include "lidar_drivers/proto/lidar_component_config.pb.h"
-#include "common/proto/lidar.pb.h"
+#include "cyber/sensor_proto/lidar.pb.h"
 
 namespace crdc {
 namespace airi {

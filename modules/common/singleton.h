@@ -14,6 +14,7 @@ template <typename T>
 class Singleton {
  public:
   // @brief Get the singleton instance
+  // @return type pointer
   static T* get() {
     pthread_once(&p_once_, &Singleton::new_);
     return instance_;

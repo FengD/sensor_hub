@@ -53,7 +53,7 @@ class CCObjectPool : public std::enable_shared_from_this<CCObjectPool<T>> {
 
 template <typename T>
 CCObjectPool<T>::CCObjectPool(uint32_t size) : capacity_(size) {
-  node_arena_ = static_cast<Node *>(CheckedCalloc(capacity_, sizeof(Node)));
+  node_arena_ = static_cast<Node *>(calloc(capacity_, sizeof(Node)));
   FOR_EACH(i, 0, capacity_ - 1) { node_arena_[i].next = node_arena_ + 1 + i; }
   node_arena_[capacity_ - 1].next = nullptr;
   free_head_.store({0, node_arena_}, std::memory_order_relaxed);

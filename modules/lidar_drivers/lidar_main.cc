@@ -6,24 +6,27 @@
 #define MODULE "LidarDriver"
 
 #include "common/common.h"
+#include "cyber/cyber.h"
+#include "lidar_drivers/output/cyber_output.h"
+#include "lidar_drivers/proto/lidar_component_config.pb.h"
 
 namespace crdc {
 namespace airi {
 
 int main(int argc, char* argv[]) {
     // log dir string
-    // google::ParseCommandLineFlags(&argc, &argv, true);
+    google::ParseCommandLineFlags(&argc, &argv, true);
 
-    // FLAGS_colorlogtostderr = true;
-    // FLAGS_miniloglevel = 0;
-    // FLAGS_v = 0;
-    // FLAGS_stderrthreshold = 3;
+    FLAGS_colorlogtostderr = true;
+    FLAGS_v = 0;
+    FLAGS_stderrthreshold = 3;
 
-    // apollo::cyber::airi::GlobalData::Instance()->SetProcessGroup(MODULE);
-    // apollo::cyber::Init(MODULE);
+    apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
+    apollo::cyber::Init(MODULE);
+    Singleton<LidarCyberOutput>::get()->init(MODULE);
 
-    // Singleton<CyberMessage>::get()->init(MODULE);
-
+    LidarComponentConfig lidar_component_config;
+    
     std::cout << "[LIDAR_MAIN] lidar_driver terminated" << std::endl << std::flush;
     return 0;
 }

@@ -1,0 +1,47 @@
+frame_id: ""
+channel_name: ""
+header_frame_id: ""
+header_channel_name: ""
+stricted_max_time_gap: 50000 # us
+latest_max_time_gap: 500000 # us
+priotiry: -15
+
+blind_zone {
+    delete_point: true
+    min_x: 0
+    max_x: 0
+    min_y: 0
+    max_y: 0
+    min_z: 0
+    max_z: 0
+}
+
+component_config {
+    sensor_position_id: 1
+    frame_id: "LIDAR_TOP"
+    channel_name: "LIDAR_TOP_CLOUD"
+    raw_data_channel_name: "LIDAR_TOP_RAW"
+    priotiry: -15
+    stricted_bundle: true
+    config_file: "param/lidar/emgrand/lidar_top.prototxt"
+}
+
+component_config {
+    sensor_position_id: 2
+    frame_id: "LIDAR_LEFT"
+    channel_name: "LIDAR_LEFT_CLOUD"
+    raw_data_channel_name: "LIDAR_LEFT_RAW"
+    priotiry: -15
+    stricted_bundle: true
+    config_file: "param/lidar/emgrand/lidar_lest.prototxt"
+}
+
+component_config {
+    sensor_position_id: 3
+    frame_id: "LIDAR_RIGHT"
+    channel_name: "LIDAR_RIGHT_CLOUD"
+    raw_data_channel_name: "LIDAR_RIGHT_RAW"
+    priotiry: -15
+    stricted_bundle: true
+    config_file: "param/lidar/emgrand/lidar_right.prototxt"
+}

@@ -1,0 +1,33 @@
+input_config {
+    name: "SocketInput"
+    pool_size: 10
+    packet_size: 1500
+    lidar_port: 6699
+    gps_port: 7788
+    socket_config {}
+}
+
+parser_config {
+    name: "VLP16Parser"
+    pool_size: 4
+    split_azimuth: 18000
+    time_zone: 8
+    max_points: 100000
+    use_local_time: false
+    lidar_packet_config {
+        size: 1248
+        check_sum: 0x55AA05
+        blocks: 12
+        block_offset: 42
+        block_size: 100
+        block_check_sum: 0xFFEE
+        firing_offset: 4
+        lasers: 32
+        point_size: 3
+    }
+
+    gps_packet_config {
+        size: 1248
+        check_sum: 0xA5FF005A
+    }
+}
