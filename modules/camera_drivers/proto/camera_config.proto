@@ -1,0 +1,39 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+import "decoder_config.proto";
+import "encoder_config.proto";
+
+message A6Config {}
+
+message Tda4Config {}
+
+message CameraInputConfig {
+    optional string frame_id = 1;
+    optional string name = 2;
+    optional int32 pool_size = 3 [default = 4];
+    optional int32 height = 4;
+    optional int32 width = 5;
+    optional int32 offset_x = 6 [default = 0];
+    optional int32 offset_y = 7 [default = 0];
+    optional int32 sensor_height = 8;
+    optional int32 sensor_width = 9;
+    optional int32 fps = 10 [default = 10];
+    oneof input {
+        A6Config a6_config = 11;
+        Tda4Config tda4_config = 12;
+    };
+}
+
+message CameraUndistortionConfig {
+    optional string frame_id = 1;
+    optional string name = 2;
+}
+
+
+message CameraConfig {
+    optional CameraInputConfig input_config = 1;
+    optional CameraUndistortionConfig undistortion_config = 2;
+    optional EncoderConfig encoder_config = 3;
+}

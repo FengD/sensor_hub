@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+message PlaceHolderDecoderConfig {}
+
+message DecoderConfig {
+    enum VideoCodec {
+        VideoCodec_MPEG1 = 1;
+        VideoCodec_MPEG2 = 2;
+        VideoCodec_MPEG4 = 3;
+        VideoCodec_VC1 = 4;
+        VideoCodec_H264 = 5;
+        VideoCodec_JPEG = 6;
+        VideoCodec_H264_SVC = 7;
+        VideoCodec_H264_MVC = 8;
+        VideoCodec_HEVC = 9;
+        VideoCodec_VP8 = 10;
+        VideoCodec_VP9 = 11;
+        VideoCodec_NumCodecs = 12;
+    };
+    optional string frame_id = 1;
+    optional string name = 2;
+    optional VideoCodec video_codec = 3;
+    optional int32 input_height = 4;
+    optional int32 input_width = 5;
+    optional int32 output_height = 6;
+    optional int32 output_width = 7;
+    oneof decoder_config {
+        PlaceHolderDecoderConfig ph_config = 11;
+    }
+}

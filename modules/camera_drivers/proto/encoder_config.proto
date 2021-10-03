@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+message CvEncodeConfig {
+    optional int32 quality = 1;
+}
+
+message TurboEncoderConfig {
+    optional int32 quality = 1;
+}
+
+message EncoderConfig {
+    optional string frame_id = 1;
+    optional string name = 2;
+    oneof encoder_config {
+        CvEncodeConfig cv_encoder_config = 11;
+        TurboEncoderConfig turbo_encoder_config = 12;
+    }
+}

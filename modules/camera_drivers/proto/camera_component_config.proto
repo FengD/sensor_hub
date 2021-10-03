@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+message CameraComponentConfig {
+    optional int32 sensor_position_id = 1;
+    optional string frame_id = 2;
+    optional string channel_name = 3;
+    optional string channel_encode_name = 4;
+    optional int32 priotiry = 5;
+    optional string config_file = 6;
+    optional string name = 7;
+}
+
+message CameraComponent {
+    repeated CameraComponentConfig component_config = 1;
+}
