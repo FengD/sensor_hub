@@ -4,7 +4,6 @@
 // Description: lidar
 
 #include "lidar_drivers/lidar.h"
-#include "lidar_drivers/output/cyber_output.h"
 
 namespace crdc {
 namespace airi {

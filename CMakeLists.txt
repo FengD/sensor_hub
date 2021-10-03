@@ -12,9 +12,4 @@ if (TEST_ENABLE)
     enable_testing()
 endif()
 
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/modules
-    ${CMAKE_CURRENT_BINARY_DIR}/modules
-    /usr/local/apollo/cyber/include/
-)
 add_subdirectory(modules)

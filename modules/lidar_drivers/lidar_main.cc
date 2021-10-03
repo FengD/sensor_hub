@@ -7,7 +7,7 @@
 
 #include "common/common.h"
 #include "cyber/cyber.h"
-#include "lidar_drivers/output/cyber_output.h"
+#include "lidar_drivers/cyber_message.h"
 #include "lidar_drivers/proto/lidar_component_config.pb.h"
 
 namespace crdc {
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
     apollo::cyber::Init(MODULE);
-    Singleton<LidarCyberOutput>::get()->init(MODULE);
+    common::Singleton<LidarCyberMessage>::get()->init(MODULE);
 
     LidarComponentConfig lidar_component_config;
     

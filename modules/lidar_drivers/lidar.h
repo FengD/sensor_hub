@@ -20,7 +20,7 @@
 namespace crdc {
 namespace airi {
 
-class Lidar : public Thread {
+class Lidar : public common::Thread {
  public:
   Lidar() = default;
   virtual ~Lidar();

@@ -10,6 +10,7 @@
 
 namespace crdc {
 namespace airi {
+namespace common {
 void Thread::start() {
   std::lock_guard<std::mutex> lock(mutex_);
   CHECK(!started_) << thread_name_ << " start twice";
@@ -66,6 +67,6 @@ void Thread::set_priority(int priority) {
   }
   priority_ = priority;
 }
-
+}  // namespace common
 }  // namespace airi
 }  // namespace crdc

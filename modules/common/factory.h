@@ -16,7 +16,7 @@
 
 namespace crdc {
 namespace airi {
-
+namespace common {
 static inline std::string to_upper(const std::string& a) {
   return boost::to_upper_copy<std::string>(a);
 }
@@ -173,18 +173,18 @@ class ComponentRegisterer {
     ComponentFactory<E>::register_creator(type, c);
   }
 };
-
-#define REGISTER_COMPONENT(com)                \
-  template <>                                  \
-  struct ComponentTraits<com> {                \
-    static std::string name() { return #com; } \
-  };                                           \
-  using com##Factory = ComponentFactory<com>;  \
-  using com##Registerer = ComponentRegisterer<com>
-
-#define REGISTER_CLASS(com, type)                                                           \
-  std::shared_ptr<com> create_##com##_##type() { return std::shared_ptr<com>(new type()); } \
-  static com##Registerer g_registerer_##com##type(#type, create_##com##_##type)
-
+}  // namespace common
 }  // namespace airi
 }  // namespace crdc
+
+#define REGISTER_COMPONENT(com)                                    \
+  template <>                                                      \
+  struct crdc::airi::common::ComponentTraits<com> {                \
+    static std::string name() { return #com; }                     \
+  };                                                               \
+  using com##Factory = crdc::airi::common::ComponentFactory<com>;  \
+  using com##Registerer = crdc::airi::common::ComponentRegisterer<com>
+
+#define REGISTER_CLASS(com, type)                                                            \
+  std::shared_ptr<com> create_##com##_##type() { return std::shared_ptr<com>(new type()); }  \
+  static com##Registerer g_registerer_##com##type(#type, create_##com##_##type)

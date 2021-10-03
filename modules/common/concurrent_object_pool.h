@@ -16,6 +16,7 @@
 
 namespace crdc {
 namespace airi {
+namespace common {
 template <typename T>
 class CCObjectPool : public std::enable_shared_from_this<CCObjectPool<T>> {
  public:
@@ -129,6 +130,6 @@ void CCObjectPool<T>::ReleaseObject(T *object) {
                                              std::memory_order_acq_rel,
                                              std::memory_order_acquire));
 }
-
+}  // namespace common
 }  // namespace airi
 }  // namespace crdc

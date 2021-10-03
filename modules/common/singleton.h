@@ -8,7 +8,7 @@
 #include <pthread.h>
 namespace crdc {
 namespace airi {
-
+namespace common {
 // @brief Thread-safe, no-manual destroy Singleton template
 template <typename T>
 class Singleton {
@@ -46,7 +46,7 @@ pthread_once_t Singleton<T>::p_once_ = PTHREAD_ONCE_INIT;
 
 template <typename T>
 T* Singleton<T>::instance_ = NULL;
-
+}  // namespace common
 }  // namespace airi
 }  // namespace crdc
 
@@ -55,4 +55,4 @@ T* Singleton<T>::instance_ = NULL;
  private:                    \
   Type() {}                  \
   ~Type() {}                 \
-  friend class ::crdc::airi::Singleton<Type>
+  friend class ::crdc::airi::common::Singleton<Type>

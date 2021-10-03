@@ -6,26 +6,11 @@
 #pragma once
 
 #include <type_traits>
-
-#define DEFINE_TYPE_TRAIT(name, func)                            \
-  template <typename T>                                          \
-  class name {                                                   \
-   private:                                                      \
-    template <typename Class>                                    \
-    static char Test(decltype(&Class::func)*);                   \
-    template <typename>                                          \
-    static int Test(...);                                        \
-                                                                 \
-   public:                                                       \
-    static constexpr bool value = sizeof(Test<T>(nullptr)) == 1; \
-  };                                                             \
-                                                                 \
-  template <typename T>                                          \
-  constexpr bool name<T>::value;
+#include "common/common.h"
 
 namespace crdc {
 namespace airi {
-
+namespace common {
 DEFINE_TYPE_TRAIT(HasLess, operator<)  // NOLINT
 
 template <class Value, class End>
@@ -44,7 +29,7 @@ LessThan(const Value& val, const End& end) {
 
 #define FOR_EACH(i, begin, end)           \
   for (auto i = (true ? (begin) : (end)); \
-    crdc::airi::LessThan(i, (end)); ++i)
-
+    crdc::airi::common::LessThan(i, (end)); ++i)
+}  // namespace common
 }  // namespace airi
 }  // namespace crdc

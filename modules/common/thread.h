@@ -11,11 +11,11 @@
 #include <pthread.h>
 #include <mutex>
 #include <string>
-#include "common/macros.h"
+#include "common/common.h"
 
 namespace crdc {
 namespace airi {
-
+namespace common {
 class Thread {
  public:
   explicit Thread(bool joinable = false, const std::string& name = "Thread")
@@ -73,6 +73,6 @@ class Thread {
  private:
   DISALLOW_COPY_AND_ASSIGN(Thread);
 };
-
+}  // namespace common
 }  // namespace airi
 }  // namespace crdc

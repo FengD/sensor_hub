@@ -13,7 +13,7 @@
 
 namespace crdc {
 namespace airi {
-
+namespace common {
 template <typename T>
 class ThreadSafeQueue {
  public:
@@ -96,6 +96,6 @@ class ThreadSafeQueue {
   std::queue<T> queue_;
   std::condition_variable cv_;
 };
-
+}  // namespace common
 }  // namespace airi
 }  // namespace crdc
