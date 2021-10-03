@@ -13,6 +13,7 @@
 #include <stdexcept>
 #include <utility>
 #include "common/for_each.h"
+#include "common/macros.h"
 
 namespace crdc {
 namespace airi {

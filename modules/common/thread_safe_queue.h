@@ -50,7 +50,7 @@ class ThreadSafeQueue {
   }
 
   bool wait_for_dequeue(T *element, const uint32_t& usec = 500000) {
-    std::lock_guard<std::mutex> lock(mutex_);
+    std::unique_lock<std::mutex> lock(mutex_);
     if (!cv_.wait_for(lock, std::chrono::microseconds(usec), [this]() {
       return break_all_wait_ || !queue_.empty();
     })) {
