@@ -14,10 +14,10 @@
 namespace crdc {
 namespace airi {
 
-class LidarCyberMessage {
+class LidarCyberOutput {
  public:
-  LidarCyberMessage() = default;
-  virtual ~LidarCyberMessage() = default;
+  LidarCyberOutput() = default;
+  virtual ~LidarCyberOutput() = default;
   bool init(const std::string& name) {
     apollo::cyber::Init(name.c_str());
     lidar_node_ptr_ = apollo::cyber::CreateNode(name);
@@ -45,7 +45,7 @@ class LidarCyberMessage {
   }
 
  private:
-  friend class common::Singleton<LidarCyberMessage>;
+  friend class common::Singleton<LidarCyberOutput>;
   std::shared_ptr<apollo::cyber::Node> lidar_node_ptr_;
   std::shared_ptr<apollo::cyber::Writer<PointCloud>> cloud_writer_ptr_;
   std::shared_ptr<apollo::cyber::Writer<Packets>> packets_writer_ptr_;

@@ -7,6 +7,7 @@
 
 namespace crdc {
 namespace airi {
+namespace sensor_hub {
 
 void Lidar::init(const LidarComponentConfig& config) {
 
@@ -20,6 +21,6 @@ void Lidar::run() {
 
 }
 
-
+}  // namespace sensor_hub
 }  // namespace airi
 }  // namespace crdc

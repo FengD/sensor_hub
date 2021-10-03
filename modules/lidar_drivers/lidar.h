@@ -19,8 +19,9 @@
 
 namespace crdc {
 namespace airi {
+namespace sensor_hub {
 
-class Lidar : public common::Thread {
+class Lidar : public crdc::airi::common::Thread {
  public:
   Lidar() = default;
   virtual ~Lidar();
@@ -41,6 +42,6 @@ class Lidar : public common::Thread {
   std::shared_ptr<LidarParser> parser_;
   uint32_t sensor_position_id_;
 };
-
+}  // namespace sensor_hub
 }  // namespace airi
 }  // namespace crdc
