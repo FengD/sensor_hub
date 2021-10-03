@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     LidarComponentConfig lidar_component_config;
 
     if (argc < 2) {
-        LOG(FATAL) << "[LIDAR_MAIN] No proto file given." << std::endl;
+        LOG(FATAL) << "[LIDAR_MAIN] No lidar proto file given." << std::endl;
         return 1;
     }
 
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
         std::shared_ptr<crdc::airi::Lidar> lidar = std::make_shared<crdc::airi::Lidar>(config);
         lidars.emplace_back(lidar);
     }
-    std::cout << lidars.size() << std::endl;
+
     for (const auto& lidar : lidars) {
         lidar->start();
     }
