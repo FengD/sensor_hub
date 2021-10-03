@@ -21,10 +21,9 @@ class LidarCyberOutput {
   bool init(const std::string& name) {
     apollo::cyber::Init(name.c_str());
     lidar_node_ptr_ = apollo::cyber::CreateNode(name);
-    cloud_writer_ptr_ = lidar_node_ptr_->CreateWriter<PointCloud>("test");
-    packets_writer_ptr_ = lidar_node_ptr_->CreateWriter<Packets>("test");
-    fusion_clouds_writer_ptr_ = lidar_node_ptr_->CreateWriter<PointClouds>("test");
-    apollo::cyber::WaitForShutdown();
+    cloud_writer_ptr_ = lidar_node_ptr_->CreateWriter<PointCloud>("lidar/cloud");
+    packets_writer_ptr_ = lidar_node_ptr_->CreateWriter<Packets>("lidar/packets");
+    fusion_clouds_writer_ptr_ = lidar_node_ptr_->CreateWriter<PointClouds>("lidar/clouds");
     return true;
   }
 

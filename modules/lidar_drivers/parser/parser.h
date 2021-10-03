@@ -21,5 +21,5 @@ class LidarParser {
 
 REGISTER_COMPONENT(LidarParser);
 
-}  // airi
-}  // crdc
+}  // namespace airi
+}  // namespace crdc

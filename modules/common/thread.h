@@ -20,7 +20,7 @@ class Thread {
  public:
   explicit Thread(bool joinable = false, const std::string& name = "Thread")
     : tid_(0), started_(false), joinable_(joinable), priority_(0), thread_name_(name) {}
-  
+
   virtual ~Thread() = default;
 
   pthread_t tid() const {
@@ -54,7 +54,7 @@ class Thread {
   }
 
  protected:
-  virtual void run();
+  virtual void run() {}
 
   static void* thread_runner(void* arg) {
     Thread* t = reinterpret_cast<Thread*>(arg);

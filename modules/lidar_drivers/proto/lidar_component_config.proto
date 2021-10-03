@@ -3,12 +3,13 @@ syntax = "proto2";
 package crdc.airi;
 
 message BlindZone {
-    optional double min_x = 1;
-    optional double max_x = 2;
-    optional double min_y = 3;
-    optional double max_y = 4;
-    optional double min_z = 5;
-    optional double max_z = 6;
+    optional bool delete_point = 1;
+    optional double min_x = 2;
+    optional double max_x = 3;
+    optional double min_y = 4;
+    optional double max_y = 5;
+    optional double min_z = 6;
+    optional double max_z = 7;
 }
 
 message Component {
@@ -23,7 +24,7 @@ message Component {
 
 message LidarComponentConfig{
     optional string frame_id = 1;
-    optional string chaneel_name = 2;
+    optional string channel_name = 2;
     optional string header_frame_id = 3;
     optional string header_channel_name = 4;
     optional int32 stricted_max_time_gap = 5;

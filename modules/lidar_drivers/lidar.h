@@ -19,29 +19,28 @@
 
 namespace crdc {
 namespace airi {
-namespace sensor_hub {
 
-class Lidar : public crdc::airi::common::Thread {
+class Lidar : public common::Thread {
  public:
-  Lidar() = default;
-  virtual ~Lidar();
+  explicit Lidar(const Component& config);
+  virtual ~Lidar() = default;
   void stop();
-  void init(const LidarComponentConfig& config);
-
   void set_callback(std::function<void(const std::shared_ptr<PointCloud>&)> callback) {
     callback_ = callback;
   }
 
+  std::string get_name() const {
+    return lidar_name_;
+  }
  private:
   void run() override;
-  
-  LidarComponentConfig config_;
+  std::string lidar_name_;
+  Component config_;
   LidarConfig lidar_config_;
   std::function<void(const std::shared_ptr<PointCloud>&)> callback_;
   std::shared_ptr<LidarInput> input_;
   std::shared_ptr<LidarParser> parser_;
   uint32_t sensor_position_id_;
 };
-}  // namespace sensor_hub
 }  // namespace airi
 }  // namespace crdc
