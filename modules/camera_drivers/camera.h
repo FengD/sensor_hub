@@ -38,6 +38,7 @@ class Camera : public common::Thread {
   bool init_encoder();
 
   std::string camera_name_;
+  bool stop_;
   CameraComponentConfig config_;
   CameraConfig camera_config_;
   std::shared_ptr<CameraInput> input_;
