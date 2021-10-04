@@ -18,3 +18,9 @@
 #include "common/io/file.h"
 
 #define MAX_THREAD_NAME_LENGTH 21
+
+static uint64_t get_now_microsecond() {
+  auto now = std::chrono::high_resolution_clock::now();
+  auto now_us = std::chrono::time_point_cast<std::chrono::microseconds>(now);
+  return now_us.time_since_epoch().count();
+}

@@ -33,7 +33,6 @@ target_link_libraries(${PROJECT_NAME}
     fastrtps
     cyber
     ${OpenCV_LIBS}
-    boost_filesystem
 )
 
 # file(GLOB HEADERS *.h)

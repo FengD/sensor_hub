@@ -5,7 +5,6 @@
 
 #define MODULE "CameraDriver"
 
-#include <boost/filesystem.hpp>
 #include "common/common.h"
 #include "camera_drivers/output/cyber_output.h"
 #include "camera_drivers/camera.h"
@@ -29,12 +28,6 @@ int main(int argc, char* argv[]) {
     common::Singleton<CameraCyberOutput>::get()->init(MODULE);
 
     CameraComponent camera_component;
-
-    boost::filesystem::path env_path(std::getenv("AIRI_ENV"));
-    if (!boost::filesystem::exists(env_path)) {
-        LOG(FATAL) << "[CAMERA_MAIN] AIRI_ENV not exist, please setup environment first." << std::endl;
-        return 1;
-    }
 
     if (argc < 2) {
         LOG(FATAL) << "[CAMERA_MAIN] No camera proto file given." << std::endl;

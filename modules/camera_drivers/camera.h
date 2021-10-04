@@ -33,9 +33,12 @@ class Camera : public common::Thread {
 
  private:
   void run() override;
-  // void load_sensor_config(CameraSensorConfig& sensor_config);
-  // bool init_camera_config(const CameraSensorConfig& snesor_config, CameraConfig& config);
+  void load_sensor_config(CameraSensorConfig& sensor_config);
+  void init_camera_config(const CameraSensorConfig& sensor_config, CameraConfig& config);
   bool init_encoder();
+  bool init_input();
+  bool init_undistortion();
+  void init_proto_image();
 
   std::string camera_name_;
   bool stop_;
@@ -45,7 +48,7 @@ class Camera : public common::Thread {
   std::shared_ptr<CameraInput> input_;
   std::shared_ptr<Undistortion> undistortion_;
   std::shared_ptr<Encoder> encoder_;
-  
+
   cv::Mat image_undistorted_;
   std::shared_ptr<Image> proto_image_;
   std::shared_ptr<Image> proto_encode_image_;

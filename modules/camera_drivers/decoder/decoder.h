@@ -14,7 +14,7 @@ namespace crdc {
 namespace airi {
 
 class Decoder {
-
+  // todo
 };
 
 REGISTER_COMPONENT(Decoder);
