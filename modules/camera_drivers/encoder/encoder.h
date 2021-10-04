@@ -5,16 +5,31 @@
 
 #pragma once
 
-#include <vector>
 #include <string>
-#include "camera_drivers/proto/encoder_config.pb.h"
+#include <opencv2/opencv.hpp>
 #include "common/common.h"
+#include "camera_drivers/proto/encoder_config.pb.h"
+#include "cyber/sensor_proto/image.pb.h"
 
 namespace crdc {
 namespace airi {
 
 class Encoder {
+ public:
+  Encoder() = default;
+  virtual ~Encoder() = default;
+  virtual bool init (const EncoderConfig& config) {
+    return false;
+  }
 
+  virtual int32_t encode(const cv::Mat& image, unsigned char** encode_buffer) {
+    AERROR << "NOT IMPLEMENTED";
+    return 0;
+  }
+
+  virtual std::string get_name() const = 0;
+ protected:
+  EncoderConfig config_;
 };
 
 REGISTER_COMPONENT(Encoder);

@@ -5,6 +5,7 @@
 
 #define MODULE "CameraDriver"
 
+#include <boost/filesystem.hpp>
 #include "common/common.h"
 #include "camera_drivers/output/cyber_output.h"
 #include "camera_drivers/camera.h"
@@ -29,6 +30,12 @@ int main(int argc, char* argv[]) {
 
     CameraComponent camera_component;
 
+    boost::filesystem::path env_path(std::getenv("AIRI_ENV"));
+    if (!boost::filesystem::exists(env_path)) {
+        LOG(FATAL) << "[CAMERA_MAIN] AIRI_ENV not exist, please setup environment first." << std::endl;
+        return 1;
+    }
+
     if (argc < 2) {
         LOG(FATAL) << "[CAMERA_MAIN] No camera proto file given." << std::endl;
         return 1;
@@ -44,7 +51,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    LOG(INFO) << camera_component.DebugString();
+    LOG(INFO) << camera_component.DebugString() << std::endl;
 
     std::vector<std::shared_ptr<crdc::airi::Camera>> cameras;
     for (const auto& config : camera_component.component_config()) {
@@ -56,7 +63,7 @@ int main(int argc, char* argv[]) {
         camera->start();
     }
 
-    LOG(INFO) << "[CAMERA_MAIN] camera_driver started.";
+    LOG(INFO) << "[CAMERA_MAIN] camera_driver started." << std::endl;
     apollo::cyber::WaitForShutdown();
     for (const auto& camera : cameras) {
         camera->stop();
@@ -66,10 +73,10 @@ int main(int argc, char* argv[]) {
         if (camera->is_alive()) {
             camera->join();
         }
-        LOG(INFO) << "[CAMERA_MAIN] camera[" << camera->get_name() << "] joined successfully.";
+        LOG(INFO) << "[CAMERA_MAIN] camera[" << camera->get_name() << "] joined successfully."  << std::endl;
     }
 
-    LOG(WARNING) << "[CAMERA_MAIN] camera_driver terminated.";
+    LOG(WARNING) << "[CAMERA_MAIN] camera_driver terminated." << std::endl;
     return 0;
 }
 

@@ -41,9 +41,11 @@ class Camera : public common::Thread {
   bool stop_;
   CameraComponentConfig config_;
   CameraConfig camera_config_;
+
   std::shared_ptr<CameraInput> input_;
   std::shared_ptr<Undistortion> undistortion_;
   std::shared_ptr<Encoder> encoder_;
+  
   cv::Mat image_undistorted_;
   std::shared_ptr<Image> proto_image_;
   std::shared_ptr<Image> proto_encode_image_;

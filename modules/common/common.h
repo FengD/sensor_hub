@@ -16,3 +16,5 @@
 #include "common/thread.h"
 #include "common/thread_safe_queue.h"
 #include "common/io/file.h"
+
+#define MAX_THREAD_NAME_LENGTH 21

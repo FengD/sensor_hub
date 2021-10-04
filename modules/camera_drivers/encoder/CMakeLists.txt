@@ -1,0 +1,4 @@
+project(camera_drivers_encoder)
+
+add_subdirectory(cv_encoder)
+add_subdirectory(turbo_encoder)
