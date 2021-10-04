@@ -160,7 +160,6 @@ void Camera::run() {
         start_time = get_now_microsecond();
         full_start_time = start_time;
         ret = input_->get_camera_data(&raw_data);
-        std::cout << "[" << get_thread_name() << "] " << ret << std::endl;
         if (ret < 0) {
             LOG(ERROR) << "[" << get_thread_name() << "] "
                        << " Failed to get raw data. code: " << std::to_string(ret);
