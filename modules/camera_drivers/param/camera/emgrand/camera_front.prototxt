@@ -1,0 +1,18 @@
+input_config {
+  name: "MaximCamera"
+  pool_size: 4
+  height: 640
+  width: 1280
+  maxim_config {}
+}
+
+undistortion_config {
+  name: "CvUndistortion"
+}
+
+encoder_config {
+  name: "CvEncoder"
+  cv_encoder_config {
+    quality: 1
+  }
+}

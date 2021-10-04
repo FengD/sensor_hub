@@ -24,10 +24,17 @@ Camera::Camera(const CameraComponentConfig& config) : common::Thread(true) {
         set_priority(config_.priotiry());
     }
 
-    if (crdc::airi::util::get_proto_from_file(config_.config_file(),
+    std::string config_file_path = std::string(std::getenv("CRDC_WS")) + '/' + config_.config_file();
+    if (!crdc::airi::util::is_path_exists(config_file_path)) {
+        LOG(FATAL) << "[" << get_thread_name() << "] proto file not exits: "
+                   << config_file_path;
+        return;
+    }
+
+    if (!crdc::airi::util::get_proto_from_file(config_file_path,
                                               &camera_config_)) {
         LOG(FATAL) << "[" << get_thread_name() << "] failed to read camera proto config: "
-                   << config_.config_file() << std::endl;
+                   << config_file_path;
         return;
     }
 
@@ -156,6 +163,7 @@ void Camera::run() {
         if (ret < 0) {
             LOG(ERROR) << "[" << get_thread_name() << "] " << camera_name_
                        << " Failed to get raw data. code: " << std::to_string(ret);
+            continue;
         }
 
         if (ret == 0) {
