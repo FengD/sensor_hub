@@ -7,40 +7,19 @@
 #include "camera_drivers/encoder/cv_encoder/cv_encoder.h" 
 #include "camera_drivers/encoder/turbo_encoder/turbo_encoder.h"
 #include "camera_drivers/undistortion/cv/cv_undistortion.h"
-
-// #ifdef PLATFORM_XGO 
-// #ifdef PYLON_FOUND 
-// #include "camera/input/basler/basler.h" 
-// #endif // PYLON_FOUND 
-// #ifdef GSTREAMER FOUND
-// #include "camera/input/gstreamer/gst.h" 
-// #endif // GSTREAMER FOUND 
-// #include "camera/input/hk/hikvision.h" 
-// #include "camera/decoder/nv_decoder/nv_decoder.h" 
-// #else 
-// #include "camera/input/fpga/fpga.h" 
-// #endif
+#include "camera_drivers/input/sensing/sensing.h"
+#include "camera_drivers/input/maxim/maxim.h"
 
 
 namespace crdc {
 namespace airi {
-REGISTER_ENCODER (CvEncoder);
-REGISTER_ENCODER (TurboEncoder);
-REGISTER_UNDISTORTION (CvUndistortion);
-REGISTER_UNDISTORTION (Undistortion);
 
-// #ifdef PLATFORM_XGO 
-// REGISTER_DECODER (NvidiaDecoder);
-// #ifdef GSTREAMER FOUND
-// REGISTER_CAMERA_INPUT (GstCamera);
-// #endif // GSTREAMER_FOUND
-// REGISTER_CAMERA_INPUT (Hikvision Camera);
-// #ifdef PYLON_FOUND
-// REGISTER_CAMERA_INPUT (BaslerCamera);
-// #endif // PYLON_FOUND
-// #else
-// REGISTER_CAMERA_INPUT (FPGA Camera);
-// #endif
+REGISTER_ENCODER(CvEncoder);
+REGISTER_ENCODER(TurboEncoder);
+REGISTER_UNDISTORTION(CvUndistortion);
+REGISTER_UNDISTORTION(Undistortion);
+REGISTER_CAMERA_INPUT(SensingCamera);
+REGISTER_CAMERA_INPUT(MaximCamera);
 
 }  // namespace airi 
 }  // namespace crdc

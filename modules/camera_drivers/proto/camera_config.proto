@@ -5,9 +5,9 @@ package crdc.airi;
 import "decoder_config.proto";
 import "encoder_config.proto";
 
-message A6Config {}
+message SensingConfig {}
 
-message Tda4Config {}
+message MaximConfig {}
 
 message CameraInputConfig {
     optional string frame_id = 1;
@@ -21,8 +21,8 @@ message CameraInputConfig {
     optional int32 sensor_width = 9;
     optional int32 fps = 10 [default = 10];
     oneof input {
-        A6Config a6_config = 11;
-        Tda4Config tda4_config = 12;
+        SensingConfig sensing_config = 11;
+        MaximConfig maxim_config = 12;
     };
 }
 
