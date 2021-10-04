@@ -1,9 +1,9 @@
 input_config {
-  name: "MaximCamera"
+  name: "TestingCamera"
   pool_size: 4
   height: 640
   width: 1280
-  maxim_config {}
+  testing_config {}
 }
 
 undistortion_config {

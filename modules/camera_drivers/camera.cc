@@ -147,7 +147,7 @@ void Camera::stop() {
 
 void Camera::run() {
     while (!input_->start()) {
-        LOG(ERROR) << "[" << get_thread_name() << "] " << camera_name_ << " Failed to start.";
+        LOG(ERROR) << "[" << get_thread_name() << "] " << " Failed to start.";
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         continue; 
     }
@@ -160,8 +160,9 @@ void Camera::run() {
         start_time = get_now_microsecond();
         full_start_time = start_time;
         ret = input_->get_camera_data(&raw_data);
+        std::cout << "[" << get_thread_name() << "] " << ret << std::endl;
         if (ret < 0) {
-            LOG(ERROR) << "[" << get_thread_name() << "] " << camera_name_
+            LOG(ERROR) << "[" << get_thread_name() << "] "
                        << " Failed to get raw data. code: " << std::to_string(ret);
             continue;
         }
@@ -194,7 +195,7 @@ void Camera::run() {
                       << get_now_microsecond() - start_time;
         }
 
-        if (encoder_) {
+        if (config_.has_channel_encode_name() && encoder_) {
             start_time = get_now_microsecond();
             unsigned char* compress_buffer;
             int32_t compress_buffer_size = encoder_->encode(image_undistorted_, &compress_buffer);

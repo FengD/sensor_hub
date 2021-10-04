@@ -9,6 +9,8 @@ message SensingConfig {}
 
 message MaximConfig {}
 
+message TestingConfig {}
+
 message CameraInputConfig {
     optional string frame_id = 1;
     optional string name = 2;
@@ -23,6 +25,7 @@ message CameraInputConfig {
     oneof input {
         SensingConfig sensing_config = 11;
         MaximConfig maxim_config = 12;
+        TestingConfig testing_config = 13;
     };
 }
 
