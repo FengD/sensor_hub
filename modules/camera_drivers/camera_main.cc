@@ -17,8 +17,14 @@ namespace airi {
 namespace camera {
 
 int main(int argc, char* argv[]) {
-    // log dir setting
+    // gflags command setting
     google::ParseCommandLineFlags(&argc, &argv, true);
+
+    if (!std::getenv("CRDC_WS")) {
+        LOG(FATAL) << "[CAMERA_MAIN] CRDC_WS not setting!";
+    } else {
+        LOG(INFO) << "[CAMERA_MAIN] Current CRDC_WS: " << std::string(std::getenv("CRDC_WS"));
+    }
 
     FLAGS_colorlogtostderr = true;
     FLAGS_minloglevel = 0;
