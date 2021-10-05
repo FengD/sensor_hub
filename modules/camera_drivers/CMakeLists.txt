@@ -35,6 +35,5 @@ target_link_libraries(${PROJECT_NAME}
     ${OpenCV_LIBS}
 )
 
-# file(GLOB HEADERS *.h)
-# install(FILES ${HEADERS} DESTINATION apollo/cyber/include/cyber/)
-# install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib${PROJECT_NAME}.so DESTINATION apollo/cyber/lib/)
+install(DIRECTORY param DESTINATION .)
+install(TARGETS ${PROJECT_NAME} DESTINATION bin/)

@@ -58,13 +58,7 @@ bool copy(const std::string& from, const std::string& to);
 
 bool ensure_directory(const std::string& directory_path);
 
-bool remove_all_files(const std::string& directory_path);
-
-std::string get_file_name(const std::string& path, const bool remove_extension = false);
-
 std::string get_current_path();
-
-bool get_type(const std::string& file_name, FileType *type);
 
 bool create_dir(const std::string& directory_path);
 

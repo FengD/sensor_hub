@@ -256,21 +256,9 @@ bool ensure_directory(const std::string& directory_path) {
     return true;
 }
 
-bool remove_all_files(const std::string& directory_path) {
-
-}
-
-std::string get_file_name(const std::string& path, const bool remove_extension) {
-
-}
-
 std::string get_current_path() {
     char tmp[PATH_MAX];
     return getcwd(tmp, sizeof(tmp)) ? std::string(tmp) : std::string("");
-}
-
-bool get_type(const std::string& file_name, FileType *type) {
-
 }
 
 bool create_dir(const std::string& directory_path) {

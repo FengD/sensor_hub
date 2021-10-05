@@ -19,3 +19,6 @@ target_link_libraries(${PROJECT_NAME}
     fastrtps
     cyber
 )
+
+install(DIRECTORY param DESTINATION .)
+install(TARGETS ${PROJECT_NAME} DESTINATION bin/)

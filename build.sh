@@ -79,8 +79,7 @@ function get_dependencies() {
 function build_make() {
     MAX_CPU_NUM=$(nproc)
     cd ${WS}/build
-    make -j$[${MAX_CPU_NUM}-1]
-
+    make -j$[${MAX_CPU_NUM}-1] install
     if [ $? -eq 0 ]; then
         success 'Build passed!'
     else
@@ -92,7 +91,8 @@ function build() {
     mkdir -p ${WS}/build && cd ${WS}/build
     cmake -DWITH_COV=${WITH_COV} \
           -DDO_TEST=${DO_TEST} \
-          -DBUILD_AARCH64=${WITH_AARCH64} ..
+          -DBUILD_AARCH64=${WITH_AARCH64} \
+          -DCMAKE_INSTALL_PREFIX=${WS}/build_dist ..
     build_make
 }
 
@@ -111,7 +111,11 @@ function main() {
     START_TIME=$(get_now)
     WITH_COV=OFF
     DO_TEST=OFF
-    WITH_AARCH64=OFF
+    if [ "${PLATFORM}" = "AARCH64" ]; then
+        WITH_AARCH64=ON
+    else
+        WITH_AARCH64=OFF
+    fi
     case $cmd in
         build)
             build_make
@@ -126,11 +130,6 @@ function main() {
         cov)
             WITH_COV=ON
             DO_TEST=ON
-            get_dependencies
-            build
-            ;;
-        build_cross)
-            WITH_AARCH64=ON
             get_dependencies
             build
             ;;
