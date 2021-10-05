@@ -185,6 +185,7 @@ void Camera::run() {
             proto_image_->mutable_header()->set_frame_id(config_.frame_id());
             proto_image_->mutable_header()->set_module_name("CameraDrivers");
             proto_image_->set_measurement_time(raw_data->exposure_time_);
+            proto_image_->set_encoding(raw_data->data_type);
             proto_image_->set_data(image_undistorted_.data, 
                                    camera_config_.input_config().width() * 
                                    camera_config_.input_config().height() * 3);

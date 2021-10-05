@@ -18,6 +18,7 @@ struct CameraRawData {
   float exposure_time_ = 0;
   uint64_t utime_ = 0;
   cv::Mat image_;
+  std::string data_type = "";
   CameraRawData() {}
 };
 
