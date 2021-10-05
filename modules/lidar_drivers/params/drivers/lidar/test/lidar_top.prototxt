@@ -8,7 +8,7 @@ input_config {
 }
 
 parser_config {
-    name: "VLP16Parser"
+    name: "LidarParserVlp16"
     pool_size: 4
     split_azimuth: 18000
     time_zone: 8

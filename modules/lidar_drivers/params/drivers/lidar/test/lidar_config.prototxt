@@ -1,7 +1,7 @@
-frame_id: ""
-channel_name: ""
-header_frame_id: ""
-header_channel_name: ""
+frame_id: "LIDAR_DRIVERS"
+channel_name: "MERGE_CLOUD"
+header_frame_id: "LIDAR_DRIVERS"
+header_channel_name: "MERGE_CLOUD_HEADER"
 stricted_max_time_gap: 50000 # us
 latest_max_time_gap: 500000 # us
 priotiry: -15

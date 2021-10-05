@@ -34,6 +34,9 @@ class Lidar : public common::Thread {
   }
 
  private:
+  /**
+   * @brief The run function execute the whole process of the lidar loop process.
+   */
   void run() override;
   /**
    * @brief Init the encoder if defined.
@@ -55,5 +58,6 @@ class Lidar : public common::Thread {
   std::shared_ptr<LidarParser> parser_;
   uint32_t sensor_position_id_;
 };
+
 }  // namespace airi
 }  // namespace crdc

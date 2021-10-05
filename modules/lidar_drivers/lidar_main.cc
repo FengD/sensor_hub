@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     FLAGS_v = 0;
     FLAGS_stderrthreshold = 3;
     // log on screen
-    // FLAGS_alsologtostderr = true;
+    FLAGS_alsologtostderr = true;
 
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
     apollo::cyber::Init(MODULE);

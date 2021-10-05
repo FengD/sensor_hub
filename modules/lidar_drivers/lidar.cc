@@ -101,24 +101,24 @@ void Lidar::run() {
             LOG(WARNING) << "[" << get_thread_name() << "] failed to get lidar packet.";
         } else {
             if (raw_packet->port() == lidar_config_.input_config().lidar_port()) {
-                std::shared_ptr<PointCloud> cloud;
-                if (parser_->parse_lidar_packet(raw_packet, &cloud)) {
+                std::shared_ptr<LidarPointCloud> cloud;
+                if (parser_->parse_lidar_packet(raw_packet, &cloud->proto_cloud_)) {
                     auto now = get_now_microsecond();
-                    auto receive_time = now - cloud->header().lidar_timestamp();
-                    if (now < cloud->header().lidar_timestamp()) {
-                        receive_time = cloud->header().lidar_timestamp() - now;
+                    auto receive_time = now - cloud->proto_cloud_->header().lidar_timestamp();
+                    if (now < cloud->proto_cloud_->header().lidar_timestamp()) {
+                        receive_time = cloud->proto_cloud_->header().lidar_timestamp() - now;
                     }
                     LOG(INFO) << "[" << get_thread_name()
                               << "] [TIMER] [receive] elapsed_time(us): " << receive_time;
-                    cloud->mutable_header()->set_frame_id(config_.frame_id());
+                    cloud->proto_cloud_->mutable_header()->set_frame_id(config_.frame_id());
                     now = get_now_microsecond();
-                    callback_(cloud);
+                    callback_(cloud->proto_cloud_);
                     LOG(INFO) << "[" << get_thread_name()
                               << "] [TIMER] [callback] elapsed_time(us): "
                               << get_now_microsecond() - now;
                     if (config_.has_channel_name()) {
                         common::Singleton<LidarCyberOutput>::get()->write_cloud(
-                            config_.channel_name(), cloud);
+                            config_.channel_name(), cloud->proto_cloud_);
                     }
                 }
             }

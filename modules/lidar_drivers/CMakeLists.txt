@@ -11,11 +11,15 @@ add_dependencies(${PROJECT_NAME}
     sensor_hub_common
     lidar_drivers_proto
     lidar_drivers_input_socket
+    lidar_drivers_parser
+    lidar_drivers_compensator
 )
 target_link_libraries(${PROJECT_NAME}
     sensor_hub_common 
     lidar_drivers_proto
     lidar_drivers_input_socket
+    lidar_drivers_parser
+    lidar_drivers_compensator
     glog
     gflags
     fastrtps

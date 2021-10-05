@@ -36,7 +36,7 @@ message LidarPacketConfig {
 
 message GpsPacketConfig {
     optional int32 size = 1;
-    optional int32 check_sum = 2;
+    optional int64 check_sum = 2;
 }
 
 message ParserConfig {

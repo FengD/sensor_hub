@@ -59,6 +59,11 @@ class LidarCyberOutput {
     return cloud_writer_ptr_->write(topic, proto_cloud);
   }
 
+  /**
+   * @brief Send the merged cloud
+   * @param the cloud list
+   * @return status
+   */
   bool write_fusion_clouds(const std::shared_ptr<PointClouds>& clouds) {
     return fusion_clouds_writer_ptr_->Write(clouds);
   }
