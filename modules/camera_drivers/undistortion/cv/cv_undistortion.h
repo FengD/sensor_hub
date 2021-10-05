@@ -27,7 +27,6 @@ class CvUndistortion : public Undistortion {
   cv::Mat image_undistorted;
   cv::Mat map_x_;
   cv::Mat map_y_;
-
 };
 
 }  // namespace airi

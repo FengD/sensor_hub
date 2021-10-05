@@ -8,7 +8,7 @@
 namespace crdc {
 namespace airi {
 
-bool CvEncoder::init (const EncoderConfig& config) {
+bool CvEncoder::init(const EncoderConfig& config) {
   config_ = config;
   if (!config_.has_cv_encoder_config()) {
     LOG(ERROR) << "Config not contain cv encoder config." << std::endl;

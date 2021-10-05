@@ -24,7 +24,7 @@ class Encoder {
    * @param The encode config.
    * @return status
    */
-  virtual bool init (const EncoderConfig& config) {
+  virtual bool init(const EncoderConfig& config) {
     return false;
   }
 
@@ -40,6 +40,7 @@ class Encoder {
   }
 
   virtual std::string get_name() const = 0;
+
  protected:
   EncoderConfig config_;
 };

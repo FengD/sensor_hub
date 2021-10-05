@@ -4,7 +4,7 @@
 // Description: camera_factory
 
 #include "camera_drivers/camera.h"
-#include "camera_drivers/encoder/cv_encoder/cv_encoder.h" 
+#include "camera_drivers/encoder/cv_encoder/cv_encoder.h"
 #include "camera_drivers/encoder/turbo_encoder/turbo_encoder.h"
 #include "camera_drivers/undistortion/cv/cv_undistortion.h"
 #include "camera_drivers/input/sensing/sensing.h"
@@ -24,6 +24,6 @@ REGISTER_CAMERA_INPUT(SensingCamera);
 REGISTER_CAMERA_INPUT(MaximCamera);
 REGISTER_CAMERA_INPUT(TestingCamera);
 
-}  // namespace airi 
+}  // namespace airi
 }  // namespace crdc
 

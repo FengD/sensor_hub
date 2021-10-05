@@ -18,7 +18,7 @@ class TurboEncoder : public Encoder {
  public:
   TurboEncoder() = default;
   virtual ~TurboEncoder() = default;
-  bool init (const EncoderConfig& config) override;
+  bool init(const EncoderConfig& config) override;
 
   int32_t encode(const cv::Mat& image, unsigned char** encode_buffer) override;
 

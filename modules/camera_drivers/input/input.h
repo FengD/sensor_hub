@@ -26,7 +26,7 @@ class CameraInput {
  public:
   CameraInput() = default;
   virtual ~CameraInput() = default;
-  
+
   /**
    * @brief init the input
    * @param the input config

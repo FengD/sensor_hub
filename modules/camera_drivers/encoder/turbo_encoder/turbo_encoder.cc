@@ -8,7 +8,7 @@
 namespace crdc {
 namespace airi {
 
-bool TurboEncoder::init (const EncoderConfig& config) {
+bool TurboEncoder::init(const EncoderConfig& config) {
   config_ = config;
   if (!config_.has_turbo_encoder_config()) {
     LOG(ERROR) << "Config not contain turbo encoder config." << std::endl;

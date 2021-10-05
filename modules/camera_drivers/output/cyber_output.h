@@ -47,7 +47,7 @@ class CameraCyberOutput {
    * @return status
    */
   bool write_image(const std::string& topic, const std::shared_ptr<Image>& proto_image) {
-    return image_writer_ptr_->write(topic, proto_image);                
+    return image_writer_ptr_->write(topic, proto_image);
   }
 
   std::shared_ptr<apollo::cyber::Node> get_node() {
@@ -60,7 +60,7 @@ class CameraCyberOutput {
   template <typename MessageT>
   class ChannelWriter {
    public:
-    explicit ChannelWriter(std::shared_ptr<apollo::cyber::Node>& node) : node_(node){}
+    explicit ChannelWriter(std::shared_ptr<apollo::cyber::Node>& node) : node_(node) {}
     bool write(const std::string& topic, const std::shared_ptr<MessageT>& msg_ptr) {
       std::lock_guard<std::mutex> lock(mutex_);
       if (writer_.find(topic) == writer_.end()) {

@@ -24,7 +24,8 @@ Camera::Camera(const CameraComponentConfig& config) : common::Thread(true) {
         set_priority(config_.priotiry());
     }
 
-    std::string config_file_path = std::string(std::getenv("CRDC_WS")) + '/' + config_.config_file();
+    std::string config_file_path = std::string(std::getenv("CRDC_WS"))
+                                   + '/' + config_.config_file();
     if (!crdc::airi::util::is_path_exists(config_file_path)) {
         LOG(FATAL) << "[" << get_thread_name() << "] proto file not exits: "
                    << config_file_path;
@@ -46,13 +47,13 @@ Camera::Camera(const CameraComponentConfig& config) : common::Thread(true) {
 }
 
 void Camera::init_proto_image() {
-    LOG(INFO) << "[" << get_thread_name() << "] create Camera Instance: " 
+    LOG(INFO) << "[" << get_thread_name() << "] create Camera Instance: "
               << config_.DebugString() << camera_config_.DebugString();
     proto_image_ = std::make_shared<Image>();
     proto_image_->set_frame_id(config_.frame_id());
     proto_image_->set_width(camera_config_.input_config().width());
     proto_image_->set_height(camera_config_.input_config().height());
-    proto_image_->mutable_data()->reserve(camera_config_.input_config().width() * 
+    proto_image_->mutable_data()->reserve(camera_config_.input_config().width() *
                                           camera_config_.input_config().height() * 3);
     proto_image_->set_step(3 * camera_config_.input_config().width());
 }
@@ -112,7 +113,7 @@ bool Camera::init_undistortion() {
         camera_config_.mutable_undistortion_config()->set_frame_id(config_.frame_id());
         undistortion_ = UndistortionFactory::get(camera_config_.undistortion_config().name());
         if (!undistortion_) {
-            LOG(FATAL) << "[" << get_thread_name() << "] failed to get undistortion ptr: " 
+            LOG(FATAL) << "[" << get_thread_name() << "] failed to get undistortion ptr: "
                        << camera_config_.undistortion_config().name();
             return false;
         }
@@ -149,7 +150,7 @@ void Camera::run() {
     while (!input_->start()) {
         LOG(ERROR) << "[" << get_thread_name() << "] " << " Failed to start.";
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        continue; 
+        continue;
     }
 
     uint64_t start_time = 0;
@@ -176,7 +177,7 @@ void Camera::run() {
         if (!undistortion_->process(raw_data->image_, image_undistorted_)) {
             continue;
         }
-        
+
         if (config_.has_channel_name()) {
             LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [undistortion] elapsed_time(us): "
                       << get_now_microsecond() - start_time;
@@ -186,10 +187,10 @@ void Camera::run() {
             proto_image_->mutable_header()->set_module_name("CameraDrivers");
             proto_image_->set_measurement_time(raw_data->exposure_time_);
             proto_image_->set_encoding(raw_data->data_type);
-            proto_image_->set_data(image_undistorted_.data, 
-                                   camera_config_.input_config().width() * 
+            proto_image_->set_data(image_undistorted_.data,
+                                   camera_config_.input_config().width() *
                                    camera_config_.input_config().height() * 3);
-            common::Singleton<CameraCyberOutput>::get()->write_image(config_.channel_name(), 
+            common::Singleton<CameraCyberOutput>::get()->write_image(config_.channel_name(),
                                                                      proto_image_);
             LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [total] elapsed_time(us): "
                       << get_now_microsecond() - start_time;
@@ -209,7 +210,7 @@ void Camera::run() {
             proto_encode_image_->mutable_header()->set_module_name("CameraDrivers");
             proto_encode_image_->set_measurement_time(raw_data->exposure_time_);
             proto_encode_image_->set_data(compress_buffer, compress_buffer_size);
-            common::Singleton<CameraCyberOutput>::get()->write_image(config_.channel_encode_name(), 
+            common::Singleton<CameraCyberOutput>::get()->write_image(config_.channel_encode_name(),
                                                                      proto_image_);
             LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [encode] elapsed_time(us): "
                       << get_now_microsecond() - start_time;

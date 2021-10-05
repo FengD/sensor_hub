@@ -19,7 +19,6 @@ class MaximCamera : public CameraInput {
   bool camera_init() override;
   bool camera_start() override;
   bool camera_stop() override;
-  
 };
 
 }  // namespace airi
