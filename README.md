@@ -19,7 +19,6 @@ Options:
     build: run the code build
     clean: clean the code build
     cov: run the code test coverage
-    build_cross: cross compile for aarch64
 
 ```
 

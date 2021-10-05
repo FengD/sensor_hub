@@ -64,7 +64,6 @@ function print_usage() {
     ${BLUE}build${NO_COLOR}: run the code build
     ${BLUE}clean${NO_COLOR}: clean the code build
     ${BLUE}cov${NO_COLOR}: run the code test coverage
-    ${BLUE}build_cross${NO_COLOR}: cross compile for aarch64
     "
 }
 
