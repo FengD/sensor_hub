@@ -14,6 +14,7 @@ parser_config {
     time_zone: 8
     max_points: 100000
     use_local_time: false
+    correct_utime: false
     lidar_packet_config {
         size: 1248
         check_sum: 0x55AA05
@@ -21,6 +22,7 @@ parser_config {
         block_offset: 42
         block_size: 100
         block_check_sum: 0xFFEE
+        firings: 1
         firing_offset: 4
         lasers: 32
         point_size: 3

@@ -102,7 +102,7 @@ void Lidar::run() {
         } else {
             if (raw_packet->port() == lidar_config_.input_config().lidar_port()) {
                 std::shared_ptr<LidarPointCloud> cloud;
-                if (parser_->parse_lidar_packet(raw_packet, &cloud->proto_cloud_)) {
+                if (parser_->parse_lidar_packet(raw_packet, &cloud)) {
                     auto now = get_now_microsecond();
                     auto receive_time = now - cloud->proto_cloud_->header().lidar_timestamp();
                     if (now < cloud->proto_cloud_->header().lidar_timestamp()) {

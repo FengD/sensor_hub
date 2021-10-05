@@ -29,9 +29,12 @@ message LidarPacketConfig {
     optional int32 block_offset = 4;
     optional int32 block_size = 5;
     optional int32 block_check_sum = 6;
-    optional int32 firing_offset = 7;
-    optional int32 lasers = 8;
-    optional int32 point_size = 9;
+    optional int32 firings = 7;
+    optional int32 firing_offset = 8;
+    optional int32 lasers = 9;
+    optional int32 point_size = 10;
+    optional int32 xy_offset = 11;
+    optional int32 z_offset = 12;
 }
 
 message GpsPacketConfig {
@@ -47,8 +50,9 @@ message ParserConfig {
     optional int32 time_zone = 5;
     optional int32 max_points = 6;
     optional bool use_local_time = 7;
-    optional LidarPacketConfig lidar_packet_config = 8;
-    optional GpsPacketConfig gps_packet_config = 9;
+    optional bool correct_utime = 8;
+    optional LidarPacketConfig lidar_packet_config = 9;
+    optional GpsPacketConfig gps_packet_config = 10;
 }
 
 message LidarConfig {

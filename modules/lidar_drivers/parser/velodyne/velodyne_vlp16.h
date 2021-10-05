@@ -16,10 +16,16 @@ class LidarParserVlp16 : public LidarParser {
  public:
   LidarParserVlp16() = default;
   virtual ~LidarParserVlp16() = default;
-  
-  bool init(const ParserConfig& config) override;
 
-  bool parse_lidar_packet(const Packet* raw_packet, std::shared_ptr<PointCloud>* cloud) override;
+  bool init_lidar_parser() override;
+
+  void get_block_info(const uint8_t* data, LidarParserInfo& parser_info) override;
+
+  void get_point_raw_info(const uint8_t* data, LidarParserInfo& parser_info) override;
+
+  uint64_t get_packet_timestamp(const Packet* packet) override;
+
+  void calibrate_point(LidarParserInfo& parser_info) override;
 };
 
 }  // namespace airi

@@ -33,7 +33,7 @@ component_config {
     raw_data_channel_name: "LIDAR_LEFT_RAW"
     priotiry: -15
     stricted_bundle: true
-    config_file: "params/drivers/lidar/test/lidar_lest.prototxt"
+    config_file: "params/drivers/lidar/test/lidar_left.prototxt"
 }
 
 component_config {
