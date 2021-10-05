@@ -16,8 +16,10 @@ namespace airi {
 
 REGISTER_ENCODER(CvEncoder);
 REGISTER_ENCODER(TurboEncoder);
+
 REGISTER_UNDISTORTION(CvUndistortion);
 REGISTER_UNDISTORTION(Undistortion);
+
 REGISTER_CAMERA_INPUT(SensingCamera);
 REGISTER_CAMERA_INPUT(MaximCamera);
 REGISTER_CAMERA_INPUT(TestingCamera);

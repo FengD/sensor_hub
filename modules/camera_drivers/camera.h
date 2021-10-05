@@ -32,12 +32,42 @@ class Camera : public common::Thread {
   void stop();
 
  private:
+  /**
+   * @brief The run function execute the whole process of the camera loop process.
+   */
   void run() override;
+
+  /**
+   * @brief Load the sensor parameters for example the undistortion array, the distance correct array.
+   * @param The output sensor configuration.
+   */
   void load_sensor_config(CameraSensorConfig& sensor_config);
+
+  /**
+   * @brief Init the camera config by camera config to sensor config.
+   * @param The input sensor config 
+   * @param The output config
+   */
   void init_camera_config(const CameraSensorConfig& sensor_config, CameraConfig& config);
+
+  /**
+   * @brief Init the encoder if defined.
+   */
   bool init_encoder();
+
+  /**
+   * @brief Init the input if defined.
+   */
   bool init_input();
+
+  /**
+   * @brief Init the  undistortion if needed.
+   */
   bool init_undistortion();
+
+  /**
+   * @brief Init the output proto image message.
+   */
   void init_proto_image();
 
   std::string camera_name_;

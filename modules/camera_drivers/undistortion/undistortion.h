@@ -31,10 +31,20 @@ class Undistortion {
   Undistortion() = default;
   virtual ~Undistortion() = default;
 
+  /**
+   * @brief Init the undistortion by sensor config
+   * @param sensor config
+   */
   virtual bool init(const CameraSensorConfig& config) {
       return true;
   }
 
+  /**
+   * @brief Execute the main process of undistortion
+   * @param input image
+   * @param output image
+   * @return status
+   */
   virtual bool process(const cv::Mat& img, cv::Mat& img_distorted) {
       img_distorted = img;
       return true;

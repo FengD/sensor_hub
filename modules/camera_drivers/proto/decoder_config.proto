@@ -20,6 +20,7 @@ message DecoderConfig {
         VideoCodec_NumCodecs = 12;
     };
     optional string frame_id = 1;
+    // class name
     optional string name = 2;
     optional VideoCodec video_codec = 3;
     optional int32 input_height = 4;

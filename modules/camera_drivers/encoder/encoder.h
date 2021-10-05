@@ -18,10 +18,22 @@ class Encoder {
  public:
   Encoder() = default;
   virtual ~Encoder() = default;
+
+  /**
+   * @brief Init the encoder. It needs to be redefined for each subclass.
+   * @param The encode config.
+   * @return status
+   */
   virtual bool init (const EncoderConfig& config) {
     return false;
   }
 
+  /**
+   * @brief The encode process. It needs to be redefined for each subclass.
+   * @param The input image.
+   * @param The ouput encode data.
+   * @return The size of the encode data.
+   */
   virtual int32_t encode(const cv::Mat& image, unsigned char** encode_buffer) {
     AERROR << "NOT IMPLEMENTED";
     return 0;

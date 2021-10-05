@@ -26,10 +26,30 @@ class CameraInput {
   CameraInput() = default;
   virtual ~CameraInput() = default;
   
+  /**
+   * @brief init the input
+   * @param the input config
+   * @return status
+   */
   bool init(const CameraInputConfig& config);
+
+  /**
+   * @brief start
+   * @return status
+   */
   bool start();
+
+  /**
+   * @brief stop
+   * @return status
+   */
   bool stop();
 
+  /**
+   * @brief This function is used to get the camera data
+   * @param the raw data
+   * @return status
+   */
   virtual int32_t get_camera_data(std::shared_ptr<const CameraRawData>* data) {
     if (raw_data_queue_.wait_for_dequeue(data)) {
       return DeviceStatus::SUCCESS;
@@ -38,7 +58,16 @@ class CameraInput {
     }
   }
 
+  /**
+   * @brief Used to release some tmp camera data
+   */
   virtual void release_camera_data() {}
+
+  /**
+   * @brief This function is used to update the camera data
+   * @param the raw data
+   * @return status
+   */
   virtual bool put_camera_data(std::shared_ptr<const CameraRawData>* data) {
     return true;
   }
@@ -48,8 +77,22 @@ class CameraInput {
   }
 
  protected:
+  /**
+   * @brief Init the camera. It needs to be redefined for each subclass.
+   * @return status
+   */
   virtual bool camera_init() { return false; }
+
+  /**
+   * @brief Start the camera. It needs to be redefined for each subclass.
+   * @return status
+   */
   virtual bool camera_start() { return true; }
+
+  /**
+   * @brief Stop the camera. It needs to be redefined for each subclass.
+   * @return status
+   */
   virtual bool camera_stop() { return false; }
   bool init_pool();
 

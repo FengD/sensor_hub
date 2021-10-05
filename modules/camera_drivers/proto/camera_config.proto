@@ -12,8 +12,11 @@ message MaximConfig {}
 message TestingConfig {}
 
 message CameraInputConfig {
+    // message frame id
     optional string frame_id = 1;
+    // input class name
     optional string name = 2;
+    // the pool size of message pool
     optional int32 pool_size = 3 [default = 4];
     optional int32 height = 4;
     optional int32 width = 5;
@@ -30,7 +33,9 @@ message CameraInputConfig {
 }
 
 message CameraUndistortionConfig {
+    // message frame id
     optional string frame_id = 1;
+    // undistortion class name
     optional string name = 2;
 }
 

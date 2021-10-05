@@ -18,6 +18,12 @@ class CameraCyberOutput {
  public:
   CameraCyberOutput() = default;
   virtual ~CameraCyberOutput() = default;
+
+  /**
+   * @brief Init the cyber output
+   * @param the name of the node
+   * @return status
+   */
   bool init(const std::string& name) {
     std::string node_name = name;
     auto machine_subcode = std::getenv("MACHINE_SUBCODE");
@@ -34,6 +40,12 @@ class CameraCyberOutput {
     return true;
   }
 
+  /**
+   * @brief Send the image message by topic
+   * @param topic name
+   * @param proto image ptr
+   * @return status
+   */
   bool write_image(const std::string& topic, const std::shared_ptr<Image>& proto_image) {
     return image_writer_ptr_->write(topic, proto_image);                
   }
