@@ -40,7 +40,7 @@ void TestingCamera::get_data() {
     raw_data->exposure_time_ = 1;
     raw_data->utime_ = get_now_microsecond();
     raw_data_queue_.enqueue(raw_data);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000 / config_.fps()));
   }
 }
 
