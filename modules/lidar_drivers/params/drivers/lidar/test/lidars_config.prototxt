@@ -23,7 +23,7 @@ component_config {
     raw_data_channel_name: "LIDAR_TOP_RAW"
     priotiry: -15
     stricted_bundle: true
-    config_file: "param/lidar/test/lidar_top.prototxt"
+    config_file: "params/drivers/lidar/test/lidar_top.prototxt"
 }
 
 component_config {
@@ -33,7 +33,7 @@ component_config {
     raw_data_channel_name: "LIDAR_LEFT_RAW"
     priotiry: -15
     stricted_bundle: true
-    config_file: "param/lidar/test/lidar_lest.prototxt"
+    config_file: "params/drivers/lidar/test/lidar_lest.prototxt"
 }
 
 component_config {
@@ -43,5 +43,5 @@ component_config {
     raw_data_channel_name: "LIDAR_RIGHT_RAW"
     priotiry: -15
     stricted_bundle: true
-    config_file: "param/lidar/test/lidar_right.prototxt"
+    config_file: "params/drivers/lidar/test/lidar_right.prototxt"
 }

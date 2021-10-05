@@ -20,5 +20,5 @@ target_link_libraries(${PROJECT_NAME}
     cyber
 )
 
-install(DIRECTORY param DESTINATION .)
+install(DIRECTORY params DESTINATION .)
 install(TARGETS ${PROJECT_NAME} DESTINATION bin/)

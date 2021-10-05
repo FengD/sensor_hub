@@ -5,7 +5,7 @@ component_config {
     # channel_encode_name: "CAMERA_FRONT_IMAGE_ENCODER"
     priotiry: -15
     name: "CAMERA_FRONT"
-    config_file: "param/camera/test/camera_front.prototxt"
+    config_file: "params/drivers/camera/test/camera_front.prototxt"
 }
 
 component_config {
@@ -15,7 +15,7 @@ component_config {
     # channel_encode_name: "PANO_FRONT_IMAGE_ENCODER"
     priotiry: -15
     name: "PANO_FRONT"
-    config_file: "param/camera/test/pano_front.prototxt"
+    config_file: "params/drivers/camera/test/pano_front.prototxt"
 }
 
 component_config {
@@ -25,7 +25,7 @@ component_config {
     # channel_encode_name: "PANO_LEFT_IMAGE_ENCODER"
     priotiry: -15
     name: "PANO_LEFT"
-    config_file: "param/camera/test/pano_left.prototxt"
+    config_file: "params/drivers/camera/test/pano_left.prototxt"
 }
 
 component_config {
@@ -35,7 +35,7 @@ component_config {
     # channel_encode_name: "PANO_RIGHT_IMAGE_ENCODER"
     priotiry: -15
     name: "PANO_RIGHT"
-    config_file: "param/camera/test/pano_right.prototxt"
+    config_file: "params/drivers/camera/test/pano_right.prototxt"
 }
 
 component_config {
@@ -45,5 +45,5 @@ component_config {
     # channel_encode_name: "PANO_BACK_IMAGE_ENCODER"
     priotiry: -15
     name: "PANO_BACK"
-    config_file: "param/camera/test/pano_back.prototxt"
+    config_file: "params/drivers/camera/test/pano_back.prototxt"
 }

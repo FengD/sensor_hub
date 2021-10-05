@@ -3,11 +3,13 @@
 // Author: Feng DING
 // Description: camera main
 
-#define MODULE "CameraDriver"
-
+#include <gflags/gflags.h>
 #include "common/common.h"
 #include "camera_drivers/output/cyber_output.h"
 #include "camera_drivers/camera.h"
+
+#define MODULE "CameraDriver"
+DEFINE_string(config_file, "params/drivers/camera/test/camera_config.prototxt", "path of config file");
 
 namespace crdc {
 namespace airi {
@@ -21,6 +23,7 @@ int main(int argc, char* argv[]) {
     FLAGS_minloglevel = 0;
     FLAGS_v = 0;
     FLAGS_stderrthreshold = 3;
+    // log on screen
     // FLAGS_alsologtostderr = true;
 
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
@@ -29,17 +32,21 @@ int main(int argc, char* argv[]) {
 
     CameraComponent camera_component;
 
+    std::string config = "";
+
     if (argc < 2) {
-        LOG(FATAL) << "[CAMERA_MAIN] No camera proto file given." << std::endl;
-        return 1;
+        LOG(WARNING) << "[CAMERA_MAIN] No camera proto file given. Use default proto config." << std::endl;
+        config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+    } else {
+        config = std::string(argv[1]);
     }
 
-    if (!crdc::airi::util::is_path_exists(argv[1])) {
+    if (!crdc::airi::util::is_path_exists(config)) {
         LOG(FATAL) << "[CAMERA_MAIN] CRDC not exists, please setup environment first." << std::endl;
         return 1;
     }
 
-    if (!crdc::airi::util::get_proto_from_file(argv[1], &camera_component)) {
+    if (!crdc::airi::util::get_proto_from_file(config, &camera_component)) {
         LOG(FATAL) << "[CAMERA_MAIN] failed to read camera config proto." << std::endl;
         return 1;
     }

@@ -35,5 +35,5 @@ target_link_libraries(${PROJECT_NAME}
     ${OpenCV_LIBS}
 )
 
-install(DIRECTORY param DESTINATION .)
+install(DIRECTORY params DESTINATION .)
 install(TARGETS ${PROJECT_NAME} DESTINATION bin/)
