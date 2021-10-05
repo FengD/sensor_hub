@@ -111,24 +111,69 @@ class LidarParser {
    */
   virtual bool is_lidar_packet_valid(const Packet* packet);
 
+  /**
+   * @brief If there is some other info in the packet
+   * @param The input raw ethernet packet
+   */
   virtual void parse_lidar_other_info(const Packet* packet) {}
 
+  /**
+   * @brief parse the block info, need to be redefined
+   * @param The input raw ethernet packet data
+   * @param lidar parser info
+   */
   virtual void get_block_info(const uint8_t* data, LidarParserInfo& parser_info) = 0;
 
+  /**
+   * @brief parse the point info, need to be redefined
+   * @param The input raw ethernet packet
+   * @param lidar parser info
+   */
   virtual void get_point_raw_info(const uint8_t* data, LidarParserInfo& parser_info) = 0;
 
+  /**
+   * @brief parse the timestamp in the packets, need to be redefined
+   * @param The input raw ethernet packet
+   * @param timestamp
+   */
   virtual uint64_t get_packet_timestamp(const Packet* packet) = 0;
 
+  /**
+   * @brief calibration the point info, need to be redefined
+   * @param lidar parser info
+   */
   virtual void calibrate_point(LidarParserInfo& parser_info) = 0;
+
   /**
    * @brief Init cloud pool
    * @return status
    */
   virtual bool init_pool();
+
+  /**
+   * @brief Init the calibration lists
+   * @return status
+   */
   virtual bool init_calib();
+
+  /**
+   * @brief check if the frame is end
+   * @param azimuth in pixel
+   * @return status
+   */
   virtual bool is_frame_end(const uint64_t& azimuth);
+
+  /**
+   * @brief calculate the points data xyz
+   * @param lidar parser info
+   * @param temp point
+   */
   virtual void calculate_points_data_xyz(const LidarParserInfo& parser_info, LidarPoint& pt);
 
+  /**
+   * @brief init the frame in each loop
+   * @return status
+   */
   inline bool frame_init() {
     cloud_ = cloud_pool_->GetObject();
     if (cloud_ == nullptr) {
@@ -145,6 +190,11 @@ class LidarParser {
     return true;
   }
 
+  /**
+   * @brief check if the point is invalid
+   * @param lidar parser info
+   * @return status
+   */
   inline bool is_invalid_point(const LidarParserInfo& parser_info) {
     if (parser_info.distance_ > MAX_DISTANCE) {
       invalid_pts_++;
@@ -159,11 +209,20 @@ class LidarParser {
     }
   }
 
+  /**
+   * @brief calculate the points position in the data
+   */
   inline void calculate_lidar_point_pos() {
     lidar_point_[0].timestamp_ = frame_start_utime_;
     lidar_point_[lidar_point_count_ - 1].timestamp_ = frame_end_utime_;
   }
 
+  /**
+   * @brief update the frame
+   * @param packet timestamp
+   * @param lidar parser info
+   * @return status
+   */
   inline bool update_frame(const uint64_t& packet_time, LidarParserInfo& parser_info) {
     if (!frame_init()) {
       LOG(ERROR) << "[" << config_.frame_id() << "] Failed to init frame.";
