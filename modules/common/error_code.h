@@ -14,6 +14,6 @@ enum DeviceStatus {
   BIND_SOCKET_ERROR = -3,
   CREATE_SOCKET_ERROR = -2,
   CAMERA_TIMEOUT = -1,
-  NO_ERROR = 0, 
+  NO_ERROR = 0,
   SUCCESS = 1
 };

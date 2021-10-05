@@ -264,7 +264,7 @@ std::string get_current_path() {
 bool create_dir(const std::string& directory_path) {
     int ret = mkdir(directory_path.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
     if (ret != 0) {
-        LOG(WARNING) << "failed to create dir. [dir: " << directory_path 
+        LOG(WARNING) << "failed to create dir. [dir: " << directory_path
                      << "] [err: " << strerror(errno) << "]";
         return false;
     }

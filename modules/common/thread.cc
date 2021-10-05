@@ -44,7 +44,7 @@ bool Thread::is_alive() {
   if (tid_ == 0) {
     return false;
   }
-  //no signal sent, just check existence for thread
+  // no signal sent, just check existence for thread
   int ret = pthread_kill(tid_, 0);
 
   if (ret = ESRCH) {

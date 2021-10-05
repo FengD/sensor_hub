@@ -34,7 +34,7 @@ class CCObjectPool : public std::enable_shared_from_this<CCObjectPool<T>> {
   void ReleaseObject(T *);
   uint32_t size() const;
 
- private: 
+ private:
   struct Node {
       T object;
       Node *next;

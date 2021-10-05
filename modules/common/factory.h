@@ -50,7 +50,7 @@ struct has_boolean_init {
   static int Test(...);
   static const bool value = sizeof(Test<T>(0)) == sizeof(char);
 };
-}  // namespace traits 
+}  // namespace traits
 
 template <typename E>
 class ComponentFactory {
@@ -123,7 +123,7 @@ class ComponentFactory {
     }
     return inst_registry.at(upper_type).at(upper_name);
   }
-  
+
   static std::vector<std::string> available() {
     auto& registry = get_registry();
     std::vector<std::string> ret;
@@ -149,13 +149,13 @@ class ComponentFactory {
   template <typename... Args>
   static void init_inst(ElePtr& inst, std::true_type, std::true_type, Args... params) {
     CHECK(inst->init(params...)) << "Failed to init singleton for [" << ComponentTraits<E>::name()
-                                 << "]";  
+                                 << "]";
   }
 
   template <typename... Args>
   static void init_inst(ElePtr& inst, std::false_type, std::true_type, Args... params) {
     CHECK(inst->init(params...)) << "Failed to init singleton for [" << ComponentTraits<E>::name()
-                                 << "]";  
+                                 << "]";
   }
 
   template <typename...>

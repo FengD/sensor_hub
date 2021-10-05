@@ -26,9 +26,9 @@ class Singleton {
 
   // @brief Construct the singleton instance
   static void new_() { instance_ = new T(); }
-  
+
   // @brief Destruct the singleton instance
-  // @note Only work with gcc/clang  
+  // @note Only work with gcc/clang
   __attribute__((destructor)) static void delete_() {
     typedef char T_must_be_complete[sizeof(T) == 0 ? -1 : 1];
     (void)sizeof(T_must_be_complete);
