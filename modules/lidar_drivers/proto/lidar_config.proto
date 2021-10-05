@@ -8,12 +8,13 @@ message FileConfig {}
 
 message CyberConfig {}
 
-message InputConfig {
-    optional string name = 1;
-    optional int32 pool_size = 2;
-    optional int32 packet_size = 3;
-    optional int32 lidar_port = 4;
-    optional int32 gps_port = 5;
+message LidarInputConfig {
+    optional string frame_id = 1;
+    optional string name = 2;
+    optional int32 pool_size = 3;
+    optional int32 packet_size = 4;
+    optional int32 lidar_port = 5;
+    optional int32 gps_port = 6;
     oneof input {
         SocketConfig socket_config = 11;
         FileConfig file_config = 12;
@@ -39,17 +40,18 @@ message GpsPacketConfig {
 }
 
 message ParserConfig {
-    optional string name = 1;
-    optional int32 pool_size = 2;
-    optional int32 split_azimuth = 5;
-    optional int32 time_zone = 6;
-    optional int32 max_points = 7;
-    optional bool use_local_time = 8;
-    optional LidarPacketConfig lidar_packet_config = 9;
-    optional GpsPacketConfig gps_packet_config = 10;
+    optional string frame_id = 1;
+    optional string name = 2;
+    optional int32 pool_size = 3;
+    optional int32 split_azimuth = 4;
+    optional int32 time_zone = 5;
+    optional int32 max_points = 6;
+    optional bool use_local_time = 7;
+    optional LidarPacketConfig lidar_packet_config = 8;
+    optional GpsPacketConfig gps_packet_config = 9;
 }
 
 message LidarConfig {
-    optional InputConfig input_config = 1;
+    optional LidarInputConfig input_config = 1;
     optional ParserConfig parser_config = 2;
 }

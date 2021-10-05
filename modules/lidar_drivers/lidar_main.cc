@@ -3,26 +3,35 @@
 // Author: Feng DING
 // Description: lidar main
 
-#define MODULE "LidarDriver"
-
+#include <gflags/gflags.h>
 #include "common/common.h"
 #include "lidar_drivers/output/cyber_output.h"
-#include "lidar_drivers/proto/lidar_component_config.pb.h"
 #include "lidar_drivers/lidar.h"
+
+#define MODULE "LidarDriver"
+DEFINE_string(config_file, "params/drivers/lidar/test/lidar_config.prototxt",
+              "path of config file");
 
 namespace crdc {
 namespace airi {
 namespace lidar {
 
 int main(int argc, char* argv[]) {
-    // log dir setting
+    // gflags command setting
     google::ParseCommandLineFlags(&argc, &argv, true);
+
+    if (!std::getenv("CRDC_WS")) {
+        LOG(FATAL) << "[LIDAR_MAIN] CRDC_WS not setting!";
+    } else {
+        LOG(INFO) << "[LIDAR_MAIN] Current CRDC_WS: " << std::string(std::getenv("CRDC_WS"));
+    }
 
     FLAGS_colorlogtostderr = true;
     FLAGS_minloglevel = 0;
     FLAGS_v = 0;
     FLAGS_stderrthreshold = 3;
-    FLAGS_alsologtostderr = true;
+    // log on screen
+    // FLAGS_alsologtostderr = true;
 
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
     apollo::cyber::Init(MODULE);
@@ -30,18 +39,22 @@ int main(int argc, char* argv[]) {
 
     LidarComponentConfig lidar_component_config;
 
+    std::string config = "";
+
     if (argc < 2) {
-        LOG(FATAL) << "[LIDAR_MAIN] No lidar proto file given." << std::endl;
+        LOG(WARNING) << "[LIDAR_MAIN] No lidar proto file given. Use default proto config.";
+        config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+    } else {
+        config = std::string(argv[1]);
+    }
+
+    if (!crdc::airi::util::is_path_exists(config)) {
+        LOG(FATAL) << "[LIDAR_MAIN] CRDC not exists, please setup environment first.";
         return 1;
     }
 
-    if (!crdc::airi::util::is_path_exists(argv[1])) {
-        LOG(FATAL) << "[LIDAR_MAIN] CRDC not exists, please setup environment first." << std::endl;
-        return 1;
-    }
-
-    if (!crdc::airi::util::get_proto_from_file(argv[1], &lidar_component_config)) {
-        LOG(FATAL) << "[LIDAR_MAIN] failed to read lidar config proto." << std::endl;
+    if (!crdc::airi::util::get_proto_from_file(config, &lidar_component_config)) {
+        LOG(FATAL) << "[LIDAR_MAIN] failed to read lidar config proto.";
         return 1;
     }
 
@@ -78,4 +91,4 @@ int main(int argc, char* argv[]) {
 }  // namespace airi
 }  // namespace crdc
 
-int main(int argc, char* argv[]) {return crdc::airi::lidar::main(argc, argv); }
+int main(int argc, char* argv[]) { return crdc::airi::lidar::main(argc, argv); }
