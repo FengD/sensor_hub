@@ -22,7 +22,7 @@ namespace airi {
 
 class Lidar : public common::Thread {
  public:
-  explicit Lidar(const Component& config);
+  explicit Lidar(const LidarComponentConfig& config);
   virtual ~Lidar() = default;
   void stop();
   void set_callback(std::function<void(const std::shared_ptr<PointCloud>&)> callback) {
@@ -32,10 +32,23 @@ class Lidar : public common::Thread {
   std::string get_name() const {
     return lidar_name_;
   }
+
  private:
   void run() override;
+  /**
+   * @brief Init the encoder if defined.
+   */
+  bool init_parser();
+
+  /**
+   * @brief Init the input if defined.
+   */
+  bool init_input();
+
+  bool stop_;
+  int32_t reload_;
   std::string lidar_name_;
-  Component config_;
+  LidarComponentConfig config_;
   LidarConfig lidar_config_;
   std::function<void(const std::shared_ptr<PointCloud>&)> callback_;
   std::shared_ptr<LidarInput> input_;

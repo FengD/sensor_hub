@@ -4,7 +4,6 @@
 // Description: input socket
 
 #include "lidar_drivers/input/socket/socket.h"
-#include "lidar_drivers/output/cyber_output.h"
 
 namespace crdc {
 namespace airi {

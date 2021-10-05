@@ -12,7 +12,7 @@ message BlindZone {
     optional double max_z = 7;
 }
 
-message Component {
+message LidarComponentConfig {
     optional int32 sensor_position_id = 1;
     optional string frame_id = 2;
     optional string channel_name = 3;
@@ -22,7 +22,7 @@ message Component {
     optional string config_file = 7;
 }
 
-message LidarComponentConfig{
+message LidarComponent {
     optional string frame_id = 1;
     optional string channel_name = 2;
     optional string header_frame_id = 3;
@@ -31,5 +31,5 @@ message LidarComponentConfig{
     optional int32 latest_max_time_gap = 6;
     optional int32 priotiry = 7;
     optional BlindZone blind_zone = 8;
-    repeated Component component_config = 9;
+    repeated LidarComponentConfig component_config = 9;
 }

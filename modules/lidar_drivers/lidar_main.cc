@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
     apollo::cyber::Init(MODULE);
     common::Singleton<LidarCyberOutput>::get()->init(MODULE);
 
-    LidarComponentConfig lidar_component_config;
+    LidarComponent lidar_component;
 
     std::string config = "";
 
@@ -53,15 +53,15 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    if (!crdc::airi::util::get_proto_from_file(config, &lidar_component_config)) {
+    if (!crdc::airi::util::get_proto_from_file(config, &lidar_component)) {
         LOG(FATAL) << "[LIDAR_MAIN] failed to read lidar config proto.";
         return 1;
     }
 
-    LOG(INFO) << lidar_component_config.DebugString();
+    LOG(INFO) << lidar_component.DebugString();
 
     std::vector<std::shared_ptr<crdc::airi::Lidar>> lidars;
-    for (const auto& config : lidar_component_config.component_config()) {
+    for (const auto& config : lidar_component.component_config()) {
         std::shared_ptr<crdc::airi::Lidar> lidar = std::make_shared<crdc::airi::Lidar>(config);
         lidars.emplace_back(lidar);
     }
