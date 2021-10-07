@@ -25,7 +25,7 @@ class Lidar : public common::Thread {
   explicit Lidar(const LidarComponentConfig& config);
   virtual ~Lidar() = default;
   void stop();
-  void set_callback(std::function<void(const std::shared_ptr<PointCloud>&)> callback) {
+  void set_callback(std::function<void(const std::shared_ptr<PointCloud2>&)> callback) {
     callback_ = callback;
   }
 
@@ -53,7 +53,7 @@ class Lidar : public common::Thread {
   std::string lidar_name_;
   LidarComponentConfig config_;
   LidarConfig lidar_config_;
-  std::function<void(const std::shared_ptr<PointCloud>&)> callback_;
+  std::function<void(const std::shared_ptr<PointCloud2>&)> callback_;
   std::shared_ptr<LidarInput> input_;
   std::shared_ptr<LidarParser> parser_;
   uint32_t sensor_position_id_;

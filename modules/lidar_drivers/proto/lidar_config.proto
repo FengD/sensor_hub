@@ -35,6 +35,9 @@ message LidarPacketConfig {
     optional int32 point_size = 10;
     optional int32 xy_offset = 11;
     optional int32 z_offset = 12;
+    repeated double calib_azimuth = 20;
+    repeated double calib_elevation = 21;
+    repeated int32 ring_map = 22;
 }
 
 message GpsPacketConfig {

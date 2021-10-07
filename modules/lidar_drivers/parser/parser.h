@@ -15,10 +15,17 @@
 namespace crdc {
 namespace airi {
 
+#define ADD_FIELD(cloud, name, datatype, offset, count)   \
+  f = cloud->add_fields();                                \
+  f->set_name(name);                                      \
+  f->set_datatype(datatype);                              \
+  f->set_offset(offset);                                  \
+  f->set_count(count);
+
 struct LidarPointCloud {
   uint64_t first_packet_utime_;
   uint64_t last_packet_utime_;
-  std::shared_ptr<PointCloud> proto_cloud_;
+  std::shared_ptr<PointCloud2> proto_cloud_;
   LidarPointCloud() {}
 };
 
@@ -26,13 +33,13 @@ struct LidarPoint {
   float x_ = 0;
   float y_ = 0;
   float z_ = 0;
-  uint32_t ring_ = 0;
+  uint8_t intensity_ = 0;
+  float distance = 0;
+  uint64_t timestamp_ = 0;
+  uint16_t ring_ = 0;
   float azimuth_ = 0;
   float elevation_ = 0;
-  uint32_t intensity_ = 0;
-  uint64_t timestamp_ = 0;
-  uint32_t semantic_flag_ = 0;
-  float distance = 0;
+  uint8_t semantic_flag_ = 0;
   LidarPoint() {}
 };
 
@@ -59,7 +66,7 @@ struct LidarCalibInfo {
   float calib_azimuth_ = 0;
   int32_t offset_x_ = 0;
   float elevation_cos_ = 0;
-  float elecation_sin_ = 0;
+  float elevation_sin_ = 0;
   LidarCalibInfo() {}
 };
 
@@ -181,7 +188,8 @@ class LidarParser {
       return false;
     }
     lidar_point_count_ = 0;
-    lidar_point_ = (struct LidarPoint*)cloud_->proto_cloud_->mutable_point()->data();
+    lidar_point_ = (struct LidarPoint*)cloud_->proto_cloud_->mutable_data()->data();
+    cloud_->proto_cloud_->mutable_data()->resize(config_.max_points() * sizeof(LidarPoint));
     frame_valid_pts_ = valid_pts_;
     frame_invalid_pts_ = invalid_pts_;
     invalid_pts_ = 0;
@@ -196,15 +204,11 @@ class LidarParser {
    * @return status
    */
   inline bool is_invalid_point(const LidarParserInfo& parser_info) {
-    if (parser_info.distance_ > MAX_DISTANCE) {
+    if (parser_info.distance_ > MAX_DISTANCE || parser_info.distance_ < MIN_DISTANCE) {
       invalid_pts_++;
-    } else {
-      valid_pts_++;
-    }
-
-    if (parser_info.distance_ > MAX_DISTANCE || parser_info.distance_ < MAX_DISTANCE) {
       return true;
     } else {
+      valid_pts_++;
       return false;
     }
   }
@@ -213,6 +217,14 @@ class LidarParser {
    * @brief calculate the points position in the data
    */
   inline void calculate_lidar_point_pos() {
+    auto& packet_config = config_.lidar_packet_config();
+    for (auto laser = 0; laser < packet_config.lasers(); ++laser) {
+      auto ring = packet_config.ring_map(laser);
+      for (auto x = 0; x < calib_info_[laser].offset_x_; x += packet_config.lasers()) {
+        int pos = x + ring;
+        lidar_point_[pos] = lidar_point_[pos + lidar_point_count_];
+      }
+    }
     lidar_point_[0].timestamp_ = frame_start_utime_;
     lidar_point_[lidar_point_count_ - 1].timestamp_ = frame_end_utime_;
   }

@@ -38,9 +38,9 @@ class LidarCyberOutput {
     LOG(INFO) << "[LIDAR_OUTPUT] Node name: " << node_name;
     node_ = apollo::cyber::CreateNode(node_name, "crdc");
     CHECK(node_);
-    cloud_writer_ptr_.reset(new ChannelWriter<PointCloud>(node_));
+    cloud_writer_ptr_.reset(new ChannelWriter<PointCloud2>(node_));
     packets_writer_ptr_.reset(new ChannelWriter<Packets>(node_));
-    fusion_clouds_writer_ptr_ = node_->CreateWriter<PointClouds>("MERGE_CLOUD");
+    fusion_clouds_writer_ptr_ = node_->CreateWriter<PointClouds2>("MERGE_CLOUD");
     return true;
   }
 
@@ -55,7 +55,10 @@ class LidarCyberOutput {
    * @param proto cloud ptr
    * @return status
    */
-  bool write_cloud(const std::string& topic, const std::shared_ptr<PointCloud>& proto_cloud) {
+  bool write_cloud(const std::string& topic, const std::shared_ptr<PointCloud2>& proto_cloud) {
+    proto_cloud->mutable_header()->set_module_name("LidarDriver");
+    proto_cloud->mutable_header()->set_timestamp_sec(
+                static_cast<double>(get_now_microsecond()) / 1000000);
     return cloud_writer_ptr_->write(topic, proto_cloud);
   }
 
@@ -64,7 +67,10 @@ class LidarCyberOutput {
    * @param the cloud list
    * @return status
    */
-  bool write_fusion_clouds(const std::shared_ptr<PointClouds>& clouds) {
+  bool write_fusion_clouds(const std::shared_ptr<PointClouds2>& clouds) {
+    clouds->mutable_header()->set_module_name("LidarDriver");
+    clouds->mutable_header()->set_timestamp_sec(
+                static_cast<double>(get_now_microsecond()) / 1000000);
     return fusion_clouds_writer_ptr_->Write(clouds);
   }
 
@@ -100,9 +106,9 @@ class LidarCyberOutput {
     std::mutex mutex_;
   };
   std::shared_ptr<apollo::cyber::Node> node_;
-  std::shared_ptr<ChannelWriter<PointCloud>> cloud_writer_ptr_;
+  std::shared_ptr<ChannelWriter<PointCloud2>> cloud_writer_ptr_;
   std::shared_ptr<ChannelWriter<Packets>> packets_writer_ptr_;
-  std::shared_ptr<apollo::cyber::Writer<PointClouds>> fusion_clouds_writer_ptr_;
+  std::shared_ptr<apollo::cyber::Writer<PointClouds2>> fusion_clouds_writer_ptr_;
 };
 
 }  // namespace airi
