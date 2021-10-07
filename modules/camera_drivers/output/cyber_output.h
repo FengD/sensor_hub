@@ -36,7 +36,7 @@ class CameraCyberOutput {
     LOG(INFO) << "[CAMERA_OUTPUT] Node name: " << node_name;
     node_ = apollo::cyber::CreateNode(node_name, "crdc");
     CHECK(node_);
-    image_writer_ptr_.reset(new ChannelWriter<Image>(node_));
+    image_writer_ptr_.reset(new ChannelWriter<Image2>(node_));
     return true;
   }
 
@@ -46,7 +46,7 @@ class CameraCyberOutput {
    * @param proto image ptr
    * @return status
    */
-  bool write_image(const std::string& topic, const std::shared_ptr<Image>& proto_image) {
+  bool write_image(const std::string& topic, const std::shared_ptr<Image2>& proto_image) {
     return image_writer_ptr_->write(topic, proto_image);
   }
 
@@ -77,7 +77,7 @@ class CameraCyberOutput {
   };
 
   std::shared_ptr<apollo::cyber::Node> node_;
-  std::shared_ptr<ChannelWriter<Image>> image_writer_ptr_;
+  std::shared_ptr<ChannelWriter<Image2>> image_writer_ptr_;
 };
 
 }  // namespace airi

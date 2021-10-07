@@ -31,14 +31,9 @@ bool TestingCamera::camera_stop() {
 }
 
 void TestingCamera::get_data() {
+  unsigned char data[10] = "1212321";
   while (1) {
-    std::shared_ptr<CameraRawData> raw_data = raw_pool_->GetObject();
-    if (raw_data == nullptr) {
-      raw_data = std::make_shared<CameraRawData>();
-      raw_data->image_ = cv::Mat(config_.height(), config_.width(), CV_8UC3);
-    }
-    raw_data->exposure_time_ = 1;
-    raw_data->utime_ = get_now_microsecond();
+    std::shared_ptr<CameraRawData> raw_data = get_raw_data(1, get_now_microsecond(), data);
     raw_data->data_type = "UYUV";
     raw_data_queue_.enqueue(raw_data);
     std::this_thread::sleep_for(std::chrono::milliseconds(1000 / config_.fps()));

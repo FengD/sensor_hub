@@ -80,11 +80,11 @@ class Camera : public common::Thread {
   std::shared_ptr<Encoder> encoder_;
 
   cv::Mat image_undistorted_;
-  std::shared_ptr<Image> proto_image_;
-  std::shared_ptr<Image> proto_encode_image_;
+  std::shared_ptr<Image2> proto_image_;
+  std::shared_ptr<Image2> proto_encode_image_;
 
-  uint32_t status_cnt_;
-  uint32_t camera_fail_cnt_;
+  uint32_t image_seq_;
+  uint32_t encode_image_seq_;
   uint32_t sensor_position_id_;
 };
 }  // namespace airi
