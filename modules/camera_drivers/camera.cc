@@ -53,12 +53,12 @@ void Camera::init_proto_image() {
               << config_.DebugString() << camera_config_.DebugString();
     proto_image_ = std::make_shared<Image2>();
     proto_image_->mutable_header()->set_frame_id(config_.frame_id());
-    proto_image_->mutable_header()->set_module_name("CameraDrivers");
     proto_image_->set_width(camera_config_.input_config().width());
     proto_image_->set_height(camera_config_.input_config().height());
     proto_image_->mutable_data()->reserve(camera_config_.input_config().width() *
                                           camera_config_.input_config().height() * 3);
     proto_image_->set_step(3 * camera_config_.input_config().width());
+    proto_image_->set_compression(Image2_Compression_RAW);
 }
 
 bool Camera::init_encoder() {
@@ -81,6 +81,7 @@ bool Camera::init_encoder() {
 
     proto_encode_image_ = std::make_shared<Image2>();
     proto_encode_image_->CopyFrom(*proto_image_);
+    proto_encode_image_->set_compression(Image2_Compression_JPEG);
     return true;
 }
 
@@ -186,12 +187,9 @@ void Camera::run() {
                       << get_now_microsecond() - start_time;
             // publish raw data
             proto_image_->mutable_header()->set_camera_timestamp(raw_data->utime_);
-            proto_image_->mutable_header()->set_timestamp_sec(
-                static_cast<double>(get_now_microsecond()) / 1000000);
             proto_image_->mutable_header()->set_sequence_num(image_seq_++);
             proto_image_->set_exposuretime(raw_data->exposure_time_);
             proto_image_->set_type(raw_data->data_type);
-            proto_image_->set_compression(Image2_Compression_RAW);
             proto_image_->set_data(image_undistorted_.data,
                                    camera_config_.input_config().width() *
                                    camera_config_.input_config().height() * 3);
@@ -211,13 +209,10 @@ void Camera::run() {
             }
             // publish encode data
             proto_encode_image_->mutable_header()->set_camera_timestamp(raw_data->utime_);
-            proto_encode_image_->mutable_header()->set_timestamp_sec(
-                static_cast<double>(get_now_microsecond()) / 1000000);
             proto_encode_image_->mutable_header()->set_sequence_num(encode_image_seq_++);
             proto_encode_image_->set_exposuretime(raw_data->exposure_time_);
             proto_encode_image_->set_data(compress_buffer, compress_buffer_size);
             proto_encode_image_->set_type(raw_data->data_type);
-            proto_encode_image_->set_compression(Image2_Compression_JPEG);
             common::Singleton<CameraCyberOutput>::get()->write_image(config_.channel_encode_name(),
                                                                      proto_encode_image_);
             LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [encode] elapsed_time(us): "

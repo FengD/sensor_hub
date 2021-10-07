@@ -47,6 +47,9 @@ class CameraCyberOutput {
    * @return status
    */
   bool write_image(const std::string& topic, const std::shared_ptr<Image2>& proto_image) {
+    proto_image->mutable_header()->set_module_name("CameraDriver");
+    proto_image->mutable_header()->set_timestamp_sec(
+                static_cast<double>(get_now_microsecond()) / 1000000);
     return image_writer_ptr_->write(topic, proto_image);
   }
 
