@@ -112,7 +112,9 @@ void Lidar::run() {
                               << "] [TIMER] [receive] elapsed_time(us): " << receive_time;
                     cloud->proto_cloud_->mutable_header()->set_frame_id(config_.frame_id());
                     now = get_now_microsecond();
-                    callback_(cloud->proto_cloud_);
+                    if (callback_ != nullptr) {
+                        callback_(cloud->proto_cloud_);
+                    }
                     LOG(INFO) << "[" << get_thread_name()
                               << "] [TIMER] [callback] elapsed_time(us): "
                               << get_now_microsecond() - now;

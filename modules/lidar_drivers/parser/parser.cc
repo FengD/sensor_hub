@@ -52,13 +52,13 @@ bool LidarParser::init_pool() {
     ADD_FIELD(cloud->proto_cloud_, "y", PointField::FLOAT32, 4, 1);
     ADD_FIELD(cloud->proto_cloud_, "z", PointField::FLOAT32, 8, 1);
     ADD_FIELD(cloud->proto_cloud_, "intensity", PointField::UINT8, 12, 1);
-    ADD_FIELD(cloud->proto_cloud_, "distance", PointField::FLOAT32, 13, 1);
-    ADD_FIELD(cloud->proto_cloud_, "sec", PointField::UINT32, 17, 1);
-    ADD_FIELD(cloud->proto_cloud_, "usec", PointField::UINT32, 21, 1);
-    ADD_FIELD(cloud->proto_cloud_, "ring", PointField::UINT16, 25, 1);
-    ADD_FIELD(cloud->proto_cloud_, "azimuth", PointField::FLOAT32, 27, 1);
-    ADD_FIELD(cloud->proto_cloud_, "elevation", PointField::FLOAT32, 31, 1);
-    ADD_FIELD(cloud->proto_cloud_, "semantic_flag", PointField::UINT8, 35, 1);
+    // ADD_FIELD(cloud->proto_cloud_, "distance", PointField::FLOAT32, 13, 1);
+    // ADD_FIELD(cloud->proto_cloud_, "sec", PointField::UINT32, 17, 1);
+    // ADD_FIELD(cloud->proto_cloud_, "usec", PointField::UINT32, 21, 1);
+    // ADD_FIELD(cloud->proto_cloud_, "ring", PointField::UINT16, 25, 1);
+    // ADD_FIELD(cloud->proto_cloud_, "azimuth", PointField::FLOAT32, 27, 1);
+    // ADD_FIELD(cloud->proto_cloud_, "elevation", PointField::FLOAT32, 31, 1);
+    // ADD_FIELD(cloud->proto_cloud_, "semantic_flag", PointField::UINT8, 35, 1);
     cloud->proto_cloud_->mutable_data()->resize(config_.max_points() * sizeof(LidarPoint));
     cloud->proto_cloud_->set_point_step(sizeof(LidarPoint));
     cloud->proto_cloud_->set_height(config_.lidar_packet_config().lasers());
@@ -122,8 +122,7 @@ bool LidarParser::is_lidar_packet_valid(const Packet* packet) {
   }
 
   const uint8_t* data = (const uint8_t*) packet->data().data();
-  uint32_t header_checksum = (data[0] << 24) | (data[1] << 16)
-                           | (data[2] << 8) | data[3];
+  uint32_t header_checksum = (data[0] << 8) | (data[1]);
   if (header_checksum != config_.lidar_packet_config().check_sum()) {
     LOG(ERROR) << "[" << config_.frame_id() << "] checksum " << header_checksum
                << " wrong " << config_.lidar_packet_config().check_sum();
@@ -182,7 +181,7 @@ bool LidarParser::parse_lidar_packet(const Packet* packet,
 
     parser_info.pixel_azimuth_diff_ = (ROTATION_MAX_UNITS + parser_info.pixel_azimuth_
                                        - last_pixel_azimuth_) % ROTATION_MAX_UNITS;
-    if (unlikely(cloud == nullptr)) {
+    if (unlikely(cloud_ == nullptr)) {
       if (!is_frame_end(parser_info.pixel_azimuth_)) {
         return false;
       }
@@ -220,10 +219,10 @@ bool LidarParser::parse_lidar_packet(const Packet* packet,
                          + calib_info_[parser_info.laser_].offset_x_ + ring];
         calibrate_point(parser_info);
         calculate_points_data_xyz(parser_info, pt);
-        pt.ring_ = ring;
-        pt.timestamp_ = parser_info.timestamp_;
-        pt.intensity_ = parser_info.intensity_;
-        pt.distance = parser_info.distance_;
+        // pt.ring_ = ring;
+        // pt.timestamp_ = parser_info.timestamp_;
+        // pt.intensity_ = parser_info.intensity_;
+        // pt.distance = parser_info.distance_;
         if (is_invalid_point(parser_info)) {
           lidar_point_count_--;
           continue;

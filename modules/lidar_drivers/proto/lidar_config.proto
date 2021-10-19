@@ -24,11 +24,11 @@ message LidarInputConfig {
 
 message LidarPacketConfig {
     optional int32 size = 1;
-    optional int32 check_sum = 2;
+    optional uint32 check_sum = 2;
     optional int32 blocks = 3;
     optional int32 block_offset = 4;
     optional int32 block_size = 5;
-    optional int32 block_check_sum = 6;
+    optional uint32 block_check_sum = 6;
     optional int32 firings = 7;
     optional int32 firing_offset = 8;
     optional int32 lasers = 9;
@@ -42,7 +42,7 @@ message LidarPacketConfig {
 
 message GpsPacketConfig {
     optional int32 size = 1;
-    optional int64 check_sum = 2;
+    optional uint64 check_sum = 2;
 }
 
 message ParserConfig {
