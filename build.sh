@@ -64,6 +64,7 @@ function print_usage() {
     ${BLUE}build${NO_COLOR}: run the code build
     ${BLUE}clean${NO_COLOR}: clean the code build
     ${BLUE}cov${NO_COLOR}: run the code test coverage
+    ${BLUE}check_code${NO_COLOR}: check code qulity
     "
 }
 
@@ -73,6 +74,20 @@ function clean() {
 
 function get_dependencies() {
     echo "get-dependencies"
+    mkdir -p build/modules
+    wget http://10.10.173.10/share/pkgs/get-dependencies.py
+    python get-dependencies.py
+    rm -rf get-dependencies.py
+}
+
+function check_code() {
+    wget http://10.10.173.10/release/code_check_tools/code_check_tools.tar.gz
+    tar -zxvf code_check_tools.tar.gz
+    chmod -R +x code_check_tools
+    export WORKSPACE=${WS}
+    export CODE_CHECK_EXCLUDE_LIST="3rdparty"
+    ./code_check_tools/code_check.sh run
+    rm -rf code_check_tools.tar.gz code_check_tools
 }
 
 function build_make() {
@@ -81,8 +96,10 @@ function build_make() {
     make -j$[${MAX_CPU_NUM}-1] install
     if [ $? -eq 0 ]; then
         success 'Build passed!'
+        exit 0
     else
         fail 'Build failed!'
+        exit 1
     fi
 }
 
@@ -90,7 +107,7 @@ function build() {
     mkdir -p ${WS}/build && cd ${WS}/build
     cmake -DWITH_COV=${WITH_COV} \
           -DDO_TEST=${DO_TEST} \
-          -DBUILD_AARCH64=${WITH_AARCH64} \
+          ${EXTRA_OPTIONS} \
           -DCMAKE_INSTALL_PREFIX=${WS}/build_dist ..
     build_make
 }
@@ -110,17 +127,28 @@ function main() {
     START_TIME=$(get_now)
     WITH_COV=OFF
     DO_TEST=OFF
-    if [ "${PLATFORM}" = "AARCH64" ]; then
-        WITH_AARCH64=ON
-    else
-        WITH_AARCH64=OFF
+    EXTRA_OPTIONS=
+    # get_dependencies
+    if [[ "${PLATFORM}" == "TDA4" ]];then
+        export TI_PSDK_RTOS_PATH=$(find /opt/ -name ti-processor-sdk-rtos*) 
+        source $(find /opt/ -name environment-setup-aarch64-linux)
+        EXTRA_OPTIONS="${EXTRA_OPTIONS} -DWITH_TDA4=ON"
+    elif [[ "${PLATFORM}" == "A6" ]];then
+        source /opt/hirain-imx-linux/4.14-sumo/environment-setup-aarch64-poky-linux
+        EXTRA_OPTIONS="${EXTRA_OPTIONS} -DWITH_A6=ON"
+    elif [[ "${PLATFORM}" == "X86" ]];then
+        EXTRA_OPTIONS="${EXTRA_OPTIONS} -DWITH_IPC=ON"
     fi
+
+    if [ "${ARCH}" = "arm64" ]; then
+        EXTRA_OPTIONS="${EXTRA_OPTIONS} -DWITH_AARCH64=ON"
+    fi
+
     case $cmd in
         build)
             build_make
             ;;
         all)
-            get_dependencies
             build
             ;;
         clean)
@@ -129,8 +157,10 @@ function main() {
         cov)
             WITH_COV=ON
             DO_TEST=ON
-            get_dependencies
             build
+            ;;
+        check_code)
+            check_code
             ;;
         *)
             print_usage

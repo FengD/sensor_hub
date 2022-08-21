@@ -1,0 +1,14 @@
+frame_id: "INS_DRIVERS"
+channel_name: "MERGE_INS"
+header_frame_id: "INS_DRIVERS"
+priotiry: -15
+
+component_config {
+    sensor_position_id: 1
+    frame_id: "INS"
+    channel_name: "INS_DATA"
+    raw_data_channel_name: "INS_DATA_RAW"
+    priotiry: -15
+    stricted_bundle: true
+    config_file: "params/drivers/ins/test/ins.prototxt"
+}

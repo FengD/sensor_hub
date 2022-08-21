@@ -4,6 +4,7 @@
 // Description: camera encoder
 
 #include "camera_drivers/encoder/cv_encoder/cv_encoder.h"
+#include <opencv2/imgcodecs/legacy/constants_c.h>
 
 namespace crdc {
 namespace airi {

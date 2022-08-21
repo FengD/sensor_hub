@@ -2,7 +2,9 @@
 // License: Modified BSD Software License Agreement
 // Author: Feng DING
 // Description: camera
+// Contributor: shichong.wang
 
+#include <omp.h>
 #include "camera_drivers/camera.h"
 #include "camera_drivers/output/cyber_output.h"
 
@@ -82,6 +84,8 @@ bool Camera::init_encoder() {
     proto_encode_image_ = std::make_shared<Image2>();
     proto_encode_image_->CopyFrom(*proto_image_);
     proto_encode_image_->set_compression(Image2_Compression_JPEG);
+    before_encoder_rgb_ = cv::Mat(camera_config_.input_config().height(),
+                                  camera_config_.input_config().width(), CV_8UC3);
     return true;
 }
 
@@ -137,17 +141,58 @@ void Camera::load_sensor_config(CameraSensorConfig& sensor_config) {
 }
 
 void Camera::init_camera_config(const CameraSensorConfig& sensor_config, CameraConfig& config) {
-    config.mutable_input_config()->set_width(sensor_config.img_width_);
-    config.mutable_input_config()->set_height(sensor_config.img_height_);
-    config.mutable_input_config()->set_offset_x(sensor_config.offset_x_);
-    config.mutable_input_config()->set_offset_y(sensor_config.offset_y_);
-    config.mutable_input_config()->set_sensor_width(sensor_config.sensor_width_);
-    config.mutable_input_config()->set_sensor_height(sensor_config.sensor_height_);
+    // todo no need if no need to undistortion
+    // config.mutable_input_config()->set_width(sensor_config.img_width_);
+    // config.mutable_input_config()->set_height(sensor_config.img_height_);
+    // config.mutable_input_config()->set_offset_x(sensor_config.offset_x_);
+    // config.mutable_input_config()->set_offset_y(sensor_config.offset_y_);
+    // config.mutable_input_config()->set_sensor_width(sensor_config.sensor_width_);
+    // config.mutable_input_config()->set_sensor_height(sensor_config.sensor_height_);
 }
 
 void Camera::stop() {
     stop_ = true;
     input_->stop();
+}
+
+void Camera::dill_raw_image(const std::shared_ptr<const CameraRawData>& raw_data,
+                               const uint32_t& offset, const uint32_t& one_image_size) {
+    proto_image_->mutable_header()->set_camera_timestamp(raw_data->utime_);
+    proto_image_->mutable_header()->set_sequence_num(image_seq_++);
+    proto_image_->set_exposuretime(raw_data->exposure_time_);
+    proto_image_->set_type(raw_data->data_type);
+    proto_image_->set_data(raw_data->image_.data + offset, one_image_size);
+}
+
+bool Camera::dill_encode_image(const std::shared_ptr<const CameraRawData>& raw_data,
+                                  const uint32_t& offset) {
+    unsigned char* compress_buffer;
+    if (raw_data->data_type == "Y") {
+        cv::Mat y(camera_config_.input_config().height(),
+                camera_config_.input_config().width(), CV_8UC1,
+                reinterpret_cast<void*>(raw_data->image_.data + offset));
+        cv::cvtColor(y, before_encoder_rgb_, cv::COLOR_GRAY2RGB);
+    } else if (raw_data->data_type == "NV12") {
+        cv::Mat nv12(camera_config_.input_config().height() * 3 / 2,
+                    camera_config_.input_config().width(),
+                    CV_8UC1, reinterpret_cast<void*>(raw_data->image_.data + offset));
+        cv::cvtColor(nv12, before_encoder_rgb_, cv::COLOR_YUV2RGB_NV12);
+    } else {
+        LOG(ERROR) << "[" << get_thread_name() << "] type: "
+                << raw_data->data_type << " not support.";
+        return false;
+    }
+    int32_t compress_buffer_size = encoder_->encode(before_encoder_rgb_, &compress_buffer);
+    if (compress_buffer_size == 0) {
+        LOG(ERROR) << "[" << get_thread_name() << "] encode failed.";
+        return false;
+    }
+    proto_encode_image_->mutable_header()->set_camera_timestamp(raw_data->utime_);
+    proto_encode_image_->mutable_header()->set_sequence_num(encode_image_seq_++);
+    proto_encode_image_->set_exposuretime(raw_data->exposure_time_);
+    proto_encode_image_->set_data(compress_buffer, compress_buffer_size);
+    proto_encode_image_->set_type(raw_data->data_type);
+    return true;
 }
 
 void Camera::run() {
@@ -178,45 +223,37 @@ void Camera::run() {
         LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [get_raw_data] elapsed_time(us): "
                   << get_now_microsecond() - start_time;
         start_time = get_now_microsecond();
-        if (!undistortion_->process(raw_data->image_, image_undistorted_)) {
-            continue;
-        }
-
+        // No need now
+        // if (!undistortion_->process(raw_data->image_, image_undistorted_)) {
+        //     continue;
+        // }
+        LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [undistortion] elapsed_time(us): "
+                    << get_now_microsecond() - start_time;
+        auto one_image_size = raw_data->data_size / raw_data->image_number;
         if (config_.has_channel_name()) {
-            LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [undistortion] elapsed_time(us): "
-                      << get_now_microsecond() - start_time;
-            // publish raw data
-            proto_image_->mutable_header()->set_camera_timestamp(raw_data->utime_);
-            proto_image_->mutable_header()->set_sequence_num(image_seq_++);
-            proto_image_->set_exposuretime(raw_data->exposure_time_);
-            proto_image_->set_type(raw_data->data_type);
-            proto_image_->set_data(image_undistorted_.data,
-                                   camera_config_.input_config().width() *
-                                   camera_config_.input_config().height() * 3);
-            common::Singleton<CameraCyberOutput>::get()->write_image(config_.channel_name(),
-                                                                     proto_image_);
-            LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [total] elapsed_time(us): "
-                      << get_now_microsecond() - start_time;
+            start_time = get_now_microsecond();
+            for (auto i = 0; i < raw_data->image_number; i++) {
+                auto offset = i * one_image_size;
+                dill_raw_image(raw_data, offset, one_image_size);
+                common::Singleton<CameraCyberOutput>::get()->write_image(
+                    config_.channel_name() + "/" + std::to_string(i), proto_image_);
+            }
+            LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [raw] elapsed_time(us): "
+                << get_now_microsecond() - start_time;
         }
 
         if (config_.has_channel_encode_name() && encoder_) {
             start_time = get_now_microsecond();
-            unsigned char* compress_buffer;
-            int32_t compress_buffer_size = encoder_->encode(image_undistorted_, &compress_buffer);
-            if (compress_buffer_size == 0) {
-                LOG(ERROR) << "[" << get_thread_name() << "] encode failed.";
-                continue;
+            for (auto i = 0; i < raw_data->image_number; i++) {
+                auto offset = i * one_image_size;
+                if (!dill_encode_image(raw_data, offset)) {
+                    continue;
+                }
+                common::Singleton<CameraCyberOutput>::get()->write_image(
+                    config_.channel_encode_name() + "/" + std::to_string(i), proto_encode_image_);
             }
-            // publish encode data
-            proto_encode_image_->mutable_header()->set_camera_timestamp(raw_data->utime_);
-            proto_encode_image_->mutable_header()->set_sequence_num(encode_image_seq_++);
-            proto_encode_image_->set_exposuretime(raw_data->exposure_time_);
-            proto_encode_image_->set_data(compress_buffer, compress_buffer_size);
-            proto_encode_image_->set_type(raw_data->data_type);
-            common::Singleton<CameraCyberOutput>::get()->write_image(config_.channel_encode_name(),
-                                                                     proto_encode_image_);
             LOG(INFO) << "[" << get_thread_name() << "] [TIMER] [encode] elapsed_time(us): "
-                      << get_now_microsecond() - start_time;
+                << get_now_microsecond() - start_time;
         }
 
         input_->release_camera_data();

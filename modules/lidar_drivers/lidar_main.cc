@@ -26,13 +26,6 @@ int main(int argc, char* argv[]) {
         LOG(INFO) << "[LIDAR_MAIN] Current CRDC_WS: " << std::string(std::getenv("CRDC_WS"));
     }
 
-    FLAGS_colorlogtostderr = true;
-    FLAGS_minloglevel = 0;
-    FLAGS_v = 0;
-    FLAGS_stderrthreshold = 3;
-    // log on screen
-    FLAGS_alsologtostderr = true;
-
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
     apollo::cyber::Init(MODULE);
     common::Singleton<LidarCyberOutput>::get()->init(MODULE);
@@ -41,12 +34,8 @@ int main(int argc, char* argv[]) {
 
     std::string config = "";
 
-    if (argc < 2) {
-        LOG(WARNING) << "[LIDAR_MAIN] No lidar proto file given. Use default proto config.";
-        config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
-    } else {
-        config = std::string(argv[1]);
-    }
+    config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+    LOG(INFO) << "[LIDAR_MAIN] Use proto config: " << config;
 
     if (!crdc::airi::util::is_path_exists(config)) {
         LOG(FATAL) << "[LIDAR_MAIN] CRDC not exists, please setup environment first.";

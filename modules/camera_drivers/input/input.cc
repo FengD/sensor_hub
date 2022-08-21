@@ -13,7 +13,7 @@ namespace airi {
 bool CameraInput::init(const CameraInputConfig& config) {
     is_running_.store(false);
     config_ = config;
-
+    period_ = 1000000 / config_.fps();
     if (!camera_init()) {
         LOG(ERROR) << "[" << config_.frame_id() << "] failed init.";
         return false;
@@ -83,6 +83,8 @@ std::shared_ptr<CameraRawData> CameraInput::get_raw_data(float exposure_time,
         LOG(WARNING) << "[" << config_.frame_id() << "] raw pool failed to getobject, will be new.";
         raw_data = std::make_shared<CameraRawData>();
         raw_data->image_ = cv::Mat(config_.height(), config_.width(), CV_8UC3);
+        // default rgb size = height * width * 3;
+        raw_data->data_size = config_.height() * config_.width() * 3;
     }
 
     if (raw_data) {
@@ -91,6 +93,10 @@ std::shared_ptr<CameraRawData> CameraInput::get_raw_data(float exposure_time,
         raw_data->image_.data = data;
     }
     return raw_data;
+}
+
+void CameraInput::matching_fps_by_sleep(const uint64_t& start, const uint64_t& end) {
+    std::this_thread::sleep_for(std::chrono::microseconds(period_ - end + start));
 }
 
 }  // namespace airi

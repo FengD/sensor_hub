@@ -11,6 +11,19 @@ message MaximConfig {}
 
 message TestingConfig {}
 
+message GstConfig {
+    optional string ip = 1;
+    optional string port = 2;
+}
+
+message TiovxCongfig {
+    optional int32 num_camera = 1;
+}
+
+message MxcConfig {
+    optional int32 channel_id = 1;
+}
+
 message CameraInputConfig {
     // message frame id
     optional string frame_id = 1;
@@ -29,6 +42,9 @@ message CameraInputConfig {
         SensingConfig sensing_config = 11;
         MaximConfig maxim_config = 12;
         TestingConfig testing_config = 13;
+        GstConfig gst_config = 14;
+        TiovxCongfig tiovx_camera_config = 15;
+        MxcConfig mxc_config = 16;
     };
 }
 

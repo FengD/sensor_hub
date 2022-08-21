@@ -17,8 +17,10 @@ namespace airi {
 struct CameraRawData {
   float exposure_time_ = 0;
   uint64_t utime_ = 0;
+  uint32_t image_number = 1;
   cv::Mat image_;
   std::string data_type;
+  uint32_t data_size;
   CameraRawData() {}
 };
 
@@ -100,11 +102,19 @@ class CameraInput {
   std::shared_ptr<CameraRawData> get_raw_data(float exposure_time,
                                               uint64_t utime,
                                               unsigned char* data);
+
+  /**
+   * @brief sleep a period for matching the fps configed.
+   * @param period start time [us] [in]
+   * @param period end time [us] [in]
+   */
+  void matching_fps_by_sleep(const uint64_t& start, const uint64_t& end);
   common::ThreadSafeQueue<std::shared_ptr<const CameraRawData>> raw_data_queue_;
   std::shared_ptr<common::CCObjectPool<CameraRawData>> raw_pool_ = nullptr;
   CameraInputConfig config_;
   std::atomic<bool> is_running_;
   std::string name_;
+  int32_t period_;
 };
 
 REGISTER_COMPONENT(CameraInput);

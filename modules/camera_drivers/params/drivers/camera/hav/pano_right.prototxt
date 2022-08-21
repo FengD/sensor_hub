@@ -1,0 +1,22 @@
+input_config {
+  name: "GstCamera"
+  pool_size: 4
+  height: 1080
+  width: 1920
+  fps: 30
+  gst_config {
+    ip: "192.168.1.101"
+    port: "6012"
+  }
+}
+
+undistortion_config {
+  name: "CvUndistortion"
+}
+
+encoder_config {
+  name: "CvEncoder"
+  cv_encoder_config {
+    quality: 1
+  }
+}

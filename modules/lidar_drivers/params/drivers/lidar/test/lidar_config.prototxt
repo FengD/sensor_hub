@@ -18,30 +18,20 @@ blind_zone {
 
 component_config {
     sensor_position_id: 1
-    frame_id: "LIDAR_TOP"
-    channel_name: "LIDAR_TOP_CLOUD"
-    raw_data_channel_name: "LIDAR_TOP_RAW"
+    frame_id: "LIDAR_LEFT"
+    channel_name: "LIDAR_LEFT_CLOUD"
+    raw_data_channel_name: "LIDAR_LEFT_RAW"
     priotiry: -15
     stricted_bundle: true
-    config_file: "params/drivers/lidar/test/lidar_top.prototxt"
+    config_file: "params/drivers/lidar/test/lidar_left.prototxt"
 }
 
-# component_config {
-#     sensor_position_id: 2
-#     frame_id: "LIDAR_LEFT"
-#     channel_name: "LIDAR_LEFT_CLOUD"
-#     raw_data_channel_name: "LIDAR_LEFT_RAW"
-#     priotiry: -15
-#     stricted_bundle: true
-#     config_file: "params/drivers/lidar/test/lidar_left.prototxt"
-# }
-
-# component_config {
-#     sensor_position_id: 3
-#     frame_id: "LIDAR_RIGHT"
-#     channel_name: "LIDAR_RIGHT_CLOUD"
-#     raw_data_channel_name: "LIDAR_RIGHT_RAW"
-#     priotiry: -15
-#     stricted_bundle: true
-#     config_file: "params/drivers/lidar/test/lidar_right.prototxt"
-# }
+component_config {
+    sensor_position_id: 2
+    frame_id: "LIDAR_RIGHT"
+    channel_name: "LIDAR_RIGHT_CLOUD"
+    raw_data_channel_name: "LIDAR_RIGHT_RAW"
+    priotiry: -15
+    stricted_bundle: true
+    config_file: "params/drivers/lidar/test/lidar_right.prototxt"
+}

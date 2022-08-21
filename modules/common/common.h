@@ -8,6 +8,7 @@
 #include <iostream>
 #include "cyber/cyber.h"
 #include "common/concurrent_object_pool.h"
+#include "common/concurrent_queue.h"
 #include "common/error_code.h"
 #include "common/factory.h"
 #include "common/for_each.h"

@@ -4,9 +4,10 @@ package crdc.airi;
 
 message SocketConfig {}
 
-message FileConfig {}
-
-message CyberConfig {}
+message CyberConfig {
+  optional string file_path = 1;
+  optional string channel = 2;
+}
 
 message LidarInputConfig {
     optional string frame_id = 1;
@@ -17,8 +18,7 @@ message LidarInputConfig {
     optional int32 gps_port = 6;
     oneof input {
         SocketConfig socket_config = 11;
-        FileConfig file_config = 12;
-        CyberConfig cyber_config = 13;
+        CyberConfig cyber_config = 12;
     };
 }
 

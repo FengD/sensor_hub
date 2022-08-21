@@ -16,6 +16,11 @@ TestingCamera::~TestingCamera() {
 
 bool TestingCamera::camera_init() {
   LOG(INFO) << "[" << config_.frame_id() << "] camera input init.";
+
+  if (!config_.has_testing_config()) {
+    LOG(ERROR) << "[" << config_.frame_id() << "] without testing_config.";
+    return false;
+  }
   return true;
 }
 
@@ -33,10 +38,11 @@ bool TestingCamera::camera_stop() {
 void TestingCamera::get_data() {
   unsigned char data[10] = "1212321";
   while (1) {
-    std::shared_ptr<CameraRawData> raw_data = get_raw_data(1, get_now_microsecond(), data);
+    auto start = get_now_microsecond();
+    std::shared_ptr<CameraRawData> raw_data = get_raw_data(1, start, data);
     raw_data->data_type = "UYUV";
     raw_data_queue_.enqueue(raw_data);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000 / config_.fps()));
+    matching_fps_by_sleep(start, get_now_microsecond());
   }
 }
 

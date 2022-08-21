@@ -35,7 +35,7 @@ class Encoder {
    * @return The size of the encode data.
    */
   virtual int32_t encode(const cv::Mat& image, unsigned char** encode_buffer) {
-    AERROR << "NOT IMPLEMENTED";
+    LOG(ERROR) << "NOT IMPLEMENTED";
     return 0;
   }
 

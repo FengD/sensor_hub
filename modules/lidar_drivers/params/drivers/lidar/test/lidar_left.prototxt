@@ -1,35 +1,38 @@
 input_config {
-    name: "SocketInput"
-    pool_size: 10
+    name: "CyberInput"
+    pool_size: 25
     packet_size: 1500
-    lidar_port: 6699
-    gps_port: 7788
-    socket_config {}
+    lidar_port: 2365
+    # gps_port: 10111
+    cyber_config {
+        file_path: "/home/ding/Documents/haha/20220120111449.record.00000"
+        channel: "LIDAR_LEFT_RAW" 
+    }
 }
 
 parser_config {
-    name: "LidarParserVlp16"
+    name: "LidarParserPxt32"
     pool_size: 4
-    split_azimuth: 18000
+    split_azimuth: 0
     time_zone: 8
     max_points: 100000
     use_local_time: false
     correct_utime: false
     lidar_packet_config {
-        size: 1248
-        check_sum: 0x55AA05
-        blocks: 12
-        block_offset: 42
-        block_size: 100
-        block_check_sum: 0xFFEE
+        size: 1080
+        check_sum: 0xFFEE
+        blocks: 8
+        block_offset: 12
+        block_size: 130
+        block_check_sum: 0
         firings: 1
-        firing_offset: 4
+        firing_offset: 0
         lasers: 32
-        point_size: 3
+        point_size: 4
     }
 
     gps_packet_config {
-        size: 1248
-        check_sum: 0xA5FF005A
+        size: 512
+        check_sum: 0x5e1f
     }
 }

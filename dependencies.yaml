@@ -1,0 +1,10 @@
+packages:
+  - name: crdc_airi_apollo_cyber
+    url: http://10.10.173.10/release/crdc_airi_apollo_cyber/
+    version: apollo_cyber
+  - name: crdc_airi_common_lib
+    url: http://10.10.173.10/release/crdc_airi_common_lib/
+    version: common_lib
+  - name: tiovx_camera
+    url: http://10.10.173.10/release/tiovx_camera/
+    version: tiovx_camera

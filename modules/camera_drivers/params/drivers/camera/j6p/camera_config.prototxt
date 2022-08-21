@@ -1,0 +1,9 @@
+component_config {
+    sensor_position_id: 3
+    frame_id: "PANO_LEFT"
+    channel_name: "camera/PANO_LEFT_IMAGE"
+    # channel_encode_name: "PANO_LEFT_IMAGE_ENCODER"
+    priotiry: -15
+    name: "PANO_LEFT"
+    config_file: "params/drivers/camera/j6p/pano_left.prototxt"
+}

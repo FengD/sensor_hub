@@ -3,7 +3,6 @@ input_config {
   pool_size: 4
   height: 640
   width: 1280
-  fps: 10
   testing_config {}
 }
 

@@ -5,14 +5,16 @@
 
 #include "lidar_drivers/lidar.h"
 #include "lidar_drivers/input/socket/socket.h"
-#include "lidar_drivers/parser/velodyne/velodyne_vlp16.h"
+#include "lidar_drivers/input/cyber/cyber_input.h"
+#include "lidar_drivers/parser/PandarXT32/pandar_xt32.h"
 
 namespace crdc {
 namespace airi {
 
 REGISTER_LIDAR_INPUT(SocketInput);
+REGISTER_LIDAR_INPUT(CyberInput);
 
-REGISTER_LIDAR_PARSER(LidarParserVlp16);
+REGISTER_LIDAR_PARSER(LidarParserPxt32);
 
 }  // namespace airi
 }  // namespace crdc

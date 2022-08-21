@@ -70,6 +70,24 @@ class Camera : public common::Thread {
    */
   void init_proto_image();
 
+  /**
+   * @brief dill raw image.
+   * @param the camera raw data.
+   * @param the offset of the image data, if multipule image contained.
+   * @param the size of one image.
+   */
+  void dill_raw_image(const std::shared_ptr<const CameraRawData>& raw_data,
+                      const uint32_t& offset, const uint32_t& one_image_size);
+
+  /**
+   * @brief dill encode image.
+   * @param the camera raw data.
+   * @param the offset of the image data, if multipule image contained.
+   * @return if the treatement is correct or not.
+   */
+  bool dill_encode_image(const std::shared_ptr<const CameraRawData>& raw_data,
+                         const uint32_t& offset);
+
   std::string camera_name_;
   bool stop_;
   CameraComponentConfig config_;
@@ -86,6 +104,7 @@ class Camera : public common::Thread {
   uint32_t image_seq_;
   uint32_t encode_image_seq_;
   uint32_t sensor_position_id_;
+  cv::Mat before_encoder_rgb_;
 };
 }  // namespace airi
 }  // namespace crdc

@@ -1,0 +1,68 @@
+syntax = "proto2";
+package crdc.airi;
+
+import "header.proto";
+
+// defined by apollo
+message PointXYZIT {
+  optional float x = 1 [default = nan];
+  optional float y = 2 [default = nan];
+  optional float z = 3 [default = nan];
+  optional uint32 ring = 4 [default = 0];
+  optional float azimuth = 5 [default = nan];
+  optional float elevation = 6 [default = nan];
+  optional uint32 intensity = 7 [default = 0];
+  optional uint64 timestamp = 8 [default = 0];
+  optional uint32 semantic_flag = 9 [default = 0];
+  optional float distance = 10 [default = 0];
+}
+
+message PointCloud {
+  optional crdc.airi.Header header = 1;
+  repeated PointXYZIT point = 2;
+  optional bool is_dense = 3;
+  optional double measurement_time = 5;
+  optional uint32 width = 6;
+  optional uint32 height = 7;
+}
+
+message PointClouds {
+  optional crdc.airi.Header header = 1;
+  repeated PointCloud clouds = 2;
+}
+
+// defined by ardc airi
+message PointField {
+  enum PointFieldType {
+    INT8 = 1;
+    UINT8 = 2;
+    INT16 = 3;
+    UINT16 = 4;
+    INT32 = 5;
+    UINT32 = 6;
+    FLOAT32 = 7;
+    FLOAT64 = 8;
+  }
+
+  optional string name = 1;
+  optional PointFieldType datatype = 2;
+  optional uint32 offset = 3;
+  optional uint32 count = 4;
+}
+
+message PointCloud2 {
+  optional crdc.airi.Header header = 1;
+  repeated PointField fields = 2;
+  optional bytes data = 3;
+  optional uint32 height = 4;
+  optional uint32 width = 5;
+  optional uint32 point_step = 6;
+  optional uint32 row_step = 7;
+  optional bool is_dense = 8;
+  optional bool is_bigendian = 9;
+}
+
+message PointClouds2 {
+  optional crdc.airi.Header header = 1;
+  repeated PointCloud2 clouds = 2;
+}

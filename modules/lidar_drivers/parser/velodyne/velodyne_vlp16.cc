@@ -15,22 +15,6 @@ bool LidarParserVlp16::init_lidar_parser() {
   is_init_calib_azimuth_ = true;
   is_init_calib_elevation_ = true;
 
-  for (auto i = 0; i < config_.lidar_packet_config().lasers(); ++i) {
-    config_.mutable_lidar_packet_config()->add_calib_elevation(i);
-    config_.mutable_lidar_packet_config()->add_calib_azimuth(i);
-    config_.mutable_lidar_packet_config()->add_ring_map(i);
-  }
-
-  for (auto i = 0; i < config_.lidar_packet_config().lasers(); ++i) {
-    LidarCalibInfo ld;
-    ld.calib_azimuth_ = 0;
-    ld.offset_x_ = 0;
-    ld.elevation_cos_ = std::cos(config_.lidar_packet_config().calib_elevation(i));
-    ld.elevation_sin_ = std::sin(config_.lidar_packet_config().calib_elevation(i));
-    
-    calib_info_.emplace_back(ld);
-  }
-
   // some todo
   return true;
 }

@@ -34,12 +34,12 @@ struct LidarPoint {
   float y_ = 0;
   float z_ = 0;
   uint8_t intensity_ = 0;
-  // float distance = 0;
-  // uint64_t timestamp_ = 0;
-  // uint16_t ring_ = 0;
-  // float azimuth_ = 0;
-  // float elevation_ = 0;
-  // uint8_t semantic_flag_ = 0;
+  float distance = 0;
+  uint64_t timestamp_ = 0;
+  uint16_t ring_ = 0;
+  float azimuth_ = 0;
+  float elevation_ = 0;
+  uint8_t semantic_flag_ = 0;
   LidarPoint() {}
 };
 
@@ -168,7 +168,7 @@ class LidarParser {
    * @param azimuth in pixel
    * @return status
    */
-  virtual bool is_frame_end(const uint64_t& azimuth);
+  virtual bool is_frame_end(const uint16_t& azimuth);
 
   /**
    * @brief calculate the points data xyz
@@ -225,8 +225,8 @@ class LidarParser {
         lidar_point_[pos] = lidar_point_[pos + lidar_point_count_];
       }
     }
-    // lidar_point_[0].timestamp_ = frame_start_utime_;
-    // lidar_point_[lidar_point_count_ - 1].timestamp_ = frame_end_utime_;
+    lidar_point_[0].timestamp_ = frame_start_utime_;
+    lidar_point_[lidar_point_count_ - 1].timestamp_ = frame_end_utime_;
   }
 
   /**
