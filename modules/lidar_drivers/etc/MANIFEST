@@ -1,0 +1,51 @@
+[logging]
+# logging for lidar_drivers
+app_id = "LRD"
+app_description = "The app for lidar_drivers"
+# Off, Fatal, Error, Warn, Info, Debug, Verbose
+default_level = "Off"
+# Console, File
+log_mode = ["Console"]
+# log_path = ""
+
+[process]
+name = "lidar_drivers"
+executable = "lidar_drivers"
+# report or non-report
+executable_type = "non-report"
+function_group = "MachineState"
+
+# StateDependentStartupConfig
+[[startup_configs]]
+name = "LidarStartupConfig1"
+enter_timeout = 1.0
+exit_timeout = 1.0
+
+execution_dependencies = [
+]
+
+function_group_states = ["Startup", "Driving", "Restart", "Shutdown"]
+
+resource_group = {cpu = 0.8, memory = 100}
+
+environment_variables = [
+  {key = "EXEC_MANIFEST", value = "./etc/MANIFEST"},
+  {key = "LD_LIBRARY_PATH", value = "/usr/lib"},
+  {key = "CYBER_PATH", value = "/usr/apollo/cyber"},
+  {key = "CRDC_WS", value = "/apps/sensor_hub/lidar_drivers/"},
+]
+
+startup_options = [
+  "--alsologtostderr",
+  "true",
+  "--stderrthreshold",
+  "3",
+  "--v",
+  "0",
+  "--minloglevel",
+  "2",
+  "--log_dir",
+  "/data/log/perception/lidar_drivers/",
+  "--stop_logging_if_full_disk",
+  "true",
+]

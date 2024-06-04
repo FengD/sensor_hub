@@ -1,0 +1,35 @@
+input_config {
+    name: "SocketInput"
+    pool_size: 25
+    packet_size: 1500
+    lidar_port: 50112
+    # gps_port: 10111
+    socket_config {}
+}
+
+parser_config {
+    name: "LidarParserLds50cs"
+    pool_size: 4
+    split_azimuth: 18000
+    time_zone: 8
+    max_points: 10000
+    use_local_time: true
+    correct_utime: false
+    lidar_packet_config {
+        size: 200
+        check_sum: 0xFACE
+        blocks: 100
+        block_offset: 0
+        block_size: 2
+        block_check_sum: 0
+        firing_offset: 0
+        firings: 1
+        lasers: 1
+        point_size: 2
+    }
+
+    gps_packet_config {
+        size: 1248
+        check_sum: 0xA5FF005A
+    }
+}

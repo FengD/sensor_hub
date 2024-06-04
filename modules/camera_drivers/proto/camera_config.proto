@@ -12,16 +12,29 @@ message MaximConfig {}
 message TestingConfig {}
 
 message GstConfig {
-    optional string ip = 1;
-    optional string port = 2;
+    optional string gst_launch = 1;
 }
 
 message TiovxCongfig {
-    optional int32 num_camera = 1;
+    optional string cam_name = 1;
+    optional uint32 num_camera = 2;
+    optional uint32 csi_instance = 3;
+    optional uint32 timeout = 4;
 }
 
 message MxcConfig {
     optional int32 channel_id = 1;
+}
+
+message Ros2Config {
+    optional string channel_encode_name = 1;
+    repeated string channel_name = 2;
+    repeated string file_path = 3;
+}
+
+message CameraCyberConfig {
+    optional string channel = 1;
+    repeated string file_path = 2;
 }
 
 message CameraInputConfig {
@@ -45,7 +58,9 @@ message CameraInputConfig {
         GstConfig gst_config = 14;
         TiovxCongfig tiovx_camera_config = 15;
         MxcConfig mxc_config = 16;
+        Ros2Config ros2_config = 17;
     };
+    optional CameraCyberConfig cyber_config = 18;
 }
 
 message CameraUndistortionConfig {

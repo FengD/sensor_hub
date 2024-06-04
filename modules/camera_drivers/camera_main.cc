@@ -5,12 +5,16 @@
 
 #include <gflags/gflags.h>
 #include "common/common.h"
+#include "module_diagnose/module_diagnose.h"
 #include "camera_drivers/output/cyber_output.h"
 #include "camera_drivers/camera.h"
+#include "common/util.h"
 
 #define MODULE "CameraDriver"
-DEFINE_string(config_file, "params/drivers/camera/test/camera_config.prototxt",
+DEFINE_string(config_file, "params/drivers/camera/default/camera_config.prototxt",
               "path of config file");
+DEFINE_string(tiovx_config, "TIOVX_CONFIG", "The tiovx config file path");
+DEFINE_bool(use_product_name, true, "use product_name to splicing config_file");
 
 namespace crdc {
 namespace airi {
@@ -31,10 +35,22 @@ int main(int argc, char* argv[]) {
     common::Singleton<CameraCyberOutput>::get()->init(MODULE);
 
     CameraComponent camera_component;
-
-    std::string config = "";
-
-    config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+#ifdef WITH_TDA4
+    std::string config;
+    auto product_name = get_product_name();
+    LOG(INFO) << "[" << MODULE << "] Product name is " << product_name;
+    if (FLAGS_use_product_name) {
+        config = std::string(std::getenv("CRDC_WS")) + "/params/drivers/camera/"+
+                product_name + "/camera_config.prototxt";
+        std::string tiovx_config = std::string(std::getenv("CRDC_WS"))
+                + "/params/drivers/camera/" + product_name + "/app_multi_cam.cfg";
+        set_env(FLAGS_tiovx_config, tiovx_config);
+    } else {
+        config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+    }
+#else
+    std::string config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+#endif
     LOG(INFO) << "[CAMERA_MAIN] Use proto config: " << config;
 
     if (!crdc::airi::util::is_path_exists(config)) {
@@ -60,7 +76,15 @@ int main(int argc, char* argv[]) {
     }
 
     LOG(INFO) << "[CAMERA_MAIN] camera_driver started.";
+
+    common::Singleton<ModuleDiagnose>::get()->init(MODULE, "CAMERA_DIAGNOSE");
+    common::Singleton<ModuleDiagnose>::get()->set_period_usec(100000);
+    common::Singleton<ModuleDiagnose>::get()->set_ready();
+    common::Singleton<ModuleDiagnose>::get()->start();
+    LOG(INFO) << "[CAMERA_MAIN] camera module_diagnose started.";
+
     apollo::cyber::WaitForShutdown();
+    common::Singleton<ModuleDiagnose>::get()->stop();
     for (const auto& camera : cameras) {
         camera->stop();
     }

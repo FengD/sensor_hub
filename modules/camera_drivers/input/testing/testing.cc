@@ -41,6 +41,7 @@ void TestingCamera::get_data() {
     auto start = get_now_microsecond();
     std::shared_ptr<CameraRawData> raw_data = get_raw_data(1, start, data);
     raw_data->data_type = "UYUV";
+    raw_data->data_size = 10;
     raw_data_queue_.enqueue(raw_data);
     matching_fps_by_sleep(start, get_now_microsecond());
   }

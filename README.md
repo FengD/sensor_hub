@@ -1,16 +1,56 @@
 # SENSOR_HUB
 
-This project is named `sensor_hub` which could be used for sensor app layer.
+## Description
 
-## 1. BUILD
+* This project is named `sensor_hub` which could be used for sensor app layer.
 
-``` shell
-# build 
-./build.sh
+``` mindmap
 
-# build help menu
+# SensorHub
+## CameraDriver
+### Input
+#### Gstreamer
+#### Mxc
+#### ROS2Topic
+#### Openvx/tiovx 
+### Decoder
+### Encoder
+#### opencv
+#### h264
+#### turbo_jpeg
+## LidarDriver
+### Input
+#### Cyber
+#### PCAP
+#### ROS2
+#### Socket
+### Parser
+#### Innovusion-Falcon
+#### Innoviz-pro/one
+#### Hesai-pandar40,XT32
+#### Robosense-Ruby
+#### Velodyne-16
+#### Arbe(Imaging radar cloud)
+## RadarDriver
+## ChassisDriver
+## InsDriver
+
+```
+
+## 1. Build
+
+* Set env for different platform
+`export PLATFORM=X86`  `export TAG=1804`  `export TAG=AFRED` for X86
+`export PLATFORM=TDA4` `export TAG=0703_HI`  `export TAG=AFRED` for TDA4
+
+`./build.sh` build the project.
+`./build.sh clean` clean the build.
+run `./build.sh help` to see the details.
+
+### 1.1. help menu
 ./build.sh help
 
+```
 Usage:
     ./build.sh [OPTION]
 
@@ -19,29 +59,28 @@ Options:
     build: run the code build
     clean: clean the code build
     cov: run the code test coverage
-    check_code: check code qulity
-    help: help menu
+    check_code [param]: check code qulity param 'help' for check_code param list
 ```
 
-### 1.1. Multi-platform Support
-`export PLATFORM=TDA4` for TDA4 camera input 
-`export PLATFORM=A6` for A6 camera input 
-`export PLATFORM=X86` for IPC camera input
-# set env (Eg. TDA4 platform, A6, X86)
-export PLATFORM=TDA4
-# get dependencies(Eg, 0703,0702 for tda4, 1804,1604 for x86, "" for a6)
-export TAG=0703
 
 ### 1.2. CodeCheck
+* use `./build.sh check_code run` first to verify if all check passed!
 ``` shell
 function check_code() {
-    wget http://10.10.173.10/release/code_check_tools/code_check_tools.tar.gz
+    wget http://airi-server-4010.hirain.local/release/code_check_tools/code_check_tools.tar.gz
     tar -zxvf code_check_tools.tar.gz
     chmod -R +x code_check_tools
     export WORKSPACE=${WS}
-    export CODE_CHECK_EXCLUDE_LIST="3rdparty"
-    ./code_check_tools/code_check.sh run
-    rm -rf code_check_tools.tar.gz code_check_tools
+    export CODE_CHECK_EXCLUDE_LIST="3rdparty,tools,gstcamera,test"
+    echo -e "${RED}exclude list: $CODE_CHECK_EXCLUDE_LIST ${NO_COLOR}"
+    ./code_check_tools/code_check.sh $param
+    if [ $? -eq 0 ]; then
+        rm -rf code_check_tools.tar.gz code_check_tools
+        exit 0
+    else
+        rm -rf code_check_tools.tar.gz code_check_tools
+        exit 1
+    fi
 }
 ```
 
@@ -50,7 +89,7 @@ function check_code() {
 function get_dependencies() {
     echo "get-dependencies"
     mkdir -p build/modules
-    wget http://10.10.173.10/share/pkgs/get-dependencies.py
+    wget http://airi-server-4010.hirain.local/share/pkgs/get-dependencies.py
     python get-dependencies.py
     rm -rf get-dependencies.py
 }
@@ -74,6 +113,25 @@ link_directories(
 )
 ```
 
+### 1.4. Coverage check
+``` shell
+function gen_coverage() {
+  export LD_LIBRARY_PATH=${WS}/build/modules/crdc_airi_common/lib/
+  cd ${WS}
+  rm -rf cov
+  mkdir -p cov
+  lcov -d ./build -z
+  cd build
+  ctest
+  cd ${WS}
+  lcov -d ./build -b modules --no-external --rc lcov_branch_coverage=1  -c -o cov/raw_coverage.info
+  lcov -r cov/raw_coverage.info "*test*" -o cov/drivers.info --rc lcov_branch_coverage=1 'build/*'
+}
+```
+
+## Release
+* If the build successed, all the release are in the `build_dist` folder.
+
 ## EXECUTE
 
 ``` shell
@@ -86,21 +144,3 @@ execute_imu_drivers.sh
 
 ```
 
-## DEPENDENCIES
-1. [crdc_airi_apollo_cyber](http://10.10.173.10/release/crdc_airi_apollo_cyber/)
-2. [crdc_airi_common_lib](http://10.10.173.10/release/crdc_airi_common_lib/)
-3. [tiovx_camera](http://10.10.173.10/release/tiovx_camera/)
-* Details in [dependencies.yaml](dependencies.yaml)
-
-```
-packages:
-  - name: crdc_airi_apollo_cyber
-    url: http://10.10.173.10/release/crdc_airi_apollo_cyber/
-    version: 69773acd93c88b33eab1ba2aff1af5bc629d87e3
-  - name: crdc_airi_common_lib
-    url: http://10.10.173.10/release/crdc_airi_common_lib/
-    version: 0e86b49a547db1a7c00babc4ef486442fa24b120
-  - name: tiovx_camera
-    url: http://10.10.173.10/release/tiovx_camera/
-    version: tiovx_camera
-```

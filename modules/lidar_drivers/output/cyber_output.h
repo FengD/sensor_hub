@@ -40,7 +40,7 @@ class LidarCyberOutput {
     CHECK(node_);
     cloud_writer_ptr_.reset(new ChannelWriter<PointCloud2>(node_));
     packets_writer_ptr_.reset(new ChannelWriter<Packets>(node_));
-    fusion_clouds_writer_ptr_ = node_->CreateWriter<PointClouds2>("MERGE_CLOUD");
+    fusion_clouds_writer_ptr_.reset(new ChannelWriter<PointClouds2>(node_));
     return true;
   }
 
@@ -67,11 +67,11 @@ class LidarCyberOutput {
    * @param the cloud list
    * @return status
    */
-  bool write_fusion_clouds(const std::shared_ptr<PointClouds2>& clouds) {
+  bool write_fusion_clouds(const std::string& topic, const std::shared_ptr<PointClouds2>& clouds) {
     clouds->mutable_header()->set_module_name("LidarDriver");
     clouds->mutable_header()->set_timestamp_sec(
                 static_cast<double>(get_now_microsecond()) / 1000000);
-    return fusion_clouds_writer_ptr_->Write(clouds);
+    return fusion_clouds_writer_ptr_->write(topic, clouds);
   }
 
   /**
@@ -108,7 +108,7 @@ class LidarCyberOutput {
   std::shared_ptr<apollo::cyber::Node> node_;
   std::shared_ptr<ChannelWriter<PointCloud2>> cloud_writer_ptr_;
   std::shared_ptr<ChannelWriter<Packets>> packets_writer_ptr_;
-  std::shared_ptr<apollo::cyber::Writer<PointClouds2>> fusion_clouds_writer_ptr_;
+  std::shared_ptr<ChannelWriter<PointClouds2>> fusion_clouds_writer_ptr_;
 };
 
 }  // namespace airi

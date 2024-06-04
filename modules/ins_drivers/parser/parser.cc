@@ -13,7 +13,7 @@
 namespace crdc {
 namespace airi {
 
-bool InsParser::init(const ParserConfig& config) {
+bool InsParser::init(const InsParserConfig& config) {
   config_ = config;
   time_zone_microseconds_ = int64_t(config_.time_zone()) * 3600 * 1000000;
 
@@ -41,13 +41,19 @@ bool InsParser::init_pool() {
       return false;
     }
 
-    std::cout << "init pool in loop: " << i << std::endl;
+    LOG(INFO) << "init pool in loop: " << i << std::endl;
     ins_data->proto_ins_data_ = std::make_shared<Ins>();
+#ifdef WITH_ROS2
+    ins_data->proto_ins_data_->header.frame_id = config_.frame_id();
+    ins_data->proto_ins_data_->linear_velocity.x = 0;
+    ins_data->proto_ins_data_->linear_velocity.y = 0;
+    ins_data->proto_ins_data_->linear_velocity.z = 0;
+#else
     ins_data->proto_ins_data_->mutable_header()->set_frame_id(config_.frame_id());
     ins_data->proto_ins_data_->mutable_linear_velocity()->set_x(0);
     ins_data->proto_ins_data_->mutable_linear_velocity()->set_y(0);
     ins_data->proto_ins_data_->mutable_linear_velocity()->set_z(0);
-
+#endif
     temp_ins_data_pool.emplace_back(ins_data);
   }
 
@@ -56,9 +62,14 @@ bool InsParser::init_pool() {
 }
 
 bool InsParser::is_ins_packet_valid(const Packet* packet) {
-  if (packet->size() != config_.ins_packet_config().size()) {
+#ifdef WITH_ROS2
+  auto packet_size = packet->size;
+#else
+  auto packet_size = packet->size();
+#endif
+  if (packet_size != config_.ins_packet_config().size()) {
     LOG(ERROR) << "[" << config_.frame_id() << "] packet size "
-               << packet->size() << " wrong "
+               << packet_size << " wrong "
                << config_.ins_packet_config().size();
     return false;
   }
@@ -80,15 +91,20 @@ bool InsParser::is_ins_packet_valid(const Packet* packet) {
 uint64_t InsParser::get_timestamp(const Packet* packet) {
   device_timestamp_ = get_packet_timestamp(packet);
   auto timestamp = device_timestamp_;
-  auto diff = packet->time_system() > timestamp
-                  ? packet->time_system() - timestamp
-                  : timestamp - packet->time_system();
+#ifdef WITH_ROS2
+  auto time_system = packet->time_system;
+#else
+  auto time_system = packet->time_system();
+#endif
+  auto diff = time_system > timestamp
+                  ? time_system - timestamp
+                  : timestamp - time_system;
   if (config_.correct_utime() && diff > TIME_DIFF_SHREHOLD) {
     LOG_EVERY_N(ERROR, 100)
         << "[" << config_.frame_id()
         << "] got unexpected device time: " << device_timestamp_
-        << ", override with system utime: " << packet->time_system();
-    timestamp = packet->time_system();
+        << ", override with system utime: " << time_system;
+    timestamp = time_system;
   }
 
   return timestamp;
@@ -108,7 +124,11 @@ bool InsParser::parse_ins_packet(const Packet* packet,
     return false;
   }
 
+#ifdef WITH_ROS2
+  parse_ins_can_frame(reinterpret_cast<char *>(const_cast<unsigned char*>(packet->data.data())));
+#else
   parse_ins_can_frame(const_cast<char*>(packet->data().data()));
+#endif
   *ins_data = ins_data_;
   ret = true;
 

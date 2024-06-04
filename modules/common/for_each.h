@@ -6,7 +6,11 @@
 #pragma once
 
 #include <type_traits>
-#include "common/common.h"
+#ifndef WITH_ROS2
+#include "cyber/cyber.h"
+#else
+#include "common/macros.h"
+#endif
 
 namespace crdc {
 namespace airi {

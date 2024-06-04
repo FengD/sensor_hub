@@ -1,0 +1,86 @@
+<!--
+    Interface version = 1.0.4
+    All res of trigger/set/get method are unsigend int, and 1:Success 2:Failed
+    Timeout is 5s, server must finish the callback in 5s, other than the client will get a default return value
+-->
+
+<node>
+    <interface name="hirain.diag.ai">
+
+        <method name="triggerCalibration">
+            <!-- 1:Static, 2:Dynamic -->
+            <arg name="type" type="u" direction="in"/>
+            <arg name="param" type="ay" direction="in"/>
+            <arg name="res" type="u" direction="out"/>
+        </method>
+
+        <method name="getCalibrationStatus">
+            <!-- 1:Uncalibrated, 2:Under Calibration, 3:Calibration Success, 4:Calibration Failed -->
+            <arg name="state" type="u" direction="out"/>
+        </method>
+
+        <method name="getCalibrationFilePath">
+            <arg name="path" type="s" direction="out"/>
+        </method>
+
+    </interface>
+
+    <interface name="hirain.diag.radar">
+
+        <method name="triggerCalibration">
+            <!-- 1:Front, 2:Rear -->
+            <arg name="location" type="u" direction="in"/>
+            <!-- 1:Static, 2:Dynamic -->
+            <arg name="type" type="u" direction="in"/>
+            <arg name="res" type="u" direction="out"/>
+        </method>
+
+        <method name="getCalibrationStatus">
+            <!-- 1:Front, 2:Rear -->
+            <arg name="location" type="u" direction="in"/>
+            <!-- 1:Uncalibrated, 2:Under Calibration, 3:Calibration Success, 4:Calibration Failed -->
+            <arg name="state" type="u" direction="out"/>
+        </method>
+
+        <method name="setCalibrationParams">
+            <!-- 1:Front, 2:Rear -->
+            <arg name="location" type="u" direction="in"/>
+            <arg name="x" type="u" direction="in"/>
+            <arg name="y" type="u" direction="in"/>
+            <arg name="z" type="u" direction="in"/>
+            <arg name="hAngle" type="u" direction="in"/>
+            <arg name="vAngle" type="u" direction="in"/>
+            <arg name="rAngle" type="u" direction="in"/>
+            <arg name="res" type="u" direction="out"/>
+        </method>
+
+        <method name="getCalibrationParams">
+            <!-- 1:Front, 2:Rear -->
+            <arg name="location" type="u" direction="in"/>
+            <arg name="res" type="u" direction="out"/>
+            <arg name="x" type="u" direction="out"/>
+            <arg name="y" type="u" direction="out"/>
+            <arg name="z" type="u" direction="out"/>
+            <arg name="hAngle" type="u" direction="out"/>
+            <arg name="vAngle" type="u" direction="out"/>
+            <arg name="rAngle" type="u" direction="out"/>
+        </method>
+
+    </interface>
+
+    <interface name="hirain.diag.autoDrive">
+
+        <method name="setCalibrationParam">
+            <arg name="serializedParam" type="ay" direction="in"/>
+            <arg name="res" type="u" direction="out"/>
+        </method>
+
+        <method name="getCalibrationParam">
+            <arg name="paramsType" type="u" direction="in"/>
+            <arg name="res" type="u" direction="out"/>
+            <arg name="serializedParam" type="ay" direction="out"/>
+        </method>
+
+    </interface>
+
+</node>

@@ -1,0 +1,21 @@
+input_config {
+  name: "GstCamera"
+  pool_size: 4
+  height: 1072
+  width: 1920
+  fps: 10
+  gst_config {
+    gst_launch: 'udpsrc port=1000 ! application/x-rtp,encoding-name=JPEG ! rtpjpegdepay'
+  }
+}
+
+undistortion_config {
+  name: "CvUndistortion"
+}
+
+encoder_config {
+  name: "CvEncoder"
+  cv_encoder_config {
+    quality: 1
+  }
+}

@@ -7,10 +7,23 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 #include "common/common.h"
+#include "ins_drivers/proto/ins_config.pb.h"
+#ifdef WITH_ROS2
+#include "sensor_msg/msg/packet.hpp"
+#include "sensor_msg/msg/packets.hpp"
+#include "sensor_msg/msg/ins.hpp"
+#else
 #include "cyber/sensor_proto/eth_packet.pb.h"
 #include "cyber/sensor_proto/ins.pb.h"
-#include "ins_drivers/proto/ins_config.pb.h"
+#endif
+
+#ifdef WITH_ROS2
+using Ins = sensor_msg::msg::Ins;
+using Packet = sensor_msg::msg::Packet;
+using Packets = sensor_msg::msg::Packets;
+#endif
 
 namespace crdc {
 namespace airi {
@@ -41,7 +54,7 @@ class InsParser {
    * @param The ins input config.
    * @return status
    */
-  virtual bool init(const ParserConfig& config);
+  virtual bool init(const InsParserConfig& config);
 
   /**
    * @brief Parser the ins packet to ins_data
@@ -51,6 +64,7 @@ class InsParser {
    */
   virtual bool parse_ins_packet(const Packet* packet,
                                 std::shared_ptr<InsData>* ins_data);
+  virtual std::string get_name() const = 0;
 
  protected:
   /**
@@ -77,7 +91,7 @@ class InsParser {
    * @brief If there is some other info in the packet
    * @param The input raw ethernet packet
    */
-  virtual void parse_ins_other_info(const Packet* packet) {}
+  // virtual void parse_ins_other_info(const Packet* packet) {}
 
   /**
    * @brief parse the timestamp in the packets, need to be redefined
@@ -129,7 +143,7 @@ class InsParser {
     return true;
   }
 
-  ParserConfig config_;
+  InsParserConfig config_;
   int64_t time_zone_microseconds_;
 
   std::shared_ptr<common::CCObjectPool<InsData>> ins_data_pool_ = nullptr;

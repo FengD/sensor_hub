@@ -1,0 +1,12 @@
+component_config {
+    sensor_position_id: 1
+    frame_id: "TDA4_AR0233"
+    channel_name: "camera/V200_J6P10_Camera5"
+    # channel_encode_name: "camera/V200_J6P10_Camera5_CV_ENCODER"
+    priority: -15
+    name: "TDA4_AR0233"
+    diagnose_begin_count: 30
+    diagnose_end_count: 40
+    config_file: "params/drivers/camera/HE00-1/ar0233_5chs.prototxt"
+    diagnose_config_file: "params/drivers/camera/HE00-1/camera_diagnose_config.prototxt"
+}

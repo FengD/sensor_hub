@@ -3,6 +3,7 @@
 // Author: shichong.wang
 // Description: ins parser for asensing ins570d device
 
+#include <arpa/inet.h>
 #include "ins_drivers/parser/asensing_ins570d/asensing_ins570d.h"
 
 namespace crdc {
@@ -46,7 +47,7 @@ InsParser570d::InsParser570d() {
   // startbit, length, factor,  offset, max, min, type, is_unsigned
   // 0x500
   const double ACC_X_signal_[8] = {7, 16, 0.0001220703125, -4, 4, -4, 0, 1};
-  const double ACC_Y_signal_[8] = {23, 16, 0.0001220703125, -4, 4, -4, 1, 1};
+  const double ACC_Y_signal_[8] = {23, 16, 0.0001220703125, -4, 4, -4, 0, 1};
   const double ACC_Z_signal_[8] = {39, 16, 0.0001220703125, -4, 4, -4, 0, 1};
   // 0x501
   const double GYR0_X_signal_[8] = {7, 16, 0.0076293, -250, 250, -250, 0, 1};
@@ -119,7 +120,7 @@ InsParser570d::InsParser570d() {
 
 bool InsParser570d::init_ins_parser() { return true; }
 
-uint64_t InsParser570d::get_packet_timestamp(const Packet* packet) { return 1; }
+uint64_t InsParser570d::get_packet_timestamp(const Packet* packet) { (void)packet; return 1; }
 
 double InsParser570d::unpack_ins_signal(InsSignal s, uint8_t* data) {
   // --------------- START Unpacking Signal ------------------
@@ -268,6 +269,35 @@ void InsParser570d::parse_ins_can_frame(char* can_frame_) {
     parse_ins_can_frame_to_struct(&can_frame, &can_signal_ins570d);
   }
 
+#ifdef WITH_ROS2
+  auto& linear_velocity = ins_data_->proto_ins_data_->linear_velocity;
+  linear_velocity.x = static_cast<double>(can_signal_ins570d.INS_EastSpd);
+  linear_velocity.y = static_cast<double>(can_signal_ins570d.INS_NorthSpd);
+  linear_velocity.z =
+      static_cast<double>(can_signal_ins570d.INS_ToGroundSpd);
+
+  auto& position = ins_data_->proto_ins_data_->position;
+  position.lon = static_cast<double>(can_signal_ins570d.INS_Longitude);
+  position.lat = static_cast<double>(can_signal_ins570d.INS_Latitude);
+  position.height = static_cast<double>(can_signal_ins570d.INS_LocatHeight);
+
+  auto& euler_angles = ins_data_->proto_ins_data_->euler_angles;
+  euler_angles.x = static_cast<double>(can_signal_ins570d.INS_RollAngle);
+  euler_angles.y = static_cast<double>(can_signal_ins570d.INS_PitchAngle);
+  euler_angles.z = static_cast<double>(can_signal_ins570d.INS_HeadingAngle);
+
+  auto& angular_velocity =
+      ins_data_->proto_ins_data_->angular_velocity;
+  angular_velocity.x = static_cast<double>(can_signal_ins570d.GYR0_X);
+  angular_velocity.y = static_cast<double>(can_signal_ins570d.GYR0_Y);
+  angular_velocity.z = static_cast<double>(can_signal_ins570d.GYR0_Z);
+
+  auto& linear_acceleration =
+      ins_data_->proto_ins_data_->linear_acceleration;
+  linear_acceleration.x = static_cast<double>(can_signal_ins570d.ACC_X);
+  linear_acceleration.y = static_cast<double>(can_signal_ins570d.ACC_Y);
+  linear_acceleration.z = static_cast<double>(can_signal_ins570d.ACC_Z);
+#else
   auto linear_velocity = ins_data_->proto_ins_data_->mutable_linear_velocity();
   linear_velocity->set_x(static_cast<double>(can_signal_ins570d.INS_EastSpd));
   linear_velocity->set_y(static_cast<double>(can_signal_ins570d.INS_NorthSpd));
@@ -299,6 +329,7 @@ void InsParser570d::parse_ins_can_frame(char* can_frame_) {
   linear_acceleration->set_x(static_cast<double>(can_signal_ins570d.ACC_X));
   linear_acceleration->set_y(static_cast<double>(can_signal_ins570d.ACC_Y));
   linear_acceleration->set_z(static_cast<double>(can_signal_ins570d.ACC_Z));
+#endif
 }
 
 }  // namespace airi

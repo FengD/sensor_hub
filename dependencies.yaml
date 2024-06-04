@@ -1,10 +1,19 @@
 packages:
-  - name: crdc_airi_apollo_cyber
-    url: http://10.10.173.10/release/crdc_airi_apollo_cyber/
-    version: apollo_cyber
   - name: crdc_airi_common_lib
-    url: http://10.10.173.10/release/crdc_airi_common_lib/
-    version: common_lib
-  - name: tiovx_camera
-    url: http://10.10.173.10/release/tiovx_camera/
-    version: tiovx_camera
+    url: http://airi-server-4010.hirain.local/release/crdc_airi_common_lib/
+    version: v2.42.2
+
+  - name: crdc_airi_perception_algorithm_lib/
+    url: http://airi-server-4010.hirain.local/release/crdc_airi_perception_algorithm_lib/
+    version: v2.1.0
+
+  - name: perception_tiovx_pipelines
+    url: http://airi-server-4010.hirain.local/release/crdc_airi_perception_tiovx_pipelines/
+    version: v1.41.0
+
+  - name: vehicle_configuration
+    url: http://airi-server-4010.hirain.local/release/crdc_airi_vehicle_config/
+    version: v1.32.0
+    no_tag: true
+    no_platform: true
+#    is_in_build_dist: true

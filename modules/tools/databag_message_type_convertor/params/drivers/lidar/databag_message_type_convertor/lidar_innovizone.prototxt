@@ -1,0 +1,35 @@
+input_config {
+    name: "SocketInput"
+    pool_size: 8
+    packet_size: 30000
+    lidar_port: 9101
+    # gps_port: 7766
+    socket_config {}
+}
+
+parser_config {
+    name: "LidarParserInnovizone"
+    pool_size: 4
+    split_azimuth: 18000
+    time_zone: 8
+    max_points: 307200
+    use_local_time: false
+    correct_utime: true
+    lidar_packet_config {
+        size: 23000
+        check_sum: 0xBABE
+        blocks: 24000
+        block_offset: 16
+        block_size: 120
+        block_check_sum: 0
+        firing_offset: 0
+        firings: 1
+        lasers: 1
+        point_size: 4
+    }
+
+    gps_packet_config {
+        size: 1248
+        check_sum: 0xA5FF005A
+    }
+}

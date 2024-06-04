@@ -1,0 +1,21 @@
+input_config {
+    name: "InsPcapInput"
+    pool_size: 110
+    packet_size: 261
+    ins_port: 55018
+    pcap_config {
+        file_path: "ins_someip_2.pcap"
+        channel: "INS_DATA_RAW" 
+    }
+}
+
+parser_config {
+    name: "InsParserPcap"
+    pool_size: 4
+    time_zone: 8
+    use_local_time: false
+    correct_utime: false
+    ins_packet_config {
+        size: 261
+    }
+}

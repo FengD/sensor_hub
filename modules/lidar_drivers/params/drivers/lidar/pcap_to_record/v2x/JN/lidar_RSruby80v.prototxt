@@ -1,0 +1,40 @@
+input_config {
+    name: "PcapInput"
+    pool_size: 45
+    packet_size: 1500
+    lidar_port: 6699
+    # gps_port: 10111
+    pcap_config {
+        file_path: "/data_local/A0102I.pcap"
+        source_ip_str: "192.168.1.200"
+        read_fast: false
+        packet_rate: 100
+    }
+}
+
+parser_config {
+    name: "LidarParserRSRuby"
+    pool_size: 4
+    split_azimuth: 0
+    time_zone: 8
+    max_points: 288000
+    use_local_time: true
+    correct_utime: false
+    lidar_packet_config {
+        size: 1248
+        check_sum: 0xAA55
+        blocks: 4
+        block_offset: 80
+        block_size: 244
+        block_check_sum: 0xD1FE
+        firings: 1
+        firing_offset: 0
+        lasers: 80
+        point_size: 3
+    }
+
+    gps_packet_config {
+        size: 512
+        check_sum: 0x5e1f
+    }
+}

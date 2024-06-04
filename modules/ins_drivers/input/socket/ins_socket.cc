@@ -105,9 +105,13 @@ int32_t InsSocketInput::get_ins_data(Packet** packet) {
         LOG(ERROR) << "[" << config_.frame_id() << "] failed to get raw packet.";
         return DeviceStatus::GET_RAW_PACKET_ERROR;
       }
-
+#ifdef WITH_ROS2
+      raw_packet->data.resize(config_.packet_size());
+      unsigned char *data_buf = raw_packet->data.data();
+#else
       raw_packet->mutable_data()->resize(config_.packet_size());
       char *data_buf = const_cast<char*>(raw_packet->mutable_data()->data());
+#endif
       ssize_t receive_size = recvfrom(poll_fds_[i].fd, reinterpret_cast<void *>(data_buf),
                                       config_.packet_size(), 0, nullptr, nullptr);
 
@@ -116,10 +120,17 @@ int32_t InsSocketInput::get_ins_data(Packet** packet) {
         packet_cur_index_--;
         continue;
       }
+#ifdef WITH_ROS2
+      raw_packet->data.resize(receive_size);
+      raw_packet->size = receive_size;
+      raw_packet->port = ports_[i];
+      raw_packet->time_system = get_now_microsecond();
+#else
       raw_packet->mutable_data()->resize(receive_size);
       raw_packet->set_size(receive_size);
       raw_packet->set_port(ports_[i]);
       raw_packet->set_time_system(get_now_microsecond());
+#endif
       *packet = raw_packet;
       return DeviceStatus::SUCCESS;
     }

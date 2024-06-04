@@ -12,22 +12,28 @@ bool CyberInput::init(const LidarInputConfig& config) {
   config_ = config;
 
   if (!config_.has_cyber_config()) {
-    AERROR << "[" << config_.frame_id() << "] " << "has no cyber input config";
+    LOG(ERROR) << "[" << config_.frame_id() << "] " << "has no cyber input config";
     return false;
   }
 
-  reader_ = std::make_shared<RecordReader>(config_.cyber_config().file_path());
+  if (config_.cyber_config().file_path().size() == 0) {
+    LOG(FATAL) << "No cyber record file given!";
+  }
+
+  file_index_ = 0;
+  sleeptime_ = config_.cyber_config().sleeptime();
+  reader_ = std::make_shared<RecordReader>(config_.cyber_config().file_path(file_index_));
   const auto &type = reader_->GetMessageType(config_.cyber_config().channel());
   if (!type.empty()) {
     CHECK_EQ(type, "crdc.airi.Packets");
   } else {
-    AERROR << "[" << config_.frame_id() << "] "
+    LOG(ERROR) << "[" << config_.frame_id() << "] "
            << "Failed to get message type for " << config_.cyber_config().channel();
     return false;
   }
 
   if (!init_pool()) {
-    AERROR << "[" << config_.frame_id() << "] " << "Failed to init raw data pool";
+    LOG(ERROR) << "[" << config_.frame_id() << "] " << "Failed to init raw data pool";
     return false;
   }
 
@@ -47,7 +53,14 @@ int CyberInput::get_lidar_data(Packet** packet) {
       }
     }
     if (proto_packets_.packet_size() == 0 || cur_index_ >= proto_packets_.packet_size()) {
-      AERROR << "[" << config_.frame_id() << "] " << "failed to get cyber message";
+      LOG(ERROR) << "[" << config_.frame_id() << "] " << "failed to get cyber message";
+      file_index_++;
+      if (file_index_ < config_.cyber_config().file_path().size()) {
+        reader_ = std::make_shared<RecordReader>(config_.cyber_config().file_path(file_index_));
+        LOG(ERROR) << "[INPUT_PACKET] " << config_.cyber_config().file_path(file_index_);
+      } else {
+        LOG(FATAL) << "Read Cyber Files Finished!";
+      }
       return DeviceStatus::FAILED_GET_CYBER_MESSAGE;
     }
   }
@@ -55,12 +68,12 @@ int CyberInput::get_lidar_data(Packet** packet) {
   if (cur_index_ < proto_packets_.packet_size()) {
     Packet* raw_packet = get_raw_packet();
     if (!raw_packet) {
-      AERROR << "[" << config_.frame_id() << "] " << "failed to get raw packet";
+      LOG(ERROR) << "[" << config_.frame_id() << "] " << "failed to get raw packet";
       return DeviceStatus::GET_RAW_PACKET_ERROR;
     }
     *raw_packet = proto_packets_.packet(cur_index_++);
     *packet = raw_packet;
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    std::this_thread::sleep_for(std::chrono::microseconds(sleeptime_));
     return DeviceStatus::SUCCESS;
   }
 

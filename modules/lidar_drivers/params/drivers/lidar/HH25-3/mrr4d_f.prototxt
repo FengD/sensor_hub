@@ -1,0 +1,31 @@
+input_config {
+    name: "SocketInput"
+    pool_size: 25
+    packet_size: 1400
+    lidar_port: 44000
+    control_config {
+        port: 44005
+        ip: "192.168.5.153"
+        mode: "4d"
+        range_type: "Mid"
+    }
+    socket_config {}
+}
+
+parser_config {
+    name: "RadarParserPhoenixA0"
+    pool_size: 4
+    max_points: 300000
+    use_local_time: false
+    correct_utime: false
+    lidar_packet_config {
+        size: 1400
+        check_sum: 0xA55A
+        data_type: 0x0D
+        blocks: 1
+        block_offset: 44
+        block_size: 226
+        point_size: 7
+        lasers: 1
+    }
+}

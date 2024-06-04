@@ -8,6 +8,9 @@
 #include "camera_drivers/encoder/turbo_encoder/turbo_encoder.h"
 #include "camera_drivers/undistortion/cv/cv_undistortion.h"
 #include "camera_drivers/input/testing/testing.h"
+#ifdef WITH_ROS2
+#include "camera_drivers/input/ros2/ros2_input.h"
+#endif
 
 #ifdef WITH_A6
 #include "camera_drivers/input/mxc/mxc.h"
@@ -18,6 +21,7 @@
 #endif
 
 #ifdef WITH_TDA4
+#include "camera_drivers/encoder/h264_encoder/h264_encoder.h"
 #include "camera_drivers/input/tiovx_camera/tiovx_camera.h"
 #endif
 
@@ -31,12 +35,16 @@ REGISTER_UNDISTORTION(CvUndistortion);
 REGISTER_UNDISTORTION(Undistortion);
 
 REGISTER_CAMERA_INPUT(TestingCamera);
+#ifdef WITH_ROS2
+REGISTER_CAMERA_INPUT(Ros2Input);
+#endif
 
 #ifdef WITH_IPC
 REGISTER_CAMERA_INPUT(GstCamera);
 #endif
 
 #ifdef WITH_TDA4
+REGISTER_ENCODER(H264Encoder);
 REGISTER_CAMERA_INPUT(TiovxCamera);
 #endif
 

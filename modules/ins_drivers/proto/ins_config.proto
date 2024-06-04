@@ -6,27 +6,35 @@ message InsSocketConfig {}
 
 message FileConfig {}
 
-message CyberConfig {}
+message InsCyberConfig {
+    optional string channel = 1;
+    repeated string file_path = 2;
+}
 
+message InsPcapConfig {
+    optional string channel = 1;
+    optional string file_path = 2;
+}
 message InsInputConfig {
     optional string frame_id = 1;
     optional string name = 2;
     optional int32 pool_size = 3;
     optional int32 packet_size = 4;
-    optional int32 ins_port = 5;
+    optional uint32 ins_port = 5;
     oneof input {
         InsSocketConfig ins_socket_config = 11;
         FileConfig file_config = 12;
-        CyberConfig cyber_config = 13;
+        InsCyberConfig cyber_config = 13;
+        InsPcapConfig pcap_config = 14;
     };
 }
 
 message InsPacketConfig {
-    optional int32 size = 1;
+    optional uint32 size = 1;
     optional int32 check_sum = 2;
 }
 
-message ParserConfig {
+message InsParserConfig {
     optional string frame_id = 1;
     optional string name = 2;
     optional int32 pool_size = 3;
@@ -38,5 +46,5 @@ message ParserConfig {
 
 message InsConfig {
     optional InsInputConfig input_config = 1;
-    optional ParserConfig parser_config = 2;
+    optional InsParserConfig parser_config = 2;
 }

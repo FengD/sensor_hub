@@ -5,12 +5,14 @@
 
 #include <gflags/gflags.h>
 #include "common/common.h"
-#include "lidar_drivers/output/cyber_output.h"
-#include "lidar_drivers/lidar.h"
+#include "module_diagnose/module_diagnose.h"
+#include "lidar_drivers/lidar_fusion.h"
+#include "common/util.h"
 
 #define MODULE "LidarDriver"
 DEFINE_string(config_file, "params/drivers/lidar/test/lidar_config.prototxt",
               "path of config file");
+DEFINE_bool(use_product_name, true, "use product_name to splicing config_file");
 
 namespace crdc {
 namespace airi {
@@ -31,10 +33,20 @@ int main(int argc, char* argv[]) {
     common::Singleton<LidarCyberOutput>::get()->init(MODULE);
 
     LidarComponent lidar_component;
-
-    std::string config = "";
-
-    config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+#ifdef WITH_TDA4
+    std::string config;
+    auto product_name = get_product_name();
+    LOG(INFO) << "[" << MODULE << "] Product name is " << product_name;
+    if (FLAGS_use_product_name) {
+      config = std::string(std::getenv("CRDC_WS")) + "/params/drivers/lidar/" +
+                product_name + "/lidar_config.prototxt";
+    } else {
+      config = std::string(std::getenv("CRDC_WS")) + "/" +
+                FLAGS_config_file;
+    }
+#else
+    std::string config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+#endif
     LOG(INFO) << "[LIDAR_MAIN] Use proto config: " << config;
 
     if (!crdc::airi::util::is_path_exists(config)) {
@@ -49,33 +61,28 @@ int main(int argc, char* argv[]) {
 
     LOG(INFO) << lidar_component.DebugString();
 
-    std::vector<std::shared_ptr<crdc::airi::Lidar>> lidars;
-    for (const auto& config : lidar_component.component_config()) {
-        std::shared_ptr<crdc::airi::Lidar> lidar = std::make_shared<crdc::airi::Lidar>(config);
-        lidars.emplace_back(lidar);
-    }
-
-    for (const auto& lidar : lidars) {
-        lidar->start();
-    }
+    std::shared_ptr<LidarFusion> lidar_fusion;
+    lidar_fusion = std::make_shared<LidarFusion>(lidar_component);
+    lidar_fusion->start();
 
     LOG(INFO) << "[LIDAR_MAIN] lidar_driver started.";
-    apollo::cyber::WaitForShutdown();
-    for (const auto& lidar : lidars) {
-        lidar->stop();
-    }
+    common::Singleton<ModuleDiagnose>::get()->init(MODULE, "LIDAR_DIAGNOSE");
+    common::Singleton<ModuleDiagnose>::get()->set_period_usec(100000);
+    common::Singleton<ModuleDiagnose>::get()->set_ready();
+    common::Singleton<ModuleDiagnose>::get()->start();
+    LOG(INFO) << "[LIDAR_MAIN] lidar module_diagnose started.";
 
-    for (const auto& lidar : lidars) {
-        if (lidar->is_alive()) {
-            lidar->join();
-        }
-        LOG(INFO) << "[LIDAR_MAIN] lidar[" << lidar->get_name() << "] joined successfully.";
+    apollo::cyber::WaitForShutdown();
+    lidar_fusion->stop();
+    common::Singleton<ModuleDiagnose>::get()->stop();
+
+    if (lidar_fusion->is_alive()) {
+        lidar_fusion->join();
     }
 
     LOG(WARNING) << "[LIDAR_MAIN] lidar_driver terminated.";
     return 0;
 }
-
 }  // namespace lidar
 }  // namespace airi
 }  // namespace crdc

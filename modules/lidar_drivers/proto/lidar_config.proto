@@ -2,11 +2,34 @@ syntax = "proto2";
 
 package crdc.airi;
 
-message SocketConfig {}
+message SocketConfig {
+  optional int32 poll_timeout = 1 [default = 100];
+}
 
 message CyberConfig {
-  optional string file_path = 1;
-  optional string channel = 2;
+  optional string channel = 1;
+  repeated string file_path = 2;
+  optional int32 sleeptime = 3 [default = 300];
+}
+
+message ROS2Config {
+  optional string channel = 1;
+  repeated string file_path = 2;
+  optional int32 sleeptime = 3 [default = 300];
+}
+
+message PcapConfig {
+  repeated string file_path = 1;
+  optional string source_ip_str = 2;
+  optional bool read_fast = 3;  // if true thread will not sleep
+  optional int32 packet_rate = 4;  // USECONDS microseconds the thread will sleep
+}
+
+message ContrlConfig {
+  optional int32 port = 1;
+  optional string ip = 2;
+  optional string mode = 3;
+  optional string range_type = 4;
 }
 
 message LidarInputConfig {
@@ -14,16 +37,20 @@ message LidarInputConfig {
     optional string name = 2;
     optional int32 pool_size = 3;
     optional int32 packet_size = 4;
-    optional int32 lidar_port = 5;
-    optional int32 gps_port = 6;
+    optional uint32 lidar_port = 5;
+    optional uint32 gps_port = 6;
+    optional string lidar_multicast_ip = 7;
+    optional ContrlConfig control_config = 8;
     oneof input {
         SocketConfig socket_config = 11;
         CyberConfig cyber_config = 12;
+        PcapConfig pcap_config = 13;
+        ROS2Config ros2_config = 14;
     };
 }
 
 message LidarPacketConfig {
-    optional int32 size = 1;
+    optional uint32 size = 1;
     optional uint32 check_sum = 2;
     optional int32 blocks = 3;
     optional int32 block_offset = 4;
@@ -32,12 +59,14 @@ message LidarPacketConfig {
     optional int32 firings = 7;
     optional int32 firing_offset = 8;
     optional int32 lasers = 9;
-    optional int32 point_size = 10;
+    optional uint32 point_size = 10;
     optional int32 xy_offset = 11;
     optional int32 z_offset = 12;
     repeated double calib_azimuth = 20;
     repeated double calib_elevation = 21;
     repeated int32 ring_map = 22;
+    optional int32 data_type = 23;
+    optional uint32 version = 24;
 }
 
 message GpsPacketConfig {
@@ -54,11 +83,42 @@ message ParserConfig {
     optional int32 max_points = 6;
     optional bool use_local_time = 7;
     optional bool correct_utime = 8;
-    optional LidarPacketConfig lidar_packet_config = 9;
-    optional GpsPacketConfig gps_packet_config = 10;
+    optional int32 tai_time_offset = 9 [default = 37];
+    optional LidarPacketConfig lidar_packet_config = 10;
+    optional GpsPacketConfig gps_packet_config = 11;
+    optional bool angle_filter_flag = 12 [default = false];
 }
 
 message LidarConfig {
     optional LidarInputConfig input_config = 1;
     optional ParserConfig parser_config = 2;
+}
+
+message CalibrationConfig {
+  enum FilterFlag {
+      NOT_FILTER = 0;
+      FILTER_WITHIN_ANGLE = 1;
+      FILTER_OUT_ANGLE = 2;
+  }
+  optional string name = 1;
+  optional double x = 2;
+  optional double y = 3;
+  optional double z = 4;
+  optional double roll = 5;
+  optional double pitch = 6;
+  optional double yaw = 7;
+  optional FilterFlag filter_flag = 8 [default = NOT_FILTER];
+  optional double start_angle = 9 [default = 0.0];
+  optional double end_angle = 10 [default = 360.0];
+}
+
+message LiDynamicCalibrateConfig {
+  optional int32 start_frame_nums = 1;
+  optional int32 stop_frame_nums = 2;
+  optional int32 min_total_nums = 3;
+  optional double adjustment_range = 4;
+  optional bool cloud_output = 5;
+  optional double b_offset_threshold = 6;
+  optional double yaw_deviation_rate_threshold = 7;
+  optional double b_deviation_rate_threshold = 8;
 }

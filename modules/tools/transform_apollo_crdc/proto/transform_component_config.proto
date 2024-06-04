@@ -1,0 +1,19 @@
+syntax = 'proto2';
+
+package crdc.airi;
+
+message TransformComponentConfig {
+    required string message_type = 1;
+    required string input_topic = 2;
+    required string output_topic = 3;
+    optional bool offline = 4 [default = false];  // read record file or not
+    optional bool save_file = 5 [default = false];  // save record file or not
+    optional string intput_file = 6;
+    optional string output_file = 7;
+    optional string gps_topic = 8;
+    optional string detection_2d_gt_topic = 9;
+}
+
+message TransformComponent {
+    repeated TransformComponentConfig transform_component_config = 1;
+}

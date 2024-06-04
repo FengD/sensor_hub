@@ -1,0 +1,40 @@
+project(sensor_proto)
+
+find_package(Protobuf REQUIRED)
+if(PROTOBUF_FOUND)
+    message(STATUS "protobuf library found")
+else()
+    message(FATAL_ERROR "protobuf library is needed but cant be found")
+endif()
+
+SET(SYSROOT_DIR ${RECIPE_SYSROOT})
+if(x${SYSROOT_DIR} STREQUAL "x")
+    SET(SYSROOT_DIR $ENV{SDKTARGETSYSROOT})
+endif()
+set(Protobuf_INCLUDE_DIRS ${SYSROOT_DIR}/usr/include)
+set(Protobuf_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotobuf.so)
+set(Protobuf_PROTOC_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotoc.so)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/proto)
+
+file(GLOB proto_srcs *.proto)
+set(Protobuf_USE_STATIC_LIBS on)
+
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${proto_srcs})
+if (WITH_AARCH64)
+    message("No need generate python pb")
+else()
+    protobuf_generate_python(PROTO_PYTHON ${proto_srcs})
+    add_custom_target(proto_python_target ALL DEPENDS ${PROTO_PYTHON})
+endif()
+
+
+add_library(${PROJECT_NAME} STATIC ${PROTO_SRCS} ${PROTO_HDRS})
+target_link_libraries(${PROJECT_NAME} ${PROTOBUF_LIBRARIES} ${PROTOBUF_PROTOC_LIBRARIES} pthread)
+
+install(FILES ${proto_srcs} DESTINATION proto/apollo/cyber/sensor_proto/)
+install(FILES ${PROTO_HDRS} DESTINATION include/cyber/sensor_proto/)
+if (WITH_AARCH64)
+    message("No need install python pb")
+else()
+    install(FILES ${PROTO_PYTHON} DESTINATION python/apollo/cyber/sensor_proto/)
+endif()

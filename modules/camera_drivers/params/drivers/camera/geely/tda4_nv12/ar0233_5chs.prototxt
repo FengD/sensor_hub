@@ -1,0 +1,21 @@
+input_config {
+  name: "TiovxCamera"
+  pool_size: 4
+  height: 1280
+  width: 1920
+  fps: 10
+  tiovx_camera_config {
+    num_camera: 5
+  }
+}
+
+undistortion_config {
+  name: "CvUndistortion"
+}
+
+encoder_config {
+  name: "H264Encoder"
+  h264_encoder_config {
+    bitrate: 20
+  }
+}

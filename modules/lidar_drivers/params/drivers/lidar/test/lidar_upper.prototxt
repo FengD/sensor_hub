@@ -1,0 +1,38 @@
+input_config {
+    name: "CyberInput"
+    pool_size: 25
+    packet_size: 1500
+    lidar_port: 2367
+    # gps_port: 10111
+    cyber_config {
+        file_path: "/root/20220118113622.record.00000"
+        channel: "LIDAR_UPPER_RAW" 
+    }
+}
+
+parser_config {
+    name: "LidarParserVlp16"
+    pool_size: 4
+    split_azimuth: 0
+    time_zone: 8
+    max_points: 100000
+    use_local_time: false
+    correct_utime: false
+    lidar_packet_config {
+        size: 1206
+        check_sum: 0xEEFF
+        blocks: 12
+        block_offset: 0
+        block_size: 100
+        block_check_sum: 0xEEFF
+        firings: 2
+        firing_offset: 4
+        lasers: 16
+        point_size: 3
+    }
+
+    gps_packet_config {
+        size: 512
+        check_sum: 0x5e1f
+    }
+}

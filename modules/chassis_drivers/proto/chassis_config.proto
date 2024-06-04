@@ -1,0 +1,45 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+message ChassisSocketConfig {}
+
+message FileConfig {}
+
+
+message ChassisPcapConfig {
+    optional string channel = 1;
+    optional string file_path = 2;
+}
+message ChassisInputConfig {
+    optional string frame_id = 1;
+    optional string name = 2;
+    optional int32 pool_size = 3;
+    optional int32 packet_size = 4;
+    optional int32 chassis_port = 5;
+    oneof input {
+        ChassisSocketConfig chassis_socket_config = 11;
+        FileConfig file_config = 12;
+        ChassisPcapConfig pcap_config = 13;
+    };
+}
+
+message ChassisPacketConfig {
+    optional int32 size = 1;
+    optional int32 check_sum = 2;
+}
+
+message ChassisParserConfig {
+    optional string frame_id = 1;
+    optional string name = 2;
+    optional int32 pool_size = 3;
+    optional int32 time_zone = 4;
+    optional bool use_local_time = 5;
+    optional bool correct_utime = 6;
+    optional ChassisPacketConfig chassis_packet_config = 7;
+}
+
+message ChassisConfig {
+    optional ChassisInputConfig input_config = 1;
+    optional ChassisParserConfig parser_config = 2;
+}

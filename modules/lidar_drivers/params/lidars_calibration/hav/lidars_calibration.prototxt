@@ -1,0 +1,130 @@
+vehicle_type: 'hav'
+
+lidarnum: 4
+
+aligned: 0
+
+iternum: 100
+
+lidarlist {
+    name: 'LIDAR_FR'
+    output_topic: 'fr_cloud_transformed'
+    pairnum: 0
+    calibratorsetting {
+        groundroi {
+            xmin: 3.0
+            xmax: 6.0
+            ymin: 2.0
+            ymax: 8.0
+        }
+        egoroi {
+            egoxmin: 3.0
+            egoxmax: 7.0
+            egoymin: 12.0
+            egoymax: 15.0
+            egozmin: -0.84
+            egozmax: 4.48
+        }
+    }
+    initpose {
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: -0.725
+    }
+}
+
+lidarlist {
+    name: 'LIDAR_FL'
+    output_topic: 'fl_cloud_transformed'
+    pairnum: 1
+    calibratorsetting {
+        registrationparams {
+            nbthread: 4
+            maxiteration: 400
+            resolution: 1.5
+            stepsize: 0.05
+            epsion: 0.001
+        }
+        egoroi {
+            egoxmin: 10
+            egoxmax: 18
+            egoymin: -6
+            egoymax: -1
+            egozmin: -0.89
+            egozmax: 5.06
+        }
+    }
+    initpose {
+        x: 0
+        y: 2.7
+        z: 0.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: 0.50
+    }
+}
+
+lidarlist {
+    name: 'LIDAR_RL'
+    output_topic: 'rl_cloud_transformed'
+    pairnum: 2
+    calibratorsetting {
+        registrationparams {
+            nbthread: 4
+            maxiteration: 400
+            resolution: 1
+            stepsize: 0.05
+            epsion: 0.001
+        }
+        egoroi {
+            egoxmin: 11.0
+            egoxmax: 15.0
+            egoymin: 3.0
+            egoymax: 6.0
+            egozmin: -1.1
+            egozmax: 4.32
+        }
+    }
+    initpose {
+        x: -15.4
+        y: 2.7
+        z: 1.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: 2.489
+    }
+}
+
+lidarlist {
+    name: 'LIDAR_RR'
+    output_topic: 'rr_cloud_transformed'
+    pairnum: 3
+    calibratorsetting {
+        registrationparams {
+            nbthread: 4
+            maxiteration: 400
+            resolution: 1.8
+            stepsize: 0.05
+            epsion: 0.001
+        }
+        egoroi {
+            egoxmin: 5.0
+            egoxmax: 10.0
+            egoymin: -14.8
+            egoymax: -11.5
+            egozmin: -1.07
+            egozmax: 4.78
+        }
+    }
+    initpose {
+        x: -15.4
+        y: 0
+        z: 1.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: 3.725
+    }
+}

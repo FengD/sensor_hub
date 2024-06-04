@@ -1,0 +1,8 @@
+start_frame_nums: 300
+stop_frame_nums: 200
+min_total_nums: 300
+adjustment_range: 0.1
+cloud_output: false
+b_offset_threshold: 0.3
+yaw_deviation_rate_threshold: 0.2
+b_deviation_rate_threshold: 0.2

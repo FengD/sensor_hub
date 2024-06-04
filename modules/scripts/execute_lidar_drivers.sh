@@ -8,6 +8,11 @@ if [ -z ${CRDC_WS} ];then
     echo "CRDC_WS not given. Use default path ${CRDC_WS}"
 fi
 
+if [ -z ${VIN} ];then
+    export VIN=default_vin
+    echo "VIN not given. Use the default ${VIN}"
+fi
+
 if [ -z $1 ];then
     echo "No lidar_config given. Use the default."
     ./lidar_drivers --alsologtostderr true --stderrthreshold 3 --v 0 --minloglevel 0 --colorlogtostderr true

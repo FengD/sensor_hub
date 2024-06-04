@@ -2,10 +2,10 @@ input_config {
     name: "CyberInput"
     pool_size: 25
     packet_size: 1500
-    lidar_port: 2365
+    lidar_port: 2368
     # gps_port: 10111
     cyber_config {
-        file_path: "/home/ding/Documents/haha/20220120111449.record.00000"
+        file_path: "/root/20220118113622.record.00000"
         channel: "LIDAR_LEFT_RAW" 
     }
 }

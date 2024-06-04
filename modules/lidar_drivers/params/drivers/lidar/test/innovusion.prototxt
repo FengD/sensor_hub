@@ -1,0 +1,26 @@
+input_config {
+    name: "PcapInput"
+    pool_size: 25
+    packet_size: 1500
+    lidar_port: 8010   
+    pcap_config {
+        file_path: "/data_local/data/inno.pcap"
+        file_path: "/data_local/data/inno2.pcap"
+        source_ip_str: "172.168.1.10"
+        read_fast: false
+        packet_rate: 100
+    }
+}
+
+parser_config {
+    name: "LidarParserFalcon"
+    pool_size: 4
+    max_points: 100000
+    use_local_time: false
+    lidar_packet_config {
+        data_type: 1
+        lasers: 1
+        version: 0x176A
+        block_size: 33
+    }
+}

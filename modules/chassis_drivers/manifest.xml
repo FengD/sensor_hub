@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest package="AI_ChassisDrivers" versionCode="23" versionName="3.11.0" >
+  <uses-sdk targetSdkVersion="1" />
+  <application persistent="true" category="red" product="HH03-3:HH03-4:HH03-5:HH03-6">
+    <start-on event=""/>
+  </application>
+</manifest>

@@ -1,0 +1,5 @@
+log_dir: "/data/log/perception/ins_drivers/"
+alsologtostdrr: false
+stderrthreshold: 3
+minloglevel: 2
+log_v: 3

@@ -13,8 +13,8 @@
 #include <stdexcept>
 #include <utility>
 #include "common/for_each.h"
-#include "common/macros.h"
 
+#define unlikely(x) __builtin_expect(!!(x), 0)
 namespace crdc {
 namespace airi {
 namespace common {

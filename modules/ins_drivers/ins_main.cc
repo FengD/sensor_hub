@@ -6,6 +6,7 @@
 #include "ins_drivers/ins.h"
 #include <gflags/gflags.h>
 #include "common/common.h"
+#include "module_diagnose/module_diagnose.h"
 #include "ins_drivers/output/cyber_output.h"
 
 #define MODULE "InsDriver"
@@ -33,9 +34,7 @@ int main(int argc, char* argv[]) {
 
   InsComponent ins_component;
 
-  std::string config = "";
-
-  config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+  std::string config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
   LOG(INFO) << "[INS_MAIN] Use proto config: " << config;
 
   if (!crdc::airi::util::is_path_exists(config)) {
@@ -62,6 +61,12 @@ int main(int argc, char* argv[]) {
   }
 
   LOG(INFO) << "[INS_MAIN] ins_driver started.";
+
+  common::Singleton<ModuleDiagnose>::get()->init(MODULE, "INS_DIAGNOSE");
+  common::Singleton<ModuleDiagnose>::get()->set_period_usec(100000);
+  common::Singleton<ModuleDiagnose>::get()->set_ready();
+  common::Singleton<ModuleDiagnose>::get()->start();
+  LOG(INFO) << "[INS_MAIN] ins module_diagnose started.";
   apollo::cyber::WaitForShutdown();
   for (const auto& ins : inss) {
     ins->stop();

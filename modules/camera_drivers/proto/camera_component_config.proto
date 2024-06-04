@@ -9,9 +9,14 @@ message CameraComponentConfig {
     optional string channel_name = 3;
     // the encode image data channel
     optional string channel_encode_name = 4;
-    optional int32 priotiry = 5;
+    optional int32 priority = 5;
     optional string config_file = 6;
     optional string name = 7;
+    optional string calibration_config = 8;
+    optional uint32 encode_image_downsampling_each_image_frame = 9 [default = 1];
+    optional string diagnose_config_file = 10;
+    optional int32 diagnose_begin_count = 11;
+    optional int32 diagnose_end_count = 12;
 }
 
 message CameraComponent {

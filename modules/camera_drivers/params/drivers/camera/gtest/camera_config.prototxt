@@ -1,0 +1,49 @@
+component_config {
+    sensor_position_id: 1
+    frame_id: "CAMERA_FRONT"
+    channel_name: "CAMERA_FRONT_IMAGE"
+    # channel_encode_name: "CAMERA_FRONT_IMAGE_ENCODER"
+    priority: -15
+    name: "CAMERA_FRONT"
+    config_file: "../../../../params/drivers/camera/default/camera_front.prototxt"
+}
+
+component_config {
+    sensor_position_id: 2
+    frame_id: "PANO_FRONT"
+    channel_name: "PANO_FRONT_IMAGE"
+    # channel_encode_name: "PANO_FRONT_IMAGE_ENCODER"
+    priority: -15
+    name: "PANO_FRONT"
+    config_file: "params/drivers/camera/default/pano_front.prototxt"
+}
+
+component_config {
+    sensor_position_id: 3
+    frame_id: "PANO_LEFT"
+    channel_name: "PANO_LEFT_IMAGE"
+    # channel_encode_name: "PANO_LEFT_IMAGE_ENCODER"
+    priority: -15
+    name: "PANO_LEFT"
+    config_file: "params/drivers/camera/default/pano_left.prototxt"
+}
+
+component_config {
+    sensor_position_id: 4
+    frame_id: "PANO_RIGHT"
+    channel_name: "PANO_RIGHT_IMAGE"
+    # channel_encode_name: "PANO_RIGHT_IMAGE_ENCODER"
+    priority: -15
+    name: "PANO_RIGHT"
+    config_file: "params/drivers/camera/default/pano_right.prototxt"
+}
+
+component_config {
+    sensor_position_id: 5
+    frame_id: "PANO_BACK"
+    channel_name: "PANO_BACK_IMAGE"
+    # channel_encode_name: "PANO_BACK_IMAGE_ENCODER"
+    priority: -15
+    name: "PANO_BACK"
+    config_file: "params/drivers/camera/default/pano_back.prototxt"
+}

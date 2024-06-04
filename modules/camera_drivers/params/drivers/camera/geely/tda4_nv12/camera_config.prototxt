@@ -1,0 +1,9 @@
+component_config {
+    sensor_position_id: 1
+    frame_id: "TDA4_AR0233"
+    #channel_name: "camera/TDA4_AR0233_IMAGE"
+    channel_encode_name: "camera/TDA4_AR0233_IMAGE_ENCODER"
+    priority: -15
+    name: "TDA4_AR0233"
+    config_file: "params/drivers/camera/geely/tda4_nv12/ar0233_5chs.prototxt"
+}

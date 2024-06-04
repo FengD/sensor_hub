@@ -1,0 +1,9 @@
+modules:
+  - name: "m1"
+    library: "libAI_ChassisDrivers.so"
+    blocks:
+      - name: "AI_ChassisDrivers"
+        class_name: "ChassisMain"
+        interval: 50
+        count: -1
+

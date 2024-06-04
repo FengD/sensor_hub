@@ -3,12 +3,7 @@
 // Author: Feng DING
 // Description: file
 
-#include <fcntl.h>
-#include <dirent.h>
 #include <glob.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fstream>
 #include "glog/logging.h"
 #include "common/io/file.h"
 
@@ -246,7 +241,7 @@ bool ensure_directory(const std::string& directory_path) {
         }
     }
 
-    // Make the filanl (full) directory.
+    // Make the final (full) directory.
     if (mkdir(path.c_str(), S_IRWXU) != 0) {
         if (errno != EEXIST) {
             return false;
@@ -269,6 +264,27 @@ bool create_dir(const std::string& directory_path) {
         return false;
     }
     return true;
+}
+
+std::vector<std::string> list_sub_paths(const std::string &directory_path,
+                                        const unsigned char& d_type) {
+  std::vector<std::string> result;
+  DIR *directory = opendir(directory_path.c_str());
+  if (directory == nullptr) {
+    LOG(ERROR) << "Cannot open directory " << directory_path;
+    return result;
+  }
+
+  struct dirent *entry;
+  while ((entry = readdir(directory)) != nullptr) {
+    // Skip "." and "..".
+    if (entry->d_type == d_type && strcmp(entry->d_name, ".") != 0 &&
+        strcmp(entry->d_name, "..") != 0) {
+      result.emplace_back(entry->d_name);
+    }
+  }
+  closedir(directory);
+  return result;
 }
 
 }  // namespace util

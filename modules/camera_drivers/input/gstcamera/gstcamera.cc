@@ -43,9 +43,7 @@ bool GstCamera::camera_init() {
 
   GError *gst_error = 0;  // Assignment to zero is a gst requirement
 
-  // gsconfig_ = "v4l2src device=/dev/video0 ! video/x-raw-rgb,framerate=30/1 ! ffmpegcolorspace";
-  gsconfig_ = "tcpclientsrc host=" + config_.gst_config().ip()\
-               + " port=" + config_.gst_config().port() + " ! jpegparse";
+  gsconfig_ = config_.gst_config().gst_launch();
 
   LOG(INFO) << "[" << config_.frame_id() << "] gsconfig_: " << gsconfig_;
 
@@ -144,11 +142,9 @@ void GstCamera::get_data() {
       break;
     }
     GstBuffer* buf = gst_sample_get_buffer(sample);
-    GstMemory *memory;
     GstMapInfo info;
     if (buf != nullptr) {
-      memory = gst_buffer_get_memory(buf, 0);
-      gst_memory_map(memory, &info, GST_MAP_READ);
+      gst_buffer_map(buf, &info, GST_MAP_READ);
       data = info.data;
       data_size = info.size;
     }
@@ -182,10 +178,11 @@ void GstCamera::get_data() {
     raw_data_queue_.enqueue(raw_data);
     if (buf) {
 #if (GST_VERSION_MAJOR == 1)
-      gst_memory_unmap(memory, &info);
-      gst_memory_unref(memory);
+    gst_buffer_unmap(buf, &info);
+    gst_sample_unref(sample);
+#else
+    gst_buffer_unref(buf);
 #endif
-      gst_buffer_unref(buf);
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(1000 / config_.fps()));
   }

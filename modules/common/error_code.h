@@ -6,6 +6,7 @@
 #pragma once
 
 enum DeviceStatus {
+  PCAP_END = -29,
   FAILED_GET_CYBER_MESSAGE = -28,
   NON_BLOCKERR = -27,
   UNKOWN_HOST_ERROR = -26,
@@ -35,5 +36,15 @@ enum DeviceStatus {
   CREATE_SOCKET_ERROR = -2,
   CAMERA_TIMEOUT = -1,
   NO_ERROR = 0,
-  SUCCESS = 1
+  SUCCESS = 1,
+
+  // camera data abnormal diagnose
+  CAMERA_DATA_GREEN = -30,
+  CAMERA_WINDOW_DIRTY_BLOCKED = -31,
+  CAMERA_STRONG_BACKLIGHT = -32,
+  CAMERA_IMAGE_DARK = -33,
+  CAMERA_IMAGE_BLUR = -34,
+
+  // lidar data abnormal diagnose
+  LIDAR_PACKET_LOSS = -50
 };

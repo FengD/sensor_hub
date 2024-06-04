@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+message AFArgsConfig {
+  optional string log_dir = 1 [default = "/data/log/perception/"];
+  optional bool alsologtostdrr = 2 [default = false];
+  optional int32 stderrthreshold = 3 [default = 3];
+  optional int32 minloglevel = 4 [default = 2];
+  optional int32 log_v = 5 [default = 3];
+  optional int32 max_log_size = 6 [default = 2];
+}

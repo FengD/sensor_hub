@@ -29,6 +29,8 @@ class CyberInput : public LidarInput {
   std::shared_ptr<RecordReader> reader_;
   Packets proto_packets_;
   int cur_index_;
+  int file_index_;
+  int sleeptime_;
 };
 
 }  // namespace airi

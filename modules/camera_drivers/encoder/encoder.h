@@ -1,4 +1,4 @@
-// Copyright (C) 2020 Hirain Technologies
+// Copyright (C) 2022 Hirain Technologies
 // License: Modified BSD Software License Agreement
 // Author: Feng DING
 // Description: camera encoder
@@ -9,7 +9,11 @@
 #include <opencv2/opencv.hpp>
 #include "common/common.h"
 #include "camera_drivers/proto/encoder_config.pb.h"
+#ifdef WITH_ROS2
+#include "sensor_msg/msg/image.hpp"
+#else
 #include "cyber/sensor_proto/image.pb.h"
+#endif
 
 namespace crdc {
 namespace airi {

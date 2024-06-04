@@ -1,0 +1,32 @@
+transform_component_config {
+  message_type: "PointCloud"
+  input_topic: "/apollo/sensor/lidar128/compensator/PointCloud2"
+  output_topic: "/crdc/sensor/lidar128/compensator/PointCloud2"
+}
+
+transform_component_config {
+  message_type: "CompressedImage"
+  input_topic: "/apollo/sensor/camera/front_12mm/Image"
+  output_topic: "/crdc/sensor/camera/front_12mm/Image2"
+  # detection_2d_gt_topic: "/GroundTruth2D"
+}
+
+transform_component_config {
+  message_type: "PerceptionObstacles"
+  input_topic: "/apollo/ground_truth_3D/PerceptionObstacles"
+  output_topic: "/crdc/ground_truth_3D/PerceptionObstacles"
+  gps_topic: "/apollo/gps_odometry_sensor/GPS"
+}
+
+transform_component_config {
+  message_type: "2DGT"
+  input_topic: "/apollo/ground_truth_2D/Detection2DArray"
+  output_topic: "/crdc/ground_truth_2D/Detection2DArray"
+}
+
+# transform_component_config {
+#   message_type: "CompressedImage"
+#   input_topic: "segmentation"
+#   output_topic: "/crdc_image2_segmentation"
+#   # detection_2d_gt_topic: "/GroundTruth2D"
+# }

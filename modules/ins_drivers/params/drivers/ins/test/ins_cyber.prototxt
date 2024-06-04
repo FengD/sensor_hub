@@ -1,0 +1,23 @@
+input_config {
+    name: "CyberInput"
+    pool_size: 110
+    packet_size: 136
+    ins_port: 1025
+    cyber_config {
+        file_path: "/root/20220320174707.record.00000"
+        file_path: "/root/20220320174707.record.00000"
+        file_path: "/root/20220320174707.record.00000"
+        channel: "INS_DATA_RAW" 
+    }
+}
+
+parser_config {
+    name: "InsParser570d"
+    pool_size: 4
+    time_zone: 8
+    use_local_time: false
+    correct_utime: false
+    ins_packet_config {
+        size: 136
+    }
+}

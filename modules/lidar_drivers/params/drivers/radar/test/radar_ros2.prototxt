@@ -1,0 +1,30 @@
+input_config {
+    name: "ROS2Input"
+    pool_size: 25
+    packet_size: 1400
+    lidar_port: 6003
+    ros2_config {
+        file_path: "/data_local/10107/data/radar/CameraR-RADAR-DATA-2023-6-20-10-2-36-621_0.db3"
+        channel: "/radar/RADAR_DATA_RAW"
+    }
+}
+
+parser_config {
+    name: "RadarParserPhoenixA0"
+    pool_size: 4
+    split_azimuth: 0
+    time_zone: 8
+    max_points: 40000000
+    use_local_time: false
+    correct_utime: false
+    lidar_packet_config {
+        size: 1400
+        check_sum: 0xA55A
+        data_type: 0x0D
+        blocks: 1
+        block_offset: 44
+        block_size: 226
+        point_size: 6
+        lasers: 1
+    }
+}

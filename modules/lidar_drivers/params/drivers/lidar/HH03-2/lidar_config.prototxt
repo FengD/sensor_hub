@@ -1,0 +1,37 @@
+frame_id: "LIDAR_DRIVERS"
+#channel_name: "MERGE_CLOUD"
+header_frame_id: "LIDAR_DRIVERS"
+header_channel_name: "MERGE_CLOUD_HEADER"
+stricted_max_time_gap: 50000 # us
+latest_max_time_gap: 500000 # us
+priority: -15
+
+blind_zone {
+    delete_point: true
+    min_x: 0
+    max_x: 0
+    min_y: 0
+    max_y: 0
+    min_z: 0
+    max_z: 0
+}
+
+component_config {
+    sensor_position_id: 1
+    frame_id: "MRR4D_F"
+    channel_name: "radar/RADAR_F_CLOUD"
+    raw_data_channel_name: "radar/RADAR_F_RAW"
+    priority: -15
+    stricted_bundle: true
+    config_file: "params/drivers/lidar/HH03-2/mrr4d_f.prototxt"
+}
+
+component_config {
+    sensor_position_id: 2
+    frame_id: "MRR4D_R"
+    channel_name: "radar/RADAR_R_CLOUD"
+    raw_data_channel_name: "radar/RADAR_R_RAW"
+    priority: -15
+    stricted_bundle: true
+    config_file: "params/drivers/lidar/HH03-2/mrr4d_r.prototxt"
+}

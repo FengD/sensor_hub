@@ -1,0 +1,57 @@
+frame_id: "LIDAR_DRIVERS"
+#channel_name: "MERGE_CLOUD"
+header_frame_id: "LIDAR_DRIVERS"
+header_channel_name: "MERGE_CLOUD_HEADER"
+stricted_max_time_gap: 50000 # us
+latest_max_time_gap: 500000 # us
+priority: -15
+
+blind_zone {
+    delete_point: true
+    min_x: 0
+    max_x: 0
+    min_y: 0
+    max_y: 0
+    min_z: 0
+    max_z: 0
+}
+
+component_config {
+    sensor_position_id: 1
+    frame_id: "LIDAR_RIGHT"
+    channel_name: "lidar/LIDAR_RIGHT_CLOUD"
+    raw_data_channel_name: "lidar/LIDAR_RIGHT_RAW"
+    priority: -15
+    stricted_bundle: true
+    config_file: "params/drivers/lidar/pcap_to_record/j6p/lidar_right.prototxt"
+}
+
+component_config {
+    sensor_position_id: 2
+    frame_id: "LIDAR_UPPER"
+    channel_name: "lidar/LIDAR_UPPER_CLOUD"
+    raw_data_channel_name: "lidar/LIDAR_UPPER_RAW"
+    priority: -15
+    stricted_bundle: true
+    config_file: "params/drivers/lidar/pcap_to_record/j6p/lidar_upper.prototxt"
+}
+
+component_config {
+    sensor_position_id: 3
+    frame_id: "LIDAR_LEFT"
+    channel_name: "lidar/LIDAR_LEFT_CLOUD"
+    raw_data_channel_name: "lidar/LIDAR_LEFT_RAW"
+    priority: -15
+    stricted_bundle: true
+    config_file: "params/drivers/lidar/pcap_to_record/j6p/lidar_left.prototxt"
+}
+
+component_config {
+    sensor_position_id: 4
+    frame_id: "LIDAR_REAR"
+    channel_name: "lidar/LIDAR_REAR_CLOUD"
+    raw_data_channel_name: "lidar/LIDAR_REAR_RAW"
+    priority: -15
+    stricted_bundle: true
+    config_file: "params/drivers/lidar/pcap_to_record/j6p/lidar_rear.prototxt"
+}

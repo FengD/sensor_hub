@@ -1,0 +1,19 @@
+input_config {
+  name: "TestingCamera"
+  pool_size: 4
+  height: 1080
+  width: 1920
+  fps: 20
+  testing_config {}
+}
+
+undistortion_config {
+  name: "CvUndistortion"
+}
+
+encoder_config {
+  name: "CvEncoder"
+  cv_encoder_config {
+    quality: 1
+  }
+}

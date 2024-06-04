@@ -4,10 +4,20 @@
 // Description: ins
 
 #include "ins_drivers/ins.h"
+#ifdef WITH_ROS2
+#include "ins_drivers/output/af_output.h"
+#else
 #include "ins_drivers/output/cyber_output.h"
+#endif
 
 namespace crdc {
 namespace airi {
+#ifdef WITH_ROS2
+using Level = sensor_msg::msg::Level;
+using InsOutput = InsAFOutput;
+#else
+using InsOutput = InsCyberOutput;
+#endif
 
 InsSensor::InsSensor(const InsComponentConfig& config) : common::Thread(true) {
   config_ = config;
@@ -20,8 +30,8 @@ InsSensor::InsSensor(const InsComponentConfig& config) : common::Thread(true) {
   }
   set_thread_name(thread_name);
 
-  if (config_.has_priotiry()) {
-    set_priority(config_.priotiry());
+  if (config_.has_priority()) {
+    set_priority(config_.priority());
   }
 
   std::string config_file_path =
@@ -95,14 +105,41 @@ void InsSensor::stop() {
   stop_ = false;
 }
 
+#ifdef WITH_ROS2
+void InsSensor::send_diagnose_input(const uint32_t& position_id,
+                                const DeviceStatus& error, const uint8_t& level,
+                                const std::string& custom_desc, const std::string& context) {
+    auto diagnose_input = DiagnoseInput(ModuleType::SENSOR_LIDAR, position_id,
+                                      error, level, custom_desc, context);
+    diagnose_inputs_.emplace_back(std::move(diagnose_input));
+    common::Singleton<ModuleDiagnose>::get()->diagnose_list(diagnose_inputs_);
+}
+#else
+void InsSensor::send_diagnose_input(const uint32_t& position_id,
+                                const DeviceStatus& error, const Level& level,
+                                const std::string& custom_desc, const std::string& context) {
+    auto diagnose_input = DiagnoseInput(ModuleType::SENSOR_INS, position_id,
+                                      error, level, custom_desc, context);
+    diagnose_inputs_.emplace_back(std::move(diagnose_input));
+    common::Singleton<ModuleDiagnose>::get()->diagnose_list(diagnose_inputs_);
+}
+#endif
+
 void InsSensor::run() {
   while (!stop_) {
     Packet* raw_packet;
     int32_t code = input_->get_ins_data(&raw_packet);
     if (code != DeviceStatus::SUCCESS) {
       LOG(WARNING) << "[" << get_thread_name() << "] failed to get ins packet.";
+      send_diagnose_input(sensor_position_id_, DeviceStatus(code), Level::ERROR,
+                                "ins_driver_abnormal", "input_data_abnormal");
     } else {
-      if (raw_packet->port() == ins_config_.input_config().ins_port()) {
+#ifdef WITH_ROS2
+      auto port = raw_packet->port;
+#else
+      auto port = raw_packet->port();
+#endif
+      if (port == ins_config_.input_config().ins_port()) {
         std::shared_ptr<InsData> ins_data;
         if (parser_->parse_ins_packet(raw_packet, &ins_data)) {
           // auto now = get_now_microsecond();
@@ -117,18 +154,24 @@ void InsSensor::run() {
           LOG(INFO) << "[" << get_thread_name()
                     << "] [TIMER] [receive] elapsed_time(us): " << receive_time;
           */
-
+#ifdef WITH_ROS2
+          ins_data->proto_ins_data_->header.frame_id =
+                        config_.frame_id();
+#else
           ins_data->proto_ins_data_->mutable_header()->set_frame_id(
               config_.frame_id());
+#endif
           auto now = get_now_microsecond();
           LOG(INFO) << "[" << get_thread_name()
                     << "] [TIMER] [callback] elapsed_time(us): "
                     << get_now_microsecond() - now;
           if (config_.has_channel_name()) {
-            common::Singleton<InsCyberOutput>::get()->write_ins_data(
+            common::Singleton<InsOutput>::get()->write_ins_data(
                 config_.channel_name(), ins_data->proto_ins_data_);
           }
         }
+        send_diagnose_input(sensor_position_id_, DeviceStatus(code), Level::NOERR,
+                                "ins_driver_normal", "input_data_normal");
       }
     }
 
@@ -136,7 +179,7 @@ void InsSensor::run() {
       std::shared_ptr<Packets> packets;
       input_->get_ins_packets(&packets);
       if (config_.has_raw_data_channel_name()) {
-        common::Singleton<InsCyberOutput>::get()->write_packet(
+        common::Singleton<InsOutput>::get()->write_packet(
             config_.raw_data_channel_name(), packets);
       }
       input_->clear_pool();

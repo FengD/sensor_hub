@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 #include <opencv2/opencv.hpp>
 #include "common/common.h"
 #include "camera_drivers/proto/camera_config.pb.h"
@@ -23,6 +24,14 @@ struct CameraRawData {
   uint32_t data_size;
   CameraRawData() {}
 };
+
+typedef struct {
+  float fx;
+  float fy;
+  float cx;
+  float cy;
+  std::vector<float> distortion_params;
+} CamIntrinsicParam;
 
 class CameraInput {
  public:
@@ -41,7 +50,7 @@ class CameraInput {
    * @return status
    */
   bool start();
-
+  bool start(std::shared_ptr<CamIntrinsicParam>& camera_intrinsic);
   /**
    * @brief stop
    * @return status
@@ -54,7 +63,7 @@ class CameraInput {
    * @return status
    */
   virtual int32_t get_camera_data(std::shared_ptr<const CameraRawData>* data) {
-    if (raw_data_queue_.wait_for_dequeue(data)) {
+    if (raw_data_queue_.wait_for_dequeue(data, 100000)) {
       return DeviceStatus::SUCCESS;
     } else {
       return DeviceStatus::CAMERA_TIMEOUT;
@@ -75,6 +84,17 @@ class CameraInput {
     return true;
   }
 
+  /**
+   * @brief This function is only used for db3 input
+   * @param the topic name
+   * @param the raw data
+   * @return status
+   */
+  virtual bool get_topic_name(std::string* topic_name,
+                              std::shared_ptr<const CameraRawData>& raw_data) {
+    return false;
+  }
+
   std::string get_name() const {
     return name_;
   }
@@ -91,12 +111,14 @@ class CameraInput {
    * @return status
    */
   virtual bool camera_start() { return true; }
+  virtual bool camera_start(std::shared_ptr<CamIntrinsicParam>& camera_intrinsic) { return true; }
 
   /**
    * @brief Stop the camera. It needs to be redefined for each subclass.
    * @return status
    */
   virtual bool camera_stop() { return false; }
+
   bool init_pool();
 
   std::shared_ptr<CameraRawData> get_raw_data(float exposure_time,

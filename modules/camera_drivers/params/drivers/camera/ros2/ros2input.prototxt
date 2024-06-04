@@ -1,0 +1,25 @@
+input_config {
+  name: "Ros2Input"
+  pool_size: 4
+  height: 1080
+  width: 1920
+  fps: 10
+  ros2_config {
+    # db3 data packet
+    file_path: "/data_local/camera_input/camera/HRC5GTE48P0000009_V210_HAV30_608-004-CameraF-2023-11-16-08-40-32-103.db3"
+    channel_encode_name: "/camera/V210_HAV30_CameraF_CV_ENCODER_0"
+    channel_name: "/hav_fs_mask"
+    channel_name: "/hav_ld_mask"
+  }
+}
+
+undistortion_config {
+  name: "CvUndistortion"
+}
+
+encoder_config {
+  name: "CvEncoder"
+  cv_encoder_config {
+    quality: 80
+  }
+}

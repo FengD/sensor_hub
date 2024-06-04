@@ -10,6 +10,9 @@
 #include <memory>
 #include "common/common.h"
 #include "cyber/sensor_proto/image.pb.h"
+#ifdef WITH_TEST
+#include <gtest/gtest.h>
+#endif
 
 namespace crdc {
 namespace airi {
@@ -81,6 +84,11 @@ class CameraCyberOutput {
 
   std::shared_ptr<apollo::cyber::Node> node_;
   std::shared_ptr<ChannelWriter<Image2>> image_writer_ptr_;
+
+  #ifdef WITH_TEST
+  FRIEND_TEST(CameraCyberOutputTest, cyber_output_init_test);
+  FRIEND_TEST(CameraCyberOutputTest, cyber_output_write_image_test);
+  #endif
 };
 
 }  // namespace airi

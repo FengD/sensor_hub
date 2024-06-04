@@ -3,7 +3,7 @@
 // Author: Feng DING
 // Description: camera yuyv_to_bgr
 
-#ifdef PLATFORM_X86
+#ifdef WITH_IPC
 #include <immintrin.h>
 #include <nmmintrin.h>
 #endif
@@ -13,60 +13,38 @@
 namespace crdc {
 namespace airi {
 
-#ifdef PLATFORM_X86
+#ifdef WITH_IPC
 
 bool Convert::yuyv_to_bgr(const unsigned char *src, unsigned char *dst,
-                          const int& width, const int& height,
-                          const std::string& sensor) {
-    if (width <= 0) {
-        LOG(ERROR) << "[" << sensor << "] width input error: " << width << std::endl;
+                          const int& width, const int& height, const std::string& sensor) {
+    if (!verify_image(src, dst, width, height, sensor)) {
         return false;
     }
 
-    if (height <= 0) {
-        LOG(ERROR) << "[" << sensor << "] height input error: " << height << std::endl;
-        return false;
-    }
-
-    if (width % 8 != 0) {
-        LOG(ERROR) << "[" << sensor << "] width must be a multiple of 8: " << width << std::endl;
-        return false;
-    }
-
-    if (src == nullptr) {
-        LOG(ERROR) << "[" << sensor << "] src input error." << std::endl;
-        return false;
-    }
-
-    if (dst == nullptr) {
-        LOG(ERROR) << "[" << sensor << "] dst input error." << std::endl;
-        return false;
-    }
-
+    const unsigned char *p_uv = src + width * height;
     const unsigned char *p_y = src;
-    const unsigned char *p_uv = stc + width * height;
 
-    __m128i vec_param16 = __mm_set1_epi16(16);
-    __m128i vec_param128 = __mm_set1_epi16(128);
-    __m128i vec_param75 = __mm_set1_epi16(75);
-    __m128i vec_param102 = __mm_set1_epi16(102);
-    __m128i vec_param_moin_52 = __mm_set1_epi16(-52);
-    __m128i vec_param_moin_25 = __mm_set1_epi16(-25);
-    __m128i vec_param129 = __mm_set1_epi16(129);
+    __m128i vec_param16 = _mm_set1_epi16(16);
+    __m128i vec_param128 = _mm_set1_epi16(128);
+    __m128i vec_param75 = _mm_set1_epi16(75);
+    __m128i vec_param102 = _mm_set1_epi16(102);
+    __m128i vec_param_moin_52 = _mm_set1_epi16(-52);
+    __m128i vec_param_moin_25 = _mm_set1_epi16(-25);
+    __m128i vec_param129 = _mm_set1_epi16(129);
     // low is u, height is v
-    __m128i vec_index1 = __mm_set_epi18(15, 13, 11, 9, 7, 5, 3, 1,
+    __m128i vec_index1 = _mm_set_epi8(15, 13, 11, 9, 7, 5, 3, 1,
                                         14, 12, 10, 8, 6, 4, 2, 0);
-    __m128i vec_index2 = __mm_set_epi18(15, 15, 13, 13, 11, 11, 9, 9,
+    __m128i vec_index2 = _mm_set_epi8(15, 15, 13, 13, 11, 11, 9, 9,
                                         14, 14, 12, 12, 10, 10, 8, 8);
-    __m128i vec_index3 = __mm_set_epi18(0, 0, 0, 0, 0, 0, 0, 0,
+    __m128i vec_index3 = _mm_set_epi8(0, 0, 0, 0, 0, 0, 0, 0,
                                         15, 14, 13, 12, 11, 10, 9, 8);
 
-    __m128i vec_mask0 = __mm_set_epi8(5, 20, 12, 4, 19, 11, 3, 18,
+    __m128i vec_mask0 = _mm_set_epi8(5, 20, 12, 4, 19, 11, 3, 18,
                                       10, 2, 17, 9, 1, 16, 8, 0);
-    __m128i vec_mask1 = __mm_set_epi8(0, 0, 0, 0, 0, 0, 0, 0,
-                                      23, 15, 7, 22, 14, 6, 21, 13);
     __m128i vec_mask0_sel = _mm_set_epi8(0, 0xff, 0, 0, 0xff, 0, 0, 0xff,
                                          0, 0, 0xff, 0, 0, 0xff, 0, 0);
+    __m128i vec_mask1 = _mm_set_epi8(0, 0, 0, 0, 0, 0, 0, 0,
+                                      23, 15, 7, 22, 14, 6, 21, 13);
     __m128i vec_mask1_sel = _mm_set_epi8(0, 0, 0, 0, 0, 0, 0, 0,
                                          0xff, 0, 0, 0xff, 0, 0, 0xff, 0);
 
@@ -92,16 +70,16 @@ bool Convert::yuyv_to_bgr(const unsigned char *src, unsigned char *dst,
 
             __m128i vec_r = _mm_add_epi16(vec_y, _mm_mullo_epi16(vec_u, vec_param129));
 
-            vec_b = __mm_srai_epi16(vec_b, 6);
-            vec_g = __mm_srai_epi16(vec_g, 6);
-            vec_r = __mm_srai_epi16(vec_r, 6);
+            vec_b = _mm_srai_epi16(vec_b, 6);
+            vec_r = _mm_srai_epi16(vec_r, 6);
+            vec_g = _mm_srai_epi16(vec_g, 6);
 
-            vec_b = _mm_packus_epi16(vec_b, vec_b);
             vec_g = _mm_packus_epi16(vec_g, vec_g);
+            vec_b = _mm_packus_epi16(vec_b, vec_b);
             vec_r = _mm_packus_epi16(vec_r, vec_r);
 
-            int64_t b = _mm_cvtsi128_si64(vec_b);
             int64_t g = _mm_cvtsi128_si64(vec_g);
+            int64_t b = _mm_cvtsi128_si64(vec_b);
             int64_t r = _mm_cvtsi128_si64(vec_r);
 
             __m128i tmp, sh0, sh1, val0, val2;
@@ -114,7 +92,7 @@ bool Convert::yuyv_to_bgr(const unsigned char *src, unsigned char *dst,
                                 _mm_and_si128(vec_mask0_sel, sh1));
             // store as 128 bit structure
             (((uintptr_t)(dst)&15) == 0) ? _mm_store_si128(reinterpret_cast<__m128i *>(dst), val0)
-                                         : _mm_storeu_si128(reinterpret_cast<__m128 *>(dst), val0);
+                                         : _mm_storeu_si128(reinterpret_cast<__m128i *>(dst), val0);
             sh0 = _mm_shuffle_epi8(tmp, vec_mask1);
             sh1 = _mm_shuffle_epi8(val2, vec_mask1);
             // _MM_BLENDV_EPI8(sh0, sh1, vec_mask1_sel)

@@ -1,0 +1,6 @@
+[logging]
+app_id = "CHD"
+app_description = "chassis_drivers someip app log"
+default_level = "Verbose"
+log_mode = ["File"]
+log_path = "/data/log/chassis_drivers/someip.log"

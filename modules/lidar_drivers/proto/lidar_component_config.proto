@@ -17,9 +17,14 @@ message LidarComponentConfig {
     optional string frame_id = 2;
     optional string channel_name = 3;
     optional string raw_data_channel_name = 4;
-    optional int32 priotiry = 5;
+    optional int32 priority = 5;
     optional bool stricted_bundle = 6;
     optional string config_file = 7;
+    optional int32 raw_data_downsampling_each_cloud_frame = 8 [default = 1];
+    optional int32 cloud_data_downsampling_each_cloud_frame = 9 [default = 1];
+    optional bool calibrate = 10 [default = false];
+    optional bool xytransfrom = 11 [default = true];
+    optional int32 dynamic_calibrate_id = 12 [default = 2];
 }
 
 message LidarComponent {
@@ -29,7 +34,8 @@ message LidarComponent {
     optional string header_channel_name = 4;
     optional int32 stricted_max_time_gap = 5;
     optional int32 latest_max_time_gap = 6;
-    optional int32 priotiry = 7;
+    optional int32 priority = 7;
     optional BlindZone blind_zone = 8;
     repeated LidarComponentConfig component_config = 9;
+    optional bool calibrate_module = 10;
 }

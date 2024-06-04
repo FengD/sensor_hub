@@ -1,0 +1,14 @@
+app_name: AI_LidarDrivers
+processors:
+  - id: 0
+    rt_priority: 99
+    sched_policy: FIFO
+    cpu_affinity: 1,2,3-6,9-15
+    force_realtime: false
+
+tasks:
+  - name: "AI_LidarDrivers"
+    block: "/m1/AI_LidarDrivers"
+    processor: 0
+    priority: 0
+    customer_config: "af_args_config.prototxt"

@@ -5,6 +5,13 @@
 
 #pragma once
 
+#include <dirent.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <cstdio>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -62,6 +69,15 @@ bool ensure_directory(const std::string& directory_path);
 std::string get_current_path();
 
 bool create_dir(const std::string& directory_path);
+
+/**
+ * @brief List sub-paths.
+ * @param directory_path Directory path.
+ * @param d_type Sub-path type, DT_DIR for directory, or DT_REG for file.
+ * @return A vector of sub-paths, without the directory_path prefix.
+ */
+std::vector<std::string> list_sub_paths(const std::string &directory_path,
+                                        const unsigned char& d_type = DT_DIR);
 
 }  // namespace util
 }  // namespace airi

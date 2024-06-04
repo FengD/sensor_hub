@@ -1,9 +1,0 @@
-component_config {
-    sensor_position_id: 4
-    frame_id: "PANO_RIGHT"
-    channel_name: "camera/PANO_RIGHT_IMAGE"
-    # channel_encode_name: "PANO_RIGHT_IMAGE_ENCODER"
-    priotiry: -15
-    name: "PANO_RIGHT"
-    config_file: "params/drivers/camera/hav/pano_right.prototxt"
-}

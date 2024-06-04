@@ -1,10 +1,13 @@
 input_config {
-    name: "SocketInput"
+    name: "CyberInput"
     pool_size: 25
     packet_size: 1500
-    lidar_port: 2365
+    lidar_port: 2366
     # gps_port: 10111
-    socket_config {}
+    cyber_config {
+        file_path: "/root/20220118113622.record.00000"
+        channel: "LIDAR_RIGHT_RAW" 
+    }
 }
 
 parser_config {

@@ -1,0 +1,9 @@
+modules:
+  - name: "m1"
+    library: "libAI_LidarDrivers.so"
+    blocks:
+      - name: "AI_LidarDrivers"
+        class_name: "LidarMain"
+        interval: 50
+        count: -1
+

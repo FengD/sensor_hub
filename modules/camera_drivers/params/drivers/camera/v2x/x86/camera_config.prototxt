@@ -1,0 +1,9 @@
+component_config {
+    sensor_position_id: 1
+    frame_id: "V2X_IMAGE"
+    channel_name: "camera/V2X_IMAGE"
+    # channel_encode_name: "camera/V2X_IMAGE_ENCODER"
+    priority: -15
+    name: "V2X"
+    config_file: "params/drivers/camera/v2x/x86/v2x_camera.prototxt"
+}

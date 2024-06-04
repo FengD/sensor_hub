@@ -1,0 +1,124 @@
+is_fisheye: false
+calib_func: 2
+debug: false
+save_path: "/extdata/calibrationf/"
+camera_position: "forward"
+area_low_threshold: 500
+extrinsic_config {
+  board_size {
+        width: 10
+        height: 5
+    }
+  square_size {
+        width: 0.18
+        height: 0.18
+    }
+#   A
+  correspond_points {
+      image_points {
+          x: 613
+          y: 723
+      }
+      real_world_points {
+          x: 7.875
+          y: 2.405
+          z: 0
+      }
+  }
+#   B
+  correspond_points {
+      image_points {
+          x: 1133
+          y: 720
+      }
+      real_world_points {
+          x: 7.87
+          y: -1.88
+          z: 0
+      }
+  }
+#   C
+  correspond_points {
+      image_points {
+          x: 330
+          y: 926
+      }
+      real_world_points {
+          x: 3.18
+          y: 2.405
+          z: 0
+      }
+  }
+#   D
+  correspond_points {
+      image_points {
+          x: 1384
+          y: 933
+      }
+      real_world_points {
+          x: 3.185
+          y: -1.88
+          z: 0
+      }
+  }
+#   E
+  correspond_points {
+      image_points {
+          x: 435
+          y: 1064
+      }
+      real_world_points {
+          x: 2.32
+          y: 1.46
+          z: 0
+      }
+  }
+#   F
+correspond_points {
+      image_points {
+          x: 691
+          y: 762
+      }
+      real_world_points {
+          x: 6.44
+          y: 1.46
+          z: 0
+      }
+  }
+# G
+  correspond_points {
+      image_points {
+          x: 435
+          y: 1064
+      }
+      real_world_points {
+          x: 2.32
+          y: 1.46
+          z: 0
+      }
+  }
+# H
+correspond_points {
+      image_points {
+          x: 691
+          y: 762
+      }
+      real_world_points {
+          x: 6.44
+          y: 1.46
+          z: 0
+      }
+  }
+}
+  camera_params {
+    intrinsic {
+    fx: 1043.68
+    cx: 982.067
+    fy: 1046.34
+    cy: 543.887
+    }
+    distortion_params: -0.273237
+    distortion_params: 0.0547152
+    distortion_params: -0.00129237
+    distortion_params: 0.000345501
+}

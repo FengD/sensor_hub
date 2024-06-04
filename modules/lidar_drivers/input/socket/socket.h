@@ -9,7 +9,9 @@
 #include <arpa/inet.h>
 #include <poll.h>
 #include <string>
+#include <memory>
 #include "lidar_drivers/input/input.h"
+#include "lidar_drivers/input/socket/write.h"
 
 namespace crdc {
 namespace airi {
@@ -33,7 +35,9 @@ class SocketInput : public LidarInput {
   struct pollfd poll_fds_[2];
   uint16_t ports_[2];
 
-  static const int32_t POLL_TIMEOUT = 1000;
+  int32_t POLL_TIMEOUT;
+  std::shared_ptr<SocketWrite> writing_config_;
+  std::string multicast_ip_str_;
 };
 
 }  // namespace airi

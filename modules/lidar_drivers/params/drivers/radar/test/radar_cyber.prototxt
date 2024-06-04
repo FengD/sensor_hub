@@ -1,0 +1,29 @@
+input_config {
+    name: "CyberInput"
+    pool_size: 25
+    packet_size: 1400
+    lidar_port: 6003
+    cyber_config {
+        file_path: "/data_local/sunyuan/data/cyber/yanshiche/data_record_2023_02_01_11_53_18/20230201115340.record.00005"
+        channel: "radar/RADAR_DATA_RAW"
+        sleeptime: 4000
+    }
+}
+
+parser_config {
+    name: "RadarParserPhoenixA0"
+    pool_size: 4
+    max_points: 300000
+    use_local_time: false
+    correct_utime: false
+    lidar_packet_config {
+        size: 1400
+        check_sum: 0xA55A
+        data_type: 0x0D
+        blocks: 1
+        block_offset: 44
+        block_size: 226
+        point_size: 6
+        lasers: 1
+    }
+}

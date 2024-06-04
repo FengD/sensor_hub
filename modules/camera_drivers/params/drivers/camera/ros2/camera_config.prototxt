@@ -1,0 +1,11 @@
+component_config {
+    sensor_position_id: 1
+    frame_id: "Ros2_IMAGE"
+    channel_name: "camera/V210_HAV30_CameraF"
+    channel_encode_name: "camera/V210_HAV30_CameraF_CV_ENCODER"
+    priority: -15
+    name: "Ros2"
+    config_file: "params/drivers/camera/ros2/ros2input.prototxt"
+    calibration_config: "params/drivers/camera/HH03-4/extrinsic_calib_config.prototxt"
+    diagnose_config_file: "params/drivers/camera/ros2/camera_diagnose_config.prototxt"
+}

@@ -26,6 +26,22 @@ bool CameraInput::init(const CameraInputConfig& config) {
     return true;
 }
 
+bool CameraInput::start(std::shared_ptr<CamIntrinsicParam>& camera_intrinsic) {
+    if (is_running_.load()) {
+        LOG(ERROR) << "[" << config_.frame_id() << "] already in operation.";
+        return false;
+    }
+
+    if (!camera_start(camera_intrinsic)) {
+        LOG(ERROR) << "[" << config_.frame_id() << "] failed to start.";
+        return false;
+    }
+
+    is_running_.store(true);
+    LOG(INFO) << "[" << config_.frame_id() << "] started.";
+    return true;
+}
+
 bool CameraInput::start() {
     if (is_running_.load()) {
         LOG(ERROR) << "[" << config_.frame_id() << "] already in operation.";

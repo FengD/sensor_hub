@@ -1,0 +1,32 @@
+input_config {
+    name: "PcapInput"
+    pool_size: 25
+    packet_size: 1400
+    lidar_port: 6003
+    pcap_config {
+        file_path: "/data_local/sunyuan/data/pcap/2022_1221_c4.pcapng"
+        source_ip_str: "10.20.30.40"
+        read_fast: false
+        packet_rate: 100
+    }
+}
+
+parser_config {
+    name: "RadarParserPhoenixA0"
+    pool_size: 4
+    split_azimuth: 0
+    time_zone: 8
+    max_points: 40000000
+    use_local_time: false
+    correct_utime: false
+    lidar_packet_config {
+        size: 1400
+        check_sum: 0xA55A
+        data_type: 0x0D
+        blocks: 1
+        block_offset: 44
+        block_size: 226
+        point_size: 6
+        lasers: 1
+    }
+}

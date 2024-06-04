@@ -10,6 +10,12 @@ message TurboEncoderConfig {
     optional int32 quality = 1;
 }
 
+message H264EncoderConfig {
+    optional int32 width = 1;
+    optional int32 height = 2;
+    optional int32 bitrate = 3 [default = 10];
+}
+
 message EncoderConfig {
     optional string frame_id = 1;
     // class name
@@ -17,5 +23,6 @@ message EncoderConfig {
     oneof encoder_config {
         CvEncodeConfig cv_encoder_config = 11;
         TurboEncoderConfig turbo_encoder_config = 12;
+        H264EncoderConfig h264_encoder_config = 13;
     }
 }

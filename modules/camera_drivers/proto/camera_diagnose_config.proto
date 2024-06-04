@@ -1,0 +1,46 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+
+message CameraDiagnoseGreenScreenConfig {
+    optional int32 green_value = 1;
+}
+
+message CameraDiagnoseFaculaConfig {
+    optional int32 facula_area_min_ = 1;
+    optional int32 pixel_value_min_ = 2;
+}
+
+message CameraDiagnoseDarkConfig {
+    optional int32 pixel_value_min_ = 1;
+    optional double dark_prop = 2;
+}
+message CameraDiagnoseBlockedConfig {
+    optional int32 n_cell_x = 1;
+    optional int32 n_cell_y = 2;
+    optional double blocked_min_value = 3;
+    optional double blocked_max_value = 4;
+    optional int32 gray_min_value = 5;
+    optional int32 gray_max_value = 6;
+    optional int32 n_min_value = 7;
+    optional double sub_mask_max_value = 8;
+}
+message CameraDiagnoseBlurConfig {
+    optional int32 n_cell_x = 1;
+    optional int32 n_cell_y = 2;
+    optional double blur_min_value = 3;
+    optional double blur_max_value = 4;
+    optional int32 gray_min_value = 5;
+    optional int32 gray_max_value = 6;
+    optional int32 n_min_value = 7;
+    optional double sub_mask_max_value = 8;
+}
+
+message CameraDiagnoseConfig {
+    optional CameraDiagnoseGreenScreenConfig green_screen_config = 1;
+    optional CameraDiagnoseFaculaConfig facula_config = 2;
+    optional CameraDiagnoseDarkConfig dark_config = 3;
+    optional CameraDiagnoseBlockedConfig blocked_config = 4;
+    optional CameraDiagnoseBlurConfig blur_config = 5;
+}

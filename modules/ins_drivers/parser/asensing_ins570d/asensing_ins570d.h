@@ -4,10 +4,11 @@
 // Description: ins parser for asensing ins570d device
 
 #pragma once
-
 #include <memory>
+#include <string>
 #include "common/common.h"
 #include "ins_drivers/parser/parser.h"
+
 
 namespace crdc {
 namespace airi {
@@ -96,6 +97,9 @@ class InsParser570d : public InsParser {
 
   uint64_t get_packet_timestamp(const Packet* packet) override;
   void parse_ins_can_frame(char* can_frame_) override;
+  std::string get_name() const override {
+    return "InsParser570d";
+  }
 
  private:
   // 0x500
