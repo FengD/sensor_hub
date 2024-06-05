@@ -1,4 +1,4 @@
-// Copyright (C) 2020 Hirain Technologies
+// Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
 // Author: Feng DING / JianFei JIANG
 // Description: sensor extract main
@@ -55,7 +55,6 @@ int main(int argc, char* argv[]) {
       files.push_back((*iter).path().string());
     }
   }
-  // TODO(yuan.sun) use omp_get_max_threads
   // int thread_num = omp_get_max_threads();
   // LOG(INFO) << thread_num << " workers working on parallel!";
   // thread_num = thread_num > 16 ? thread_num - 6 : 16;

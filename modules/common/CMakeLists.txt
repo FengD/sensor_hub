@@ -15,9 +15,6 @@ if (DO_TEST)
     add_subdirectory(test)
 endif()
 
-# TODO(jinsong.wu): libcommon_io.a can not be compiled into libcommon if libcommon is static lib
-# so add files in directory io here explicitly
-
 add_subdirectory(io)
 
 file(GLOB SRCS *.cc io/*.cc)

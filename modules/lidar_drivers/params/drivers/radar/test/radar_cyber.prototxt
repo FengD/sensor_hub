@@ -4,7 +4,7 @@ input_config {
     packet_size: 1400
     lidar_port: 6003
     cyber_config {
-        file_path: "/data_local/sunyuan/data/cyber/yanshiche/data_record_2023_02_01_11_53_18/20230201115340.record.00005"
+        file_path: "/data_local/fengding/data/cyber/yanshiche/data_record_2023_02_01_11_53_18/20230201115340.record.00005"
         channel: "radar/RADAR_DATA_RAW"
         sleeptime: 4000
     }

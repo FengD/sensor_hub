@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 
 project(sensor_hub_modules)
-
+SET(LIB_VERSION 3.2.0)
 if (WITH_TDA4)
     add_definitions(-DWITH_TDA4)
 endif()
@@ -72,10 +72,9 @@ link_directories(
     ${DEPENDENCIES_PATH}/perception_algorithm_lib/lib
     ${sensor_msg_LIBS}
 )
-
+add_subdirectory(common)
 add_subdirectory(camera_drivers)
 add_subdirectory(lidar_drivers)
 #add_subdirectory(ins_drivers)
-#add_subdirectory(chassis_drivers)
 #add_subdirectory(radar_drivers)
 add_subdirectory(tools)

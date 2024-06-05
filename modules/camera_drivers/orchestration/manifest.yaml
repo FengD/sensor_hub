@@ -1,8 +1,8 @@
 modules:
   - name: "m1"
-    library: "libAI_CameraDrivers.so"
+    library: "libCameraDrivers.so"
     blocks:
-      - name: "AI_CameraDrivers"
+      - name: "CameraDrivers"
         class_name: "CameraMain"
         interval: 50
         count: -1

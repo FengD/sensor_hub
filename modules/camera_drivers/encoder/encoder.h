@@ -1,4 +1,4 @@
-// Copyright (C) 2022 Hirain Technologies
+// Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
 // Author: Feng DING
 // Description: camera encoder

@@ -1,4 +1,4 @@
-// Copyright (C) 2023 Hirain Technologies Inc.
+// Copyright (C) 2023 FengD Inc.
 // License: Modified BSD Software License Agreement
 // Author: Zilou Cao
 // Description: ins parser for asensing ins570d device

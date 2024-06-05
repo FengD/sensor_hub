@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<manifest package="AI_LidarDrivers" versionCode="23" versionName="3.11.0" >
+<manifest package="LidarDrivers" versionCode="23" versionName="3.11.0" >
   <uses-sdk targetSdkVersion="1" />
   <application persistent="true" category="red" product="HH02-1:HH02-2:HH02-5:HH02-6:HE00-2:HE00-3:HH03-3:HH03-5">
     <start-on event=""/>

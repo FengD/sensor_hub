@@ -1,6 +1,8 @@
-project(AI_CameraDrivers)
+project(CameraDrivers)
 
 # gstreamer
+
+
 if(WITH_IPC)
 find_package(PkgConfig)
 pkg_check_modules(GSTREAMER QUIET gstreamer-0.10)
@@ -19,7 +21,7 @@ endif()
 include_directories(${GSTREAMER_INCLUDE_DIRS})
 message(${GSTREAMER_INCLUDE_DIRS})
 endif()
-
+find_package(OpenCV REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../../modules/ ${OpenCV_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
@@ -86,23 +88,6 @@ target_link_libraries(${PROJECT_NAME}
     ${OpenCV_LIBS}
 )
 if(WITH_ROS2)
-if(WITH_TDA4)
-    add_subdirectory(camera_calibration)
-    find_package(Utils REQUIRED)
-    target_link_libraries(${PROJECT_NAME}
-        ${UTILS_LIB}
-        ${PCL_LIBRARIES}
-        opencv_core
-        opencv_imgproc
-        opencv_imgcodecs
-        camera_calibration
-        camera_base
-        calibration
-        camera_tools_proto
-        opencv_calib3d
-        opencv_highgui
-    )
-endif()
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
     beatles

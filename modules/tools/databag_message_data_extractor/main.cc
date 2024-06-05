@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Hirain Technologies
+// Copyright (C) 2021 FengD
 // License: Modified BSD Software License Agreement
 // Author: Binqi Fan, Zilou Cao, Jianfei Jiang
 // Description: databag_message_data_extractor
@@ -87,7 +87,7 @@ void extract_packet(const std::string &path) {
   }
   int camera_status =
       data_extractor.extract_frame(path, folder_parent_path, type);
-  LOG(INFO) << "HIRAIN AIRI CYBERRT EXTRACT FRAMES" << std::endl;
+  LOG(INFO) << "CYBERRT EXTRACT FRAMES" << std::endl;
   if (apollo::cyber::SUCC != camera_status) {
     throw("Fatal Error: listener init failed!");
   }

@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Hirain Technologies
+// Copyright (C) 2021 FengD
 // License: Modified BSD Software License Agreement
 // Author: Binqi Fan,  Jianfei Jiang
 // Description: basic cyber tool

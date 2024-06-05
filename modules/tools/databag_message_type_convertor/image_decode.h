@@ -1,6 +1,6 @@
-// Copyright (C) 2021 Hirain Technologies
+// Copyright (C) 2021 FengD
 // License: Modified BSD Software License Agreement
-// Author: Yuan Sun
+// Author: Feng DING
 // Description: Decode Image
 
 #pragma once

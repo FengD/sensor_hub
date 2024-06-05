@@ -4,7 +4,7 @@ input_config {
     packet_size: 1400
     lidar_port: 6003
     pcap_config {
-        file_path: "/data_local/sunyuan/data/pcap/2022_1221_c4.pcapng"
+        file_path: "/data_local/fengding/data/pcap/2022_1221_c4.pcapng"
         source_ip_str: "10.20.30.40"
         read_fast: false
         packet_rate: 100

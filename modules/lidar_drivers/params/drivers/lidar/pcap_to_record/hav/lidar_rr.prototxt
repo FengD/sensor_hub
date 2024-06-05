@@ -6,7 +6,7 @@ input_config {
     lidar_multicast_ip: "239.76.68.1"
     # gps_port: 10111
     pcap_config {
-        file_path: "/data_local/sunyuan/data/pcap/602/05272142/RR/602_05272142RR.pcap"
+        file_path: "/data_local/fengding/data/pcap/602/05272142/RR/602_05272142RR.pcap"
         source_ip_str: "192.168.5.195"
         read_fast: false
         packet_rate: 100

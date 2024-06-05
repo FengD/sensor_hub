@@ -1,4 +1,4 @@
-project(AI_LidarDrivers)
+project(LidarDrivers)
 
 add_subdirectory(input)
 add_subdirectory(parser)

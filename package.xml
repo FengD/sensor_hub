@@ -4,8 +4,8 @@
   <name>sensor_hub</name>
   <version>1.0.0</version>
   <description>demo for shared mem block</description>
-  <maintainer email="dingbobby@hotmail.com">zilou.cao</maintainer>
-  <license>Hirain License</license>
+  <maintainer email="dingbobby@hotmail.com">feng.ding</maintainer>
+  <license> License</license>
   
   <buildtool_depend>ament_cmake</buildtool_depend>
 

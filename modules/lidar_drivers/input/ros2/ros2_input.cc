@@ -1,6 +1,6 @@
-// Copyright (C) 2020 Hirain Technologies
+// Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Yuan Sun
+// Author: Feng DING
 // Description: input ros2
 
 #include "lidar_drivers/input/ros2/ros2_input.h"

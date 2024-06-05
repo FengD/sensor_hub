@@ -1,4 +1,4 @@
-# Hirain CyberRT CYBERRT EXTRACT FRAMES TOOLS
+#  CyberRT CYBERRT EXTRACT FRAMES TOOLS
 
 #### parse traverse all record_packet file
     export SAVE_PATH={save path}

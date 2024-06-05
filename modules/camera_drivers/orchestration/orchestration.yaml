@@ -1,4 +1,4 @@
-app_name: AI_CameraDrivers
+app_name: CameraDrivers
 processors:
   - id: 0
     rt_priority: 99
@@ -7,8 +7,8 @@ processors:
     force_realtime: false
 
 tasks:
-  - name: "AI_CameraDrivers"
-    block: "/m1/AI_CameraDrivers"
+  - name: "CameraDrivers"
+    block: "/m1/CameraDrivers"
     processor: 0
     priority: 0
     customer_config: "af_args_config.prototxt"

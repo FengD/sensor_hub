@@ -1,4 +1,4 @@
-// Copyright (C) 2020 Hirain Technologies
+// Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
 // Author: Feng DING / Jianfei JIANG
 // Description: lidar parser vlp16

@@ -1,6 +1,6 @@
-// Copyright (C) 2020 Hirain Technologies
+// Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Yuan SUN
+// Author: Feng DING
 // Description: socket write
 
 #include "lidar_drivers/input/socket/write.h"

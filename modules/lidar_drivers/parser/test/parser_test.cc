@@ -1,6 +1,6 @@
-// Copyright (C) 2022 Hirain Technologies
+// Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: Yuan Sun
+// Author: Feng DING
 
 #include <gtest/gtest.h>
 

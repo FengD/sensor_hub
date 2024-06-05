@@ -65,55 +65,8 @@ Options:
 
 ### 1.2. CodeCheck
 * use `./build.sh check_code run` first to verify if all check passed!
-``` shell
-function check_code() {
-    wget http://airi-server-4010.hirain.local/release/code_check_tools/code_check_tools.tar.gz
-    tar -zxvf code_check_tools.tar.gz
-    chmod -R +x code_check_tools
-    export WORKSPACE=${WS}
-    export CODE_CHECK_EXCLUDE_LIST="3rdparty,tools,gstcamera,test"
-    echo -e "${RED}exclude list: $CODE_CHECK_EXCLUDE_LIST ${NO_COLOR}"
-    ./code_check_tools/code_check.sh $param
-    if [ $? -eq 0 ]; then
-        rm -rf code_check_tools.tar.gz code_check_tools
-        exit 0
-    else
-        rm -rf code_check_tools.tar.gz code_check_tools
-        exit 1
-    fi
-}
-```
 
-### 1.3. GetDependencies
-``` shell
-function get_dependencies() {
-    echo "get-dependencies"
-    mkdir -p build/modules
-    wget http://airi-server-4010.hirain.local/share/pkgs/get-dependencies.py
-    python get-dependencies.py
-    rm -rf get-dependencies.py
-}
-```
-
-All the dependencies will extract into `build/modules/`. So it is better to put all the source in `modules` folder. And then,
-* `set(DEPENDENCIES_PATH ${CMAKE_CURRENT_BINARY_DIR}/modules)` in the top CMakeLists.txt
-* Put use for `link_directories` and `include_directories` in the CMakeLists.txt inside the `modules`
-
-```
-include_directories(
-    ${DEPENDENCIES_PATH}/apollo/cyber/include
-    ${DEPENDENCIES_PATH}/crdc_airi_common/include
-    ${DEPENDENCIES_PATH}/tiovx_camera/include
-)
-
-link_directories(
-    ${DEPENDENCIES_PATH}/apollo/cyber/lib
-    ${DEPENDENCIES_PATH}/crdc_airi_common/lib
-    ${DEPENDENCIES_PATH}/tiovx_camera/lib
-)
-```
-
-### 1.4. Coverage check
+### 1.3. Coverage check
 ``` shell
 function gen_coverage() {
   export LD_LIBRARY_PATH=${WS}/build/modules/crdc_airi_common/lib/
@@ -135,7 +88,6 @@ function gen_coverage() {
 ## EXECUTE
 
 ``` shell
-
 export CRDC_WS=
 execute_camera_drivers.sh
 execute_lidar_drivers.sh

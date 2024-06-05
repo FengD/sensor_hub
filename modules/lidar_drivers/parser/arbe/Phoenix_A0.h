@@ -1,6 +1,6 @@
-// Copyright (C) 2021 Hirain Technologies Inc.
+// Copyright (C) 2021 FengD Inc.
 // License: Modified BSD Software License Agreement
-// Author: yuan.sun
+// Author: Feng DING
 // Description: ins parser for arbe_Phoenix_A0 device
 
 #pragma once

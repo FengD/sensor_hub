@@ -1,9 +1,0 @@
-modules:
-  - name: "m1"
-    library: "liblidar_calibrate.so"
-    blocks:
-      - name: "lidars_calibration"
-        class_name: "LidarMain"
-        interval: 50
-        count: -1
-

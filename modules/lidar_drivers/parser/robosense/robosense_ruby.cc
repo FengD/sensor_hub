@@ -1,6 +1,6 @@
-// Copyright (C) 2020 Hirain Technologies
+// Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING / JianFei JIANG / Yuan Sun
+// Author: Feng DING / JianFei JIANG
 // Description: lidar parser Robosense RS-Ruby-Lite / RS-Ruby-80V
 
 #include "lidar_drivers/parser/robosense/robosense_ruby.h"
