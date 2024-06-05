@@ -4,40 +4,28 @@
 
 * This project is named `sensor_hub` which could be used for sensor app layer.
 
-``` mindmap
+![sensorhub](mindmap.png)
 
-# SensorHub
-## CameraDriver
-### Input
-#### Gstreamer
-#### Mxc
-#### ROS2Topic
-#### Openvx/tiovx 
-### Decoder
-### Encoder
-#### opencv
-#### h264
-#### turbo_jpeg
-## LidarDriver
-### Input
-#### Cyber
-#### PCAP
-#### ROS2
-#### Socket
-### Parser
-#### Innovusion-Falcon
-#### Innoviz-pro/one
-#### Hesai-pandar40,XT32
-#### Robosense-Ruby
-#### Velodyne-16
-#### Arbe(Imaging radar cloud)
-## RadarDriver
-## ChassisDriver
-## InsDriver
+## High Light
+* Each time we create or start a new robotics platform, selecting the appropriate sensors is always our first task. Unfortunately, third-party sensor software lacks standardization. Sometimes, performance regarding latency is inadequate. Other times, we need to add new functionalities such as diagnostics, data collection, data replay, sensor calibration, etc. The structure of the sensor hub project offers a new approach to address these issues.
 
-```
+* It can adapt to different types of sensor inputs, including Ethernet, CAN, GStreamer, and files (PCAP, Cyberbag, ROSbag). You can use this versatile structure to explore and tailor it for your specific needs.
+
+* Implement all the needs and it allows you to execute different kinds of sensor group during the runtime by the configuration.
+
+![architecture](arch.png)
 
 ## 1. Build
+
+### dependencies
+
+``` shell
+# turbojpeg and opencv used in camera driver, c++ 17 used like <filesystem>
+apt install libopencv-dev libopencv-contrib-dev libturbo-jpeg-dev libturbojpeg libturbojpeg0-dev libjpeg-turbo8-dev g++-8
+```
+
+* [cyber](https://github.com/FengD/apollo_cyber)
+
 
 * Set env for different platform
 `export PLATFORM=X86`  `export TAG=1804`  `export TAG=AFRED` for X86
@@ -95,4 +83,42 @@ execute_radar_drivers.sh
 execute_imu_drivers.sh
 
 ```
+
+## Annexe
+
+1. mindmap
+
+``` mindmap
+
+# SensorHub
+## CameraDriver
+### Input
+#### Gstreamer
+#### Mxc
+#### ROS2Topic
+#### Openvx/tiovx 
+### Decoder
+### Encoder
+#### opencv
+#### h264
+#### turbo_jpeg
+## LidarDriver
+### Input
+#### Cyber
+#### PCAP
+#### ROS2
+#### Socket
+### Parser
+#### Innovusion-Falcon
+#### Innoviz-pro/one
+#### Hesai-pandar40,XT32
+#### Robosense-Ruby
+#### Velodyne-16
+#### Arbe(Imaging radar cloud)
+## RadarDriver
+## ChassisDriver
+## InsDriver
+
+```
+
 
