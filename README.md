@@ -30,8 +30,7 @@ apt install libopencv-dev libopencv-contrib-dev libturbo-jpeg-dev libturbojpeg l
 
 
 * Set env for different platform
-`export PLATFORM=X86`  `export TAG=1804`  `export TAG=AFRED` for X86
-`export PLATFORM=TDA4` `export TAG=0703_HI`  `export TAG=AFRED` for TDA4
+`export PLATFORM=X86`  `export TAG=1804`(CYBER)  `export TAG=AFRED`(ROS) for X86
 
 `./build.sh` build the project.
 `./build.sh clean` clean the build.
