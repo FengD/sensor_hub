@@ -4,7 +4,7 @@
 
 * This project is named `sensor_hub` which could be used for sensor app layer.
 
-![sensorhub](mindmap.png)
+![sensorhub](docs/mindmap.png)
 
 ## High Light
 * Each time we create or start a new robotics platform, selecting the appropriate sensors is always our first task. Unfortunately, third-party sensor software lacks standardization. Sometimes, performance regarding latency is inadequate. Other times, we need to add new functionalities such as diagnostics, data collection, data replay, sensor calibration, etc. The structure of the sensor hub project offers a new approach to address these issues.
@@ -13,7 +13,9 @@
 
 * Implement all the needs and it allows you to execute different kinds of sensor group during the runtime by the configuration.
 
-![architecture](arch.png)
+* [some other details in chinese](docs/docs_zh.pdf)
+
+![architecture](docs/arch.png)
 
 ## 1. Build
 
