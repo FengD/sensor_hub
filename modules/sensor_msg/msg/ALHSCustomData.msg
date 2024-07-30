@@ -1,0 +1,5 @@
+std_msgs/Header header
+uint32 alhs_task_type
+sensor_msgs/Image alhs_image
+sensor_msgs/Image alhs_depth
+sensor_msgs/PointCloud2 alhs_cloud

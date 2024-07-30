@@ -1,0 +1,9 @@
+SensorHeader header
+PointField[] fields
+byte[] data
+uint32 height
+uint32 width
+uint32 point_step
+uint32 row_step
+bool is_dense
+bool is_bigendian

@@ -1,0 +1,17 @@
+# the details of the version
+int32 version
+# lence undistortion map
+string[30] ldc_map
+# the calibration params for each sensor
+string[20] sensor_id
+float32[20] x
+float32[20] y
+float32[20] z
+float32[20] roll
+float32[20] pitch
+float32[20] yaw
+---
+# is the calibration successed
+bool is_success
+# the details of the action
+string response

@@ -1,0 +1,13 @@
+# LEVEL constants
+uint8 NOERR=0
+uint8 WARN=1
+uint8 ERROR=2
+uint8 DEADLY=3
+
+uint8 SL_MIN=0
+uint8 SL_WARN_BASE=10
+uint8 SL_WARN_EXCEPT=11
+uint8 SL_ERROR_BASE=20
+uint8 SL_FATAL_BASE=30
+uint8 SL_FATAL_EMERG=31
+uint8 SL_MAX=39

@@ -1,0 +1,7 @@
+SensorHeader header
+Pose pose
+Uncertainty uncertainty
+float64 measurement_time
+TrajectoryPoint[] trajectory_point
+MsfStatus msf_status
+MsfSensorMsgStatus sensor_status

@@ -1,0 +1,35 @@
+# the type of the request for perception
+# CARTON_DETECT = 0
+# STOCK_DETECT = 1
+# FORM_CHECK = 2
+# GET_STATUS = 3
+# GET_VERSION = 4
+int32 request_type
+# sensor height to ground
+float32 sensor_height
+# pose information of objects
+sensor_msg/WRSPoses pose_info
+---
+# perception version
+int32 version
+# check between request id and service instance
+# true: correct match
+# false: wrong match
+bool is_right_request
+# perception status
+# SUCCESS = 0
+# NO_ERROR = 1
+# NO_IMAGE = 2
+# NO_CLOUD = 3
+# NO_SENSOR_LINKED = 4
+# NO_TARGET = 5
+# NO_POSE = 6
+# MULTI_TARGETS = 7
+# TIMEOUT = 8
+int32 perception_status
+# check form of top cartons correctness
+# true: form is correct
+# false: form is incorrect
+bool is_form_right
+# the pose information of the interesting target
+sensor_msg/WRSPoses pose_info

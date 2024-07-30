@@ -1,0 +1,10 @@
+uint8 lane_type
+float64 quality
+int32 model_degree
+float64 c0_position
+float64 c1_heading_angle
+float64 c2_curvature
+float64 c3_curvature_derivative
+float64 view_range
+float64 longitude_start
+float64 longitude_end

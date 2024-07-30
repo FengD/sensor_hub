@@ -1,0 +1,28 @@
+# the mode type of the vehicle
+# NORMAL = 0
+# DIAGNOSE = 1
+# CALIBRATION = 2
+# DATA_COLLECTION = 3
+# TESTING = 4
+int32 mode_type
+---
+# is the calibration successed
+bool is_success
+# the details of the action
+string response
+# the time used in milliseconds
+int32 execute_time_ms
+# the calibrated cloud data in uint8, could be a base64 stream
+string cloud_data
+# the calibrated image data in uint8, could be a base64 stream
+string image_data
+# lence undistortion map
+string[30] ldc_map
+# the calibration params for each sensor
+string[20] sensor_id
+float32[20] x
+float32[20] y
+float32[20] z
+float32[20] roll
+float32[20] pitch
+float32[20] yaw

@@ -1,0 +1,3 @@
+SensorHeader header
+StatusPb error_code
+MapIntRadarObstacle radar_obstacle

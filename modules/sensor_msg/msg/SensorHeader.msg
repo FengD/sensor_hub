@@ -1,0 +1,12 @@
+float64 timestamp_sec
+string module_name
+uint32 sequence_num
+uint64 lidar_timestamp
+uint64 camera_timestamp
+uint64 radar_timestamp
+uint32 version
+StatusPb status
+string frame_id
+uint64 ins_timestamp
+uint64 other_timestamp
+builtin_interfaces/Time stamp

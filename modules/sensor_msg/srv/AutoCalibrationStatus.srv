@@ -1,0 +1,14 @@
+# the status type of the connection
+# CONNECTION_STATUS = 0
+# CALIBRATION_STATUS = 1
+int32 status
+---
+# calibration status
+# CONNECT = 0
+# PREPARE = 1
+# PROCESS = 2
+# FINISH = 3
+# FAIL = 4
+int32 calibration_status
+# the details of the action
+string response

@@ -1,0 +1,5 @@
+SensorHeader header
+float64 measurement_time
+float32 measurement_span 0.0
+Point3D linear_acceleration
+Point3D angular_velocity

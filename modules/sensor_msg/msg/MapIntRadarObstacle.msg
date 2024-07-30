@@ -1,0 +1,2 @@
+int32 idx
+RadarObstacle radar_obstacle

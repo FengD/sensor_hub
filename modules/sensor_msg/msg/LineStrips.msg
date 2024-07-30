@@ -1,0 +1,1 @@
+LineStrip[] line_strip

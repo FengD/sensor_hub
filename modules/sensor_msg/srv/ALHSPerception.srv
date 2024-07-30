@@ -1,0 +1,36 @@
+# the type of the request for perception
+# INSTALL = 0
+# REMOVE = 1
+# GET_STATUS = 2
+# GET_VERSION = 3
+int32 request_type
+---
+# perception version
+int32 version
+# check between request id and service instance
+# true: correct match
+# false: wrong match
+bool is_right_request
+# perception status
+# SUCCESS = 0
+# NO_ERROR = 1
+# NO_IMAGE = 2
+# NO_CLOUD = 3
+# NO_SENSOR_LINKED = 4
+# NO_TARGET = 5
+# NO_POSE = 6
+# TIMEOUT = 7
+int32 perception_status
+# the target type detected
+# UNKNOWN = 0
+# KEYHOLE = 1
+# TWIST_LOCKPIN = 2
+# CONE_LOCKPIN = 3
+int32 target_type
+# the pose params of the interesting target
+float32 x 10000.0
+float32 y 10000.0
+float32 z 10000.0
+float32 roll 10000.0
+float32 pitch 10000.0
+float32 yaw 10000.0

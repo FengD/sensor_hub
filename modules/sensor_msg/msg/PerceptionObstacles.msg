@@ -1,0 +1,7 @@
+PerceptionObstacle[] perception_obstacle
+SensorHeader header
+uint16 error_code 0
+LaneMarkers lane_marker
+CIPVInfo cipv_info
+PerceptionObstacle[] uncertain_perception_obstacle
+PerceptionOnlineArea[] perception_online_area
