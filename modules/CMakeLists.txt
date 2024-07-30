@@ -9,6 +9,9 @@ endif()
 find_package(Protobuf REQUIRED)
 if(PROTOBUF_FOUND)
     message(STATUS "protobuf library found")
+    include_directories(${Protobuf_INCLUDE_DIRS})
+    link_directories(${Protobuf_LIBRARY_DIRS})
+    link_directories(${Protobuf_PROTOC_LIBRARIES})
 else()
     message(FATAL_ERROR "protobuf library is needed but cant be found")
 endif()
@@ -18,19 +21,6 @@ if(NOT EIGEN3_INCLUDE_DIR)
     message(FATAL_ERROR "Please point the environment variable EIGEN3_INCLUDE_DIR to the include directory of your Eigen3 installation.")
 endif()
 include_directories(${EIGEN3_INCLUDE_DIR})
-
-SET(SYSROOT_DIR ${RECIPE_SYSROOT})
-if(x${SYSROOT_DIR} STREQUAL "x")
-	SET(SYSROOT_DIR $ENV{SDKTARGETSYSROOT})
-endif()
-
-link_directories(${SYSROOT_DIR}/usr/lib)
-include_directories(${SYSROOT_DIR}/usr/include)
-include_directories(${SYSROOT_DIR}/usr/include/opencv4)
-
-set(Protobuf_INCLUDE_DIRS ${SYSROOT_DIR}/usr/include CACHE INTERNAL "Protobuf_include")
-set(Protobuf_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotobuf.so CACHE INTERNAL "Protobuf_libraries")
-set(Protobuf_PROTOC_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotoc.so CACHE INTERNAL "Protobuf_protoc_libraries")
 
 if (WITH_TDA4)
     if (($ENV{PLATFORM} MATCHES "TDA4") AND ($ENV{TAG} MATCHES "0703_HI"))
@@ -59,19 +49,13 @@ endif()
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
-    ${DEPENDENCIES_PATH}/crdc_airi_common/include
-    ${DEPENDENCIES_PATH}/perception_tiovx_pipelines/include/app_tiovx_camera
-    ${DEPENDENCIES_PATH}/crdc_airi_common/include/sensor_msg
-    ${DEPENDENCIES_PATH}/perception_algorithm_lib/include
-    ${sensor_msg_INCLUDE_DIRS}
 )
 
-link_directories(
-    ${DEPENDENCIES_PATH}/crdc_airi_common/lib
-    ${DEPENDENCIES_PATH}/perception_tiovx_pipelines/lib
-    ${DEPENDENCIES_PATH}/perception_algorithm_lib/lib
-    ${sensor_msg_LIBS}
-)
+if (WITH_ROS2)
+  add_subdirectory(sensor_msg)
+endif()
+add_subdirectory(module_diagnose)
+add_subdirectory(util)
 add_subdirectory(common)
 add_subdirectory(camera_drivers)
 add_subdirectory(lidar_drivers)

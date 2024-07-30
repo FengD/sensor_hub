@@ -1,6 +1,6 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: LINLIN WANG
+// Author: Feng DING
 // Description: TI OpenVX based camera input
 
 #pragma once

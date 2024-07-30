@@ -5,7 +5,7 @@
 
 #include "ins_drivers/ins.h"
 #ifdef WITH_ROS2
-#include "ins_drivers/output/af_output.h"
+#include "ins_drivers/output/ros_output.h"
 #else
 #include "ins_drivers/output/cyber_output.h"
 #endif

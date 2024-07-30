@@ -6,7 +6,7 @@
 #include <omp.h>
 #include "camera_drivers/camera.h"
 #ifdef WITH_ROS2
-#include "camera_drivers/output/af_output.h"
+#include "camera_drivers/output/ros_output.h"
 #else
 #include "camera_drivers/output/cyber_output.h"
 #endif
@@ -381,7 +381,7 @@ void Camera::write_data_intermittently(uint32_t last_data_fps_index,
                                std::string channel_name,
                                sensor_msgs::msg::CompressedImage& data) {
   if (last_data_fps_index % downsampling_each_frame == 0) {
-    common::Singleton<CameraAFOutput>::get()->write_image(channel_name, data);
+    common::Singleton<CameraROSOutput>::get()->write_image(channel_name, data);
   }
 }
 #endif
@@ -409,7 +409,7 @@ void Camera::send_mask_topic(std::shared_ptr<const CameraRawData>& raw_data,
     auto offset = i * one_image_size;
     dill_mask_image(raw_data, offset, one_image_size);
 #ifdef WITH_ROS2
-    common::Singleton<CameraAFOutput>::get()->write_image(topic_name + "_by_sensor",
+    common::Singleton<CameraROSOutput>::get()->write_image(topic_name + "_by_sensor",
                                                                 encode_mask_image_);
 #endif
   }
@@ -422,7 +422,7 @@ void Camera::send_raw_data(std::shared_ptr<const CameraRawData>& raw_data,
         auto offset = i * one_image_size;
         dill_raw_image(raw_data, offset, one_image_size);
 #ifdef WITH_ROS2
-        common::Singleton<CameraAFOutput>::get()->write_image(
+        common::Singleton<CameraROSOutput>::get()->write_image(
           config_.channel_name() + "_" + std::to_string(i), image_msg_);
 #else
         common::Singleton<CameraCyberOutput>::get()->write_image(

@@ -6,9 +6,13 @@
 #include <gflags/gflags.h>
 #include "common/common.h"
 #include "module_diagnose/module_diagnose.h"
+#ifdef WITH_ROS2
+#include "camera_drivers/output/ros_output.h"
+#else
 #include "camera_drivers/output/cyber_output.h"
+#endif
 #include "camera_drivers/camera.h"
-#include "common/util.h"
+#include "util/util.h"
 
 #define MODULE "CameraDriver"
 DEFINE_string(config_file, "params/drivers/camera/default/camera_config.prototxt",
@@ -30,27 +34,19 @@ int main(int argc, char* argv[]) {
         LOG(INFO) << "[CAMERA_MAIN] Current CRDC_WS: " << std::string(std::getenv("CRDC_WS"));
     }
 
+    #ifdef WITH_ROS2
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<rclcpp::Node>(MODULE);
+    common::Singleton<CameraROSOutput>::get()->init(MODULE);
+    #else
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
     apollo::cyber::Init(MODULE);
     common::Singleton<CameraCyberOutput>::get()->init(MODULE);
+    #endif
 
     CameraComponent camera_component;
-#ifdef WITH_TDA4
-    std::string config;
-    auto product_name = get_product_name();
-    LOG(INFO) << "[" << MODULE << "] Product name is " << product_name;
-    if (FLAGS_use_product_name) {
-        config = std::string(std::getenv("CRDC_WS")) + "/params/drivers/camera/"+
-                product_name + "/camera_config.prototxt";
-        std::string tiovx_config = std::string(std::getenv("CRDC_WS"))
-                + "/params/drivers/camera/" + product_name + "/app_multi_cam.cfg";
-        set_env(FLAGS_tiovx_config, tiovx_config);
-    } else {
-        config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
-    }
-#else
     std::string config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
-#endif
+
     LOG(INFO) << "[CAMERA_MAIN] Use proto config: " << config;
 
     if (!crdc::airi::util::is_path_exists(config)) {
@@ -83,7 +79,12 @@ int main(int argc, char* argv[]) {
     common::Singleton<ModuleDiagnose>::get()->start();
     LOG(INFO) << "[CAMERA_MAIN] camera module_diagnose started.";
 
+    #ifdef WITH_ROS2
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    #else
     apollo::cyber::WaitForShutdown();
+    #endif
     common::Singleton<ModuleDiagnose>::get()->stop();
     for (const auto& camera : cameras) {
         camera->stop();

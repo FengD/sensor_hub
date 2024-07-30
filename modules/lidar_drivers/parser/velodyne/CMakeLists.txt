@@ -5,6 +5,12 @@ add_library(${PROJECT_NAME} STATIC ${SRCS})
 if(WITH_ROS2)
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
-    sensor_msg
+)
+rosidl_get_typesupport_target(cpp_typesupport_target
+    sensor_msg "rosidl_typesupport_cpp"
+)
+ 
+target_link_libraries(${PROJECT_NAME}
+    "${cpp_type_support_target}"
 )
 endif()

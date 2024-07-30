@@ -18,10 +18,10 @@
 namespace crdc {
 namespace airi {
 
-class LidarAFOutput {
+class LidarROSOutput {
  public:
-  LidarAFOutput() = default;
-  virtual ~LidarAFOutput() = default;
+  LidarROSOutput() = default;
+  virtual ~LidarROSOutput() = default;
 
   /**
    * @brief Init the cyber output
@@ -84,7 +84,7 @@ class LidarAFOutput {
   }
 
  private:
-  friend class common::Singleton<LidarAFOutput>;
+  friend class common::Singleton<LidarROSOutput>;
   template <typename MessageT>
   class AFChannelWriter {
    public:

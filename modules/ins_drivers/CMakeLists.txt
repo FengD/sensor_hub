@@ -48,9 +48,7 @@ if (WITH_ROS2)
     endif()
     ament_target_dependencies(${PROJECT_NAME}
         rclcpp
-        beatles
         sensor_msg
-        af_interfaces
     )
 else()
     target_link_libraries(${PROJECT_NAME}

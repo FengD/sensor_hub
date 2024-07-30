@@ -10,16 +10,6 @@ else()
     message(FATAL_ERROR "protobuf library is needed but cant be found")
 endif()
 
-SET(SYSROOT_DIR ${RECIPE_SYSROOT})
-if(x${SYSROOT_DIR} STREQUAL "x")
-    SET(SYSROOT_DIR $ENV{SDKTARGETSYSROOT})
-endif()
-link_directories(${SYSROOT_DIR}/usr/lib)
-include_directories(${SYSROOT_DIR}/usr/include)
-set(Protobuf_INCLUDE_DIRS ${SYSROOT_DIR}/usr/include CACHE INTERNAL "Protobuf_include")
-set(Protobuf_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotobuf.so CACHE INTERNAL "Protobuf_libraries")
-set(Protobuf_PROTOC_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotoc.so CACHE INTERNAL "Protobuf_protoc_libraries")
-
 add_subdirectory(proto)
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})
@@ -34,7 +24,6 @@ if (WITH_ROS2)
         rclcpp
     )
     add_dependencies(${PROJECT_NAME} sensor_msg)
-    include_directories(${CMAKE_BINARY_DIR}/modules/af/rosidl_generator_cpp)
     rosidl_get_typesupport_target(cpp_typesupport_target
         sensor_msg "rosidl_typesupport_cpp"
     )

@@ -20,28 +20,27 @@ if (WITH_ROS2)
   if(NOT rclcpp_FOUND)
     message(WARNING "rclcpp Not Found")
   endif()
-  find_package(beatles REQUIRED)
   find_package(class_loader REQUIRED)
-  find_package(af_interfaces REQUIRED)
   find_package(rosidl_runtime_cpp REQUIRED)
   find_package(visualization_msgs REQUIRED)
   find_package(geometry_msgs REQUIRED)
   find_package(rosbag2_cpp REQUIRED)
 
-  set(sensor_msg_DIR ${CMAKE_CURRENT_BINARY_DIR}/modules/crdc_airi_common/share/sensor_msg/cmake)
-  find_package(sensor_msg REQUIRED)
-  if(NOT sensor_msg_FOUND)
-    message(WARNING "sensor_msg Not Found")
-  endif()
-
-  find_package(diagnostic_msgs REQUIRED)
-  if(NOT diagnostic_msgs_FOUND)
-    message(WARNING "diagnostic_msgs Not Found")
-  endif()
   find_package(sensor_msgs REQUIRED)
   if(NOT sensor_msgs_FOUND)
     message(WARNING "sensor_msgs Not Found")
   endif()
+  find_package(diagnostic_msgs REQUIRED)
+  if(NOT diagnostic_msgs_FOUND)
+    message(WARNING "diagnostic_msgs Not Found")
+  endif()
+
+  include_directories(
+    ${rclcpp_INCLUDE_DIRS}
+    ${sensor_msgs_INCLUDE_DIRS}
+    ${diagnostic_msgs_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_BINARY_DIR}/modules/sensor_msg/rosidl_generator_cpp/
+  )
 endif()
 
 ## GTest

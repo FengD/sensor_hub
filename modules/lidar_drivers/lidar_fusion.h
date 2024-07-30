@@ -23,7 +23,7 @@
 #include "tools/lidars_calibrate/lidars_calibration.h"
 #endif
 #ifdef WITH_ROS2
-#include "lidar_drivers/output/af_output.h"
+#include "lidar_drivers/output/ros_output.h"
 #include "sensor_msg/msg/point_clouds2.hpp"
 #else
 #include "cyber/sensor_proto/lidar.pb.h"

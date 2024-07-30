@@ -17,15 +17,6 @@
 #include <string>
 #include <vector>
 
-#ifdef WITH_TDA4
-constexpr char PRODUCT_PROPERTY[] = "ro.product";
-constexpr char VEHICLE_NUMBER_PROPERTY[] = "persist.product.vehiclenum";
-
-std::string get_product_name();
-std::string get_vehicle_number();
-void set_env(const std::string &key, const std::string &value);
-#endif
-
 void calc_time_diff(const struct timespec *lo, const struct timespec *hi, struct timespec *diff);
 void split(const std::string &s, const std::string &seperator, std::vector<std::string> *result);
 void getAllFilesInFolder(const std::string& dir_in, std::vector<std::string> *files);

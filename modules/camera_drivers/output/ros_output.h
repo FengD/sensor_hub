@@ -16,10 +16,10 @@
 namespace crdc {
 namespace airi {
 
-class CameraAFOutput {
+class CameraROSOutput {
  public:
-  CameraAFOutput() = default;
-  virtual ~CameraAFOutput() = default;
+  CameraROSOutput() = default;
+  virtual ~CameraROSOutput() = default;
 
   /**
    * @brief Init the af output
@@ -55,7 +55,7 @@ class CameraAFOutput {
   }
 
  private:
-  friend class common::Singleton<CameraAFOutput>;
+  friend class common::Singleton<CameraROSOutput>;
   template <typename T>
   class AFChannelWriter {
    public:

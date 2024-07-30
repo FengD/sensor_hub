@@ -7,7 +7,7 @@
 #include "common/common.h"
 #include "module_diagnose/module_diagnose.h"
 #include "lidar_drivers/lidar_fusion.h"
-#include "common/util.h"
+#include "util/util.h"
 
 #define MODULE "LidarDriver"
 DEFINE_string(config_file, "params/drivers/lidar/test/lidar_config.prototxt",
@@ -27,26 +27,19 @@ int main(int argc, char* argv[]) {
     } else {
         LOG(INFO) << "[LIDAR_MAIN] Current CRDC_WS: " << std::string(std::getenv("CRDC_WS"));
     }
-
+    #ifdef WITH_ROS2
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<rclcpp::Node>(MODULE);
+    common::Singleton<LidarROSOutput>::get()->init(MODULE);
+    #else
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
     apollo::cyber::Init(MODULE);
     common::Singleton<LidarCyberOutput>::get()->init(MODULE);
+    #endif
+
 
     LidarComponent lidar_component;
-#ifdef WITH_TDA4
-    std::string config;
-    auto product_name = get_product_name();
-    LOG(INFO) << "[" << MODULE << "] Product name is " << product_name;
-    if (FLAGS_use_product_name) {
-      config = std::string(std::getenv("CRDC_WS")) + "/params/drivers/lidar/" +
-                product_name + "/lidar_config.prototxt";
-    } else {
-      config = std::string(std::getenv("CRDC_WS")) + "/" +
-                FLAGS_config_file;
-    }
-#else
     std::string config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
-#endif
     LOG(INFO) << "[LIDAR_MAIN] Use proto config: " << config;
 
     if (!crdc::airi::util::is_path_exists(config)) {
@@ -71,8 +64,12 @@ int main(int argc, char* argv[]) {
     common::Singleton<ModuleDiagnose>::get()->set_ready();
     common::Singleton<ModuleDiagnose>::get()->start();
     LOG(INFO) << "[LIDAR_MAIN] lidar module_diagnose started.";
-
+    #ifdef WITH_ROS2
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    #else
     apollo::cyber::WaitForShutdown();
+    #endif
     lidar_fusion->stop();
     common::Singleton<ModuleDiagnose>::get()->stop();
 

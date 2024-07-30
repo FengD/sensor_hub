@@ -386,7 +386,7 @@ void LidarFusion::run() {
 #ifdef WITH_ROS2
       clouds_compensated_->header.stamp.sec = compensation_info->end_utime_ / 1000000;
       clouds_compensated_->header.stamp.nanosec = compensation_info->end_utime_ % 1000000;
-      common::Singleton<LidarAFOutput>::get()->write_fusion_clouds(
+      common::Singleton<LidarROSOutput>::get()->write_fusion_clouds(
                                         config_.channel_name(), clouds_compensated_);
 #else
       static uint32_t seq = 0;

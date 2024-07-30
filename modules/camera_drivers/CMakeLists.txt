@@ -50,15 +50,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}
 endif()
 
 file(GLOB SRCS *.cc)
-if(WITH_ROS2)
-file(GLOB SRC_CYBER camera_main.cc)
-list(REMOVE_ITEM SRCS ${SRC_CYBER})
-add_library(${PROJECT_NAME} SHARED ${SRCS})
-else()
-file(GLOB SRC_ROS2 camera_main_af2.0.cc)
-list(REMOVE_ITEM SRCS ${SRC_ROS2})
 add_executable(${PROJECT_NAME} ${SRCS})
-endif()
+
 add_dependencies(${PROJECT_NAME}
     camera_drivers_proto
     camera_drivers_input
@@ -86,15 +79,24 @@ target_link_libraries(${PROJECT_NAME}
     pthread
     module_diagnose
     ${OpenCV_LIBS}
+    ${Protobuf_LIBRARIES}
 )
 if(WITH_ROS2)
+add_dependencies(${PROJECT_NAME}
+    sensor_msg
+)
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
-    beatles
-    sensor_msg
     sensor_msgs
     diagnostic_msgs
-    af_interfaces
+)
+
+rosidl_get_typesupport_target(cpp_typesupport_target
+    sensor_msg "rosidl_typesupport_cpp"
+)
+ 
+target_link_libraries(${PROJECT_NAME}
+    "${cpp_type_support_target}"
 )
 else()
 target_link_libraries(${PROJECT_NAME}
@@ -130,15 +132,4 @@ install(DIRECTORY params DESTINATION ${PROJECT_NAME}/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/etc/MANIFEST DESTINATION ${PROJECT_NAME}/etc)
 if(WITH_IPC)
     install(DIRECTORY params/drivers/camera/ DESTINATION databag_message_type_convertor/params/drivers/camera/)
-endif()
-
-if(WITH_ROS2 AND WITH_TDA4)
-    include(${CMAKE_SOURCE_DIR}/af_launcher/project.cmake)
-    install(CODE "message(\"Running my custom command\")
-      execute_process(
-      COMMAND
-      ${CMAKE_COMMAND} -E chdir ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}
-      zip ../${PROJECT_NAME}.apk -r .
-      WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}
-    )")
 endif()

@@ -20,18 +20,7 @@ link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 file(GLOB SRCS *.cc)
-if (WITH_ROS2)
-    file(GLOB SRC_CYBER lidar_main.cc)
-    list(REMOVE_ITEM SRCS ${SRC_CYBER})
-    add_library(${PROJECT_NAME} SHARED ${SRCS})
-else()
-    file(GLOB SRC_ROS2 lidar_main_af2.0.cc)
-    list(REMOVE_ITEM SRCS ${SRC_ROS2})
-    add_executable(${PROJECT_NAME} ${SRCS})
-endif()
-
-
-
+add_executable(${PROJECT_NAME} ${SRCS})
 
 set(LIB_LIDAR_DRIVERS_COMMON
     lidar_drivers_proto
@@ -53,36 +42,40 @@ add_dependencies(${PROJECT_NAME}
     ${LIB_LIDAR_DRIVERS_COMMON}
 )
 
-
 if(NOT WITH_ROS2)
     add_dependencies(${PROJECT_NAME} lidar_drivers_input_cyber)
 else()
-    add_dependencies(${PROJECT_NAME} lidar_drivers_input_ros2 lidar_dynamic_calibrate)
+    add_dependencies(${PROJECT_NAME} lidar_drivers_input_ros2)
 endif()
 target_link_libraries(${PROJECT_NAME}
     module_util -Wl,--whole-archive
     module_diagnose_proto -Wl,--no-whole-archive
     ${LIB_LIDAR_DRIVERS_COMMON}
     ${LIB_COMMON}
+    ${Protobuf_LIBRARIES}
 )
 
 if(WITH_ROS2)
     target_link_libraries(${PROJECT_NAME}
             lidar_drivers_input_ros2
-            lidar_dynamic_calibrate)
-    if(WITH_TDA4)
-        target_link_libraries(${PROJECT_NAME}
-            ${UTILS_LIB}
-        )
-    endif()
+    )
+    add_dependencies(${PROJECT_NAME}
+        sensor_msg
+    )
     ament_target_dependencies(${PROJECT_NAME}
         rclcpp
-        beatles
-        sensor_msg
         sensor_msgs
         visualization_msgs
-        af_interfaces
     )
+
+    rosidl_get_typesupport_target(cpp_typesupport_target
+        sensor_msg "rosidl_typesupport_cpp"
+    )
+    
+    target_link_libraries(${PROJECT_NAME}
+        "${cpp_type_support_target}"
+    )
+    
 else()
     target_link_libraries(${PROJECT_NAME} 
     fastrtps
@@ -91,83 +84,10 @@ else()
 )
 endif()
 
-if(WITH_TDA4 AND WITH_ROS2)
-    target_link_libraries(${PROJECT_NAME}
-        ${PCL_LIBRARIES}
-        fastrtps
-        lidars_calibrate
-    )
-endif()
-
-if(CALIBRATE)
-    add_definitions(-DCALIBRATE)
-    target_link_libraries(${PROJECT_NAME}
-        ${PCL_LIBRARIES}
-        fastrtps
-        lidars_calibrate
-    )
-    if(WITH_ROS2)
-    add_library(lidar_calibrate  SHARED ${SRCS})
-    add_dependencies(lidar_calibrate
-    ${LIB_LIDAR_DRIVERS_COMMON}
-    lidar_drivers_input_ros2
-    )
-    ament_target_dependencies(lidar_calibrate
-        rclcpp
-        beatles
-        sensor_msg
-        sensor_msgs
-        af_interfaces
-    )
-    target_link_libraries(lidar_calibrate
-        ${PCL_LIBRARIES}
-        ${LIB_LIDAR_DRIVERS_COMMON}
-        ${LIB_COMMON}
-        fastrtps
-        lidars_calibrate
-        lidar_drivers_input_ros2
-    )
-    install(TARGETS lidar_calibrate LIBRARY  DESTINATION lidars_calibration/)
-    else()
-    add_executable(lidar_calibrate ${SRCS})
-    add_dependencies(lidar_calibrate
-    ${LIB_LIDAR_DRIVERS_COMMON}
-    lidar_drivers_input_cyber
-    )
-    target_link_libraries(lidar_calibrate
-        ${PCL_LIBRARIES}
-        ${LIB_LIDAR_DRIVERS_COMMON}
-        ${LIB_COMMON}
-        fastrtps
-        lidars_calibrate
-        lidar_drivers_input_cyber
-    )
-    install(TARGETS lidar_calibrate DESTINATION lidars_calibration/bin)
-    endif()
-endif()
-
 install(DIRECTORY params DESTINATION ${PROJECT_NAME}/)
-if(WITH_ROS2)
-install(TARGETS ${PROJECT_NAME} LIBRARY  DESTINATION ${PROJECT_NAME}/)
-install(
-    FILES orchestration/manifest.yaml  orchestration/orchestration.yaml orchestration/af_args_config.prototxt
-    DESTINATION ${PROJECT_NAME}/
-)
-else()
-    install(TARGETS ${PROJECT_NAME} DESTINATION ${PROJECT_NAME}/bin/)
-endif()
+install(TARGETS ${PROJECT_NAME} DESTINATION ${PROJECT_NAME}/bin/)
+
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/etc/MANIFEST DESTINATION ${PROJECT_NAME}/etc/)
 if(WITH_IPC)
     install(DIRECTORY params/drivers DESTINATION databag_message_type_convertor/params/)
-endif()
-
-if(WITH_ROS2 AND WITH_TDA4)
-include(${CMAKE_SOURCE_DIR}/af_launcher/project.cmake)
-install(CODE "message(\"Running my custom command\")
-  execute_process(
-  COMMAND
-  ${CMAKE_COMMAND} -E chdir ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}
-  zip ../${PROJECT_NAME}.apk -r .
-  WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}
-)")
 endif()

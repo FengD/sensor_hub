@@ -25,7 +25,6 @@
 #ifndef WITH_ROS2
 #include "cyber/sensor_proto/image.pb.h"
 #else
-#include "af/block/timer_block.hpp"
 #include "sensor_msgs/msg/image.hpp"
 #include "diagnostic_msgs/msg/diagnostic_status.hpp"
 #include "sensor_msgs/image_encodings.hpp"

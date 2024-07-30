@@ -28,21 +28,9 @@ Lidar::Lidar(const LidarComponentConfig& config) : common::Thread(true) {
     } else {
         raw_data_downsampling_each_cloud_frame_ = 1;
     }
-    dynamic_calibrate_id_ = config_.dynamic_calibrate_id();
-    if (config_.has_calibrate()) {
-        iftransform_ = config_.calibrate();
-    } else {
-        iftransform_ = false;
-    }
-#ifdef WITH_TDA4
-    getserver_ = false;
-#else
-    getserver_ = true;
-#endif
-    if (get_iftransform()) {
-        compensator_.init(config_);
-        dynamic_calibrate_init_ = false;
-    }
+        
+    compensator_.init(config_);
+
     std::string thread_name = lidar_name_;
     if (thread_name.length() > MAX_THREAD_NAME_LENGTH) {
         thread_name = thread_name.substr(0, MAX_THREAD_NAME_LENGTH - 1);
@@ -116,36 +104,6 @@ bool Lidar::init_input() {
 
     return true;
 }
-
-#ifdef WITH_ROS2
-void Lidar::init_dyncalibrate(const std::string& frame_id) {
-#ifdef WITH_TDA4
-    if (dynamic_calibrate_id_ == 2) {
-        dynamic_calibrate_mode_->dynamic_init(frame_id);
-    }
-#else
-    if (dynamic_calibrate_id_ == 1) {
-        dynamic_calibration_mode_.init(frame_id);
-    }
-#endif
-}
-
-void Lidar::dynamic_calibrate(std::shared_ptr<LidarPointCloud>& cloud) {
-#ifdef WITH_TDA4
-    if (dynamic_calibrate_id_ == 2 && dynamic_calibrate_mode_->get_vehicle_mode() == 2 &&
-        dynamic_calibrate_mode_->get_calib_mode() == 2) {
-        int ret = dynamic_calibrate_mode_->dynamic_process(cloud);
-        if (ret == 0) {
-            dynamic_calibrate_mode_->set_dynamic_calibrate_end();
-        }
-    }
-#else
-    if (dynamic_calibrate_id_ == 1) {
-        dynamic_calibration_mode_.process(cloud);
-    }
-#endif
-}
-#endif
 
 void Lidar::stop() {
     LOG(WARNING) << "[" << get_thread_name() << "] lidar stop.";
@@ -232,16 +190,9 @@ void Lidar::get_parser_lidar(Packet* raw_packet, int32_t code) {
             if (callback_ != nullptr) {
                 callback_(cloud);
             }
-            if (get_iftransform()) {
-                compensator_.cloud_transform(cloud);
-                if (!dynamic_calibrate_init_ && getserver_) {
-                    init_dyncalibrate(lidar_name_);
-                    dynamic_calibrate_init_ = true;
-                }
-                if (dynamic_calibrate_init_) {
-                    dynamic_calibrate(cloud);
-                }
-            }
+            
+            compensator_.cloud_transform(cloud);
+            
             if (config_.has_channel_name()) {
                 write_data_intermittently<std::shared_ptr<PointCloud2>>(
                                             last_cloud_data_fps_index_,
@@ -264,9 +215,9 @@ void Lidar::get_parser_lidar(Packet* raw_packet, int32_t code) {
             if (callback_ != nullptr) {
                 callback_(cloud);
             }
-            if (get_iftransform()) {
-                compensator_.cloud_transform(cloud);
-            }
+            
+            compensator_.cloud_transform(cloud);
+            
             if (config_.has_channel_name()) {
                 write_data_intermittently<std::shared_ptr<PointCloud2>>(
                                             last_cloud_data_fps_index_,
@@ -286,10 +237,6 @@ void Lidar::get_parser_lidar(Packet* raw_packet, int32_t code) {
 
 void Lidar::run() {
     while (!stop_) {
-      if (!get_flag()) {
-        sleep(5);
-        continue;
-      }
         Packet* raw_packet;
         int32_t code = input_->get_lidar_data(&raw_packet);
         if (code != DeviceStatus::SUCCESS) {

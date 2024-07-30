@@ -31,7 +31,7 @@ extern "C" {
 #include "camera_drivers/proto/camera_config.pb.h"
 #include "common/common.h"
 #ifdef WITH_ROS2
-#include "tools/databag_message_type_convertor/af_output.h"
+#include "tools/databag_message_type_convertor/ros_output.h"
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp/serialization.hpp"
 #include "rclcpp/serialized_message.hpp"
