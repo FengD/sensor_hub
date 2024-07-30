@@ -1,6 +1,6 @@
 // Copyright (C) 2021 FengD Inc.
 // License: Modified BSD Software License Agreement
-// Author: shichong.wang
+// Author: Feng DING
 // Description: ins parser for asensing ins570d device
 
 #pragma once

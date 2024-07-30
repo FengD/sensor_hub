@@ -2,7 +2,6 @@
 // License: Modified BSD Software License Agreement
 // Author: LINLIN WANG
 // Description: TI OpenVX based camera input
-// Contributor: shichong.wang
 
 #pragma once
 

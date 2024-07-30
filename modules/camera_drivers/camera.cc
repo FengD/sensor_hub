@@ -1,8 +1,7 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING, Zilou Cao
+// Author: Feng DING
 // Description: camera
-// Contributor: shichong.wang
 
 #include <omp.h>
 #include "camera_drivers/camera.h"

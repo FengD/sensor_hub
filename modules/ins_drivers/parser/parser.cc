@@ -1,6 +1,6 @@
 // Copyright (C) 2021 FengD Inc.
 // License: Modified BSD Software License Agreement
-// Author: shichong.wang
+// Author: Feng DING
 // Description: ins parser for asensing ins570d device
 
 #include "ins_drivers/parser/parser.h"
@@ -118,7 +118,6 @@ bool InsParser::parse_ins_packet(const Packet* packet,
     return ret;
   }
 
-  // TODO(shichong.wang): use parser_info
   InsParserInfo parser_info;
   if (!update_frame(parser_info.packet_timestamp_, parser_info)) {
     return false;

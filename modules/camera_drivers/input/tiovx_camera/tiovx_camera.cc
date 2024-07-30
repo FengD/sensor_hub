@@ -1,8 +1,7 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: LINLIN WANG
+// Author: Feng DING
 // Description: TI OpenVX based camera input
-// Contributor: shichong.wang
 
 // #include <tiovx_camera_lib.h>
 #include "camera_drivers/input/tiovx_camera/tiovx_camera.h"

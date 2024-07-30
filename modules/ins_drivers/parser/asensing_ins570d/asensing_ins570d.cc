@@ -1,6 +1,6 @@
 // Copyright (C) 2021 FengD Inc.
 // License: Modified BSD Software License Agreement
-// Author: shichong.wang
+// Author: Feng DING
 // Description: ins parser for asensing ins570d device
 
 #include <arpa/inet.h>
@@ -173,7 +173,6 @@ double InsParser570d::unpack_ins_signal(InsSignal s, uint8_t* data) {
     out_value = unpack_by_bit(s, data, startIndex, shift, unpacked_value);
   }
 
-  // TODO(shichong.wang): mask for the signed value
   double result = static_cast<double>(out_value);
   result = (result * s.factor) + s.offset;
   if (result < min) {
@@ -256,7 +255,6 @@ void InsParser570d::parse_ins_can_frame(char* can_frame_) {
   InsFrame can_frame = InsFrame();
 
   for (int i = 0; i < SIGNAL_LENGTH; i++) {
-    // TODO(shichong.wang): replace "17" by macro
     memcpy(&can_frame, &can_frame_[i * 17], sizeof(can_frame));
     can_frame.frame_id = ntohl(can_frame.frame_id);
     can_frame.frame_flag = ntohl(can_frame.frame_flag);
@@ -309,13 +307,11 @@ void InsParser570d::parse_ins_can_frame(char* can_frame_) {
   position->set_lat(static_cast<double>(can_signal_ins570d.INS_Latitude));
   position->set_height(static_cast<double>(can_signal_ins570d.INS_LocatHeight));
 
-  // TODO(shichong.wang): 570D is in degree
   auto euler_angles = ins_data_->proto_ins_data_->mutable_euler_angles();
   euler_angles->set_x(static_cast<double>(can_signal_ins570d.INS_RollAngle));
   euler_angles->set_y(static_cast<double>(can_signal_ins570d.INS_PitchAngle));
   euler_angles->set_z(static_cast<double>(can_signal_ins570d.INS_HeadingAngle));
 
-  // TODO(shichong.wang): 570D is in degree/s, positive direction: front, right,
   // down
   auto angular_velocity =
       ins_data_->proto_ins_data_->mutable_angular_velocity();
@@ -323,7 +319,6 @@ void InsParser570d::parse_ins_can_frame(char* can_frame_) {
   angular_velocity->set_y(static_cast<double>(can_signal_ins570d.GYR0_Y));
   angular_velocity->set_z(static_cast<double>(can_signal_ins570d.GYR0_Z));
 
-  // TODO(shichong.wang): 570D is in g, positive direction: front, right, down
   auto linear_acceleration =
       ins_data_->proto_ins_data_->mutable_linear_acceleration();
   linear_acceleration->set_x(static_cast<double>(can_signal_ins570d.ACC_X));

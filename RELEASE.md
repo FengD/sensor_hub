@@ -91,7 +91,7 @@
 1. (diag): add diag of empty cloud as DeviceStatus::DEVICE_ERROR
 2. (tools): add fs and bbox channel data in write packet function
 3. (tools): add h264 record data translate to yuv data
-4. (build): adapt for afred, add TAG AFRED
+4. (build): adapt for afred, add TAG ROS2
 5. (ci): fix unit test statistic errors. exclude files in common lib
 6. (ci): add cov html report in artifacts one day valid
 7. (gtest): add unit test to lidar_drivers and camera_drivers

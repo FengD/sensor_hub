@@ -152,7 +152,7 @@ function main() {
     AFRED_DATA_COLLECT=OFF
 
 
-    if [ "${TAG}" = "AFRED" ]; then
+    if [ "${TAG}" = "ROS2" ]; then
         WITH_ROS2=ON
     fi
 
