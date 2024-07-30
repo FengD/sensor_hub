@@ -1,0 +1,52 @@
+syntax = "proto2";
+
+package crdc.airi;
+
+enum Level {
+  option allow_alias = true;
+
+  // Level Severity：FATAL > ERROR > WARN > NOERR
+  NOERR = 0;
+  WARN = 1;
+  ERROR = 2;
+  DEADLY = 3;
+
+  SL_MIN = 0;
+  SL_WARN_BASE = 10;
+  SL_WARN_EXCEPT = 11;
+  SL_ERROR_BASE = 20;
+  SL_FATAL_BASE = 30;
+  SL_FATAL_EMERG = 31;
+  SL_MAX = 39;  // maxinum sublevel, FATAL * 10 + 9
+}
+
+message StatusHeader {
+  message Stamp {
+    required uint32 secs = 1;
+    optional uint32 nsecs = 2;
+  }
+
+  required Stamp stamp = 1;
+
+  // data version
+  optional uint32 version = 2 [default = 1];
+  required string frame_id = 3 [default = ""];
+
+  // Sequence number for each message, always starting from 1 on boot.
+  required uint32 seq = 4 [default = 0];
+}
+
+message ModuleStatusItem {
+  required uint32 code = 1;  // error code
+  required string key = 2 [default = ""];
+  required Level level = 3;
+  required string desc = 4;  // brief description
+  optional string context = 5;  // datail data
+}
+
+message ModuleStatus {
+  required StatusHeader header = 1;
+  required bool ready = 2 [default = false];
+  required Level level = 3 [default = DEADLY];
+  repeated ModuleStatusItem items = 4;
+}
