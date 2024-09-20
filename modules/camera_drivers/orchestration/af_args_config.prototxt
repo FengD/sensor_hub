@@ -1,6 +1,0 @@
-log_dir: "/data/log/perception/camera_drivers/"
-alsologtostdrr: false
-stderrthreshold: 3
-minloglevel: 2
-log_v: 3
-max_log_size: 2

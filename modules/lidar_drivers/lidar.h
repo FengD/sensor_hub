@@ -24,11 +24,6 @@
 #include "sensor_msg/msg/module_status.hpp"
 #include "sensor_msg/msg/level.hpp"
 #include "lidar_drivers/output/af_output.h"
-#ifdef WITH_TDA4
-#include "tools/lidars_calibrate/calibrate.h"
-#else
-#include "tools/lidar_dynamic_calibrate/dynamic_calibration.h"
-#endif
 #else
 #include "cyber/sensor_proto/lidar.pb.h"
 #include "lidar_drivers/output/cyber_output.h"

@@ -57,7 +57,7 @@ add_dependencies(${PROJECT_NAME}
 if(NOT WITH_ROS2)
     add_dependencies(${PROJECT_NAME} lidar_drivers_input_cyber)
 else()
-    add_dependencies(${PROJECT_NAME} lidar_drivers_input_ros2 lidar_dynamic_calibrate)
+    add_dependencies(${PROJECT_NAME} lidar_drivers_input_ros2)
 endif()
 target_link_libraries(${PROJECT_NAME}
     module_util -Wl,--whole-archive
@@ -68,8 +68,7 @@ target_link_libraries(${PROJECT_NAME}
 
 if(WITH_ROS2)
     target_link_libraries(${PROJECT_NAME}
-            lidar_drivers_input_ros2
-            lidar_dynamic_calibrate)
+            lidar_drivers_input_ros2)
     if(WITH_TDA4)
         target_link_libraries(${PROJECT_NAME}
             ${UTILS_LIB}
@@ -77,11 +76,9 @@ if(WITH_ROS2)
     endif()
     ament_target_dependencies(${PROJECT_NAME}
         rclcpp
-        beatles
         sensor_msg
         sensor_msgs
         visualization_msgs
-        af_interfaces
     )
 else()
     target_link_libraries(${PROJECT_NAME} 
@@ -97,53 +94,6 @@ if(WITH_TDA4 AND WITH_ROS2)
         fastrtps
         lidars_calibrate
     )
-endif()
-
-if(CALIBRATE)
-    add_definitions(-DCALIBRATE)
-    target_link_libraries(${PROJECT_NAME}
-        ${PCL_LIBRARIES}
-        fastrtps
-        lidars_calibrate
-    )
-    if(WITH_ROS2)
-    add_library(lidar_calibrate  SHARED ${SRCS})
-    add_dependencies(lidar_calibrate
-    ${LIB_LIDAR_DRIVERS_COMMON}
-    lidar_drivers_input_ros2
-    )
-    ament_target_dependencies(lidar_calibrate
-        rclcpp
-        beatles
-        sensor_msg
-        sensor_msgs
-        af_interfaces
-    )
-    target_link_libraries(lidar_calibrate
-        ${PCL_LIBRARIES}
-        ${LIB_LIDAR_DRIVERS_COMMON}
-        ${LIB_COMMON}
-        fastrtps
-        lidars_calibrate
-        lidar_drivers_input_ros2
-    )
-    install(TARGETS lidar_calibrate LIBRARY  DESTINATION lidars_calibration/)
-    else()
-    add_executable(lidar_calibrate ${SRCS})
-    add_dependencies(lidar_calibrate
-    ${LIB_LIDAR_DRIVERS_COMMON}
-    lidar_drivers_input_cyber
-    )
-    target_link_libraries(lidar_calibrate
-        ${PCL_LIBRARIES}
-        ${LIB_LIDAR_DRIVERS_COMMON}
-        ${LIB_COMMON}
-        fastrtps
-        lidars_calibrate
-        lidar_drivers_input_cyber
-    )
-    install(TARGETS lidar_calibrate DESTINATION lidars_calibration/bin)
-    endif()
 endif()
 
 install(DIRECTORY params DESTINATION ${PROJECT_NAME}/)

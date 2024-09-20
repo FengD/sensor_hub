@@ -1,3 +1,4 @@
 build
 build_dist
+build_deps
 .vscode*

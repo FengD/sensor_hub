@@ -32,17 +32,6 @@ set(Protobuf_INCLUDE_DIRS ${SYSROOT_DIR}/usr/include CACHE INTERNAL "Protobuf_in
 set(Protobuf_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotobuf.so CACHE INTERNAL "Protobuf_libraries")
 set(Protobuf_PROTOC_LIBRARIES ${SYSROOT_DIR}/usr/lib/libprotoc.so CACHE INTERNAL "Protobuf_protoc_libraries")
 
-if (WITH_TDA4)
-    if (($ENV{PLATFORM} MATCHES "TDA4") AND ($ENV{TAG} MATCHES "0703_HI"))
-        set(TI_PSDK_RTOS_PATH ${SYSROOT_DIR})
-    else()
-        set(TI_PSDK_RTOS_PATH $ENV{TI_PSDK_RTOS_PATH})
-    endif()
-    
-    link_directories(${TI_PSDK_RTOS_PATH}/targetfs/usr/lib/)
-    add_definitions(-DWITH_TDA4)
-endif()
-
 if (WITH_A6)
     add_definitions(-DWITH_A6)
 endif()
@@ -59,22 +48,15 @@ endif()
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
-    ${DEPENDENCIES_PATH}/crdc_airi_common/include
-    ${DEPENDENCIES_PATH}/perception_tiovx_pipelines/include/app_tiovx_camera
-    ${DEPENDENCIES_PATH}/crdc_airi_common/include/sensor_msg
+    ${CMAKE_CURRENT_SOURCE_DIR}/build_deps/include/sensor_msg
     ${DEPENDENCIES_PATH}/perception_algorithm_lib/include
     ${sensor_msg_INCLUDE_DIRS}
 )
 
 link_directories(
-    ${DEPENDENCIES_PATH}/crdc_airi_common/lib
-    ${DEPENDENCIES_PATH}/perception_tiovx_pipelines/lib
-    ${DEPENDENCIES_PATH}/perception_algorithm_lib/lib
-    ${sensor_msg_LIBS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/build_deps/lib/sensor_msg
 )
 add_subdirectory(common)
 add_subdirectory(camera_drivers)
 add_subdirectory(lidar_drivers)
-#add_subdirectory(ins_drivers)
-#add_subdirectory(radar_drivers)
-add_subdirectory(tools)
+# add_subdirectory(tools)

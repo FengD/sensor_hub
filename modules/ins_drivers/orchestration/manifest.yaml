@@ -1,9 +1,0 @@
-modules:
-  - name: "m1"
-    library: "libins_drivers.so"
-    blocks:
-      - name: "ins_drivers"
-        class_name: "InsMain"
-        interval: 50
-        count: -1
-

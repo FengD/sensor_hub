@@ -1,8 +1,0 @@
-modules:
-  - name: "m1"
-    library: "libCameraDrivers.so"
-    blocks:
-      - name: "CameraDrivers"
-        class_name: "CameraMain"
-        interval: 50
-        count: -1

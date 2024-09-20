@@ -3,16 +3,14 @@
 <package format="3">
   <name>sensor_hub</name>
   <version>1.0.0</version>
-  <description>demo for shared mem block</description>
-  <maintainer email="dingbobby@hotmail.com">feng.ding</maintainer>
-  <license> License</license>
+  <description>sensor hub app</description>
+  <maintainer email="dingbobby@hotmail.com">FengD</maintainer>
+  <license>MindVenture License</license>
   
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>sensor_msg</depend>
-  <depend>beatles</depend>
   <depend>rclcpp</depend>
-  <depend>af_interfaces</depend>
   
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_cmake_cppcheck</test_depend>

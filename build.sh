@@ -124,7 +124,15 @@ function build() {
         -DWITH_ROS2=${WITH_ROS2} \
         ${EXTRA_OPTIONS} \
         -DCMAKE_INSTALL_PREFIX=${WS}/build_dist ..
-    build_make
+    if [ $? -eq 0 ]; then
+        success 'cmake passed!'
+        build_make
+    else
+        cd ${WS}
+        clean
+        fail 'cmake failed!'
+        exit 1
+    fi
 }
 
 function check_env() {
@@ -173,10 +181,8 @@ function main() {
         WITH_ROS2=ON
     fi
 
-    if [[ "${PLATFORM}" == "TDA4" ]];then
-        EXTRA_OPTIONS="${EXTRA_OPTIONS} -DWITH_TDA4=ON"
-    elif [[ "${PLATFORM}" == "X86" ]];then
-        EXTRA_OPTIONS="${EXTRA_OPTIONS} -DWITH_IPC=ON -DCALIBRATE=OFF"
+    if [[ "${PLATFORM}" == "X86" ]];then
+        EXTRA_OPTIONS="${EXTRA_OPTIONS} -DWITH_IPC=ON"
     fi
 
     if [ "${ARCH}" = "arm64" ]; then

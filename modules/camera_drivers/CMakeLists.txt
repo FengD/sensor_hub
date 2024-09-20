@@ -90,11 +90,9 @@ target_link_libraries(${PROJECT_NAME}
 if(WITH_ROS2)
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
-    beatles
     sensor_msg
     sensor_msgs
     diagnostic_msgs
-    af_interfaces
 )
 else()
 target_link_libraries(${PROJECT_NAME}
