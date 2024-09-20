@@ -122,10 +122,25 @@ function build() {
         -DWITH_COV=${WITH_COV} \
         -DDO_TEST=${DO_TEST} \
         -DWITH_ROS2=${WITH_ROS2} \
-        -DAFRED_DATA_COLLECT=${AFRED_DATA_COLLECT} \
         ${EXTRA_OPTIONS} \
         -DCMAKE_INSTALL_PREFIX=${WS}/build_dist ..
     build_make
+}
+
+function check_env() {
+    if [ -z $PLATFORM ]; then
+        warning "PLATFORM not set, PLATFORM=X86 will be used by default"
+        PLATFORM=X86
+    else
+        info "PLATFORM is $PLATFORM"
+    fi
+
+    if [ -z $TAG ]; then
+        warning "TAG not set, TAG=ROS2 will be used by default"
+        TAG=ROS2
+    else
+        info "TAG is $TAG"
+    fi
 }
 
 
@@ -148,11 +163,13 @@ function main() {
     START_TIME=$(get_now)
     WITH_COV=OFF
     DO_TEST=OFF
-    WITH_ROS2=OFF
-    AFRED_DATA_COLLECT=OFF
+    WITH_ROS2=ON
+    WITH_CYBER=OFF
+
+    check_env
 
 
-    if [ "${TAG}" = "AFRED" ]; then
+    if [ "${TAG}" = "ROS2" ]; then
         WITH_ROS2=ON
     fi
 

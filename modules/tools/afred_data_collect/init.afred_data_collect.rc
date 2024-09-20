@@ -1,2 +1,0 @@
-service afred_data /apps/data_collect/afred_data_collect.sh
-        class core
