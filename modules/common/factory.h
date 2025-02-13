@@ -14,8 +14,8 @@
 #include <vector>
 #include <boost/algorithm/string/case_conv.hpp>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 static inline std::string to_upper(const std::string& a) {
   return boost::to_upper_copy<std::string>(a);
 }
@@ -178,10 +178,10 @@ class ComponentRegisterer {
   struct ComponentTraits<com> {                                    \
     static std::string name() { return #com; }                     \
   };                                                               \
-  using com##Factory = crdc::airi::ComponentFactory<com>;          \
-  using com##Registerer = crdc::airi::ComponentRegisterer<com>
-}  // namespace airi
-}  // namespace crdc
+  using com##Factory = sensor::hub::ComponentFactory<com>;          \
+  using com##Registerer = sensor::hub::ComponentRegisterer<com>
+}  // namespace hub
+}  // namespace sensor
 
 #define REGISTER_CLASS(com, type)                                                            \
   std::shared_ptr<com> create_##com##_##type() { return std::shared_ptr<com>(new type()); }  \

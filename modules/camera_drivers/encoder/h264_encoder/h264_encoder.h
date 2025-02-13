@@ -1,6 +1,6 @@
 // Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: Zilou CAO
+// Author: Feng DING
 // Description: camera encoder h264
 
 #pragma once
@@ -11,8 +11,8 @@
 #include "common/common.h"
 #include "camera_drivers/encoder/encoder.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class H264Encoder : public Encoder {
  public:
@@ -36,5 +36,5 @@ class H264Encoder : public Encoder {
   uint8_t *outbuf_ = NULL;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

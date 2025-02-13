@@ -2,8 +2,8 @@
 
 #include "camera_drivers/camera_diagnose/base/detector_base.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class DarkDetector : public DetectorBase {
  public:
@@ -17,5 +17,5 @@ class DarkDetector : public DetectorBase {
   double dark_prop_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

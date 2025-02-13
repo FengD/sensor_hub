@@ -13,8 +13,8 @@
 #include "lidar_drivers/input/input.h"
 #include "lidar_drivers/input/socket/write.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 class SocketInput : public LidarInput {
  public:
   SocketInput() = default;
@@ -40,5 +40,5 @@ class SocketInput : public LidarInput {
   std::string multicast_ip_str_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

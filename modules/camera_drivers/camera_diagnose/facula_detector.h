@@ -6,8 +6,8 @@
 /**
  * @brief This function is used to determine whether the image is facula
  */
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class FaculaDetector : public DetectorBase {
  public:
@@ -21,5 +21,5 @@ class FaculaDetector : public DetectorBase {
   int pixel_value_min_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

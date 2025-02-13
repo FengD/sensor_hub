@@ -1,7 +1,7 @@
 #include "camera_drivers/camera_diagnose/green_screen_detector.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
   GreenScreenDetector::GreenScreenDetector(const CameraDiagnoseConfig& cfg) {
     init_cfg(cfg);
   }
@@ -28,5 +28,5 @@ int GreenScreenDetector::classify_an_image(const cv::Mat& img,
   return 1;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

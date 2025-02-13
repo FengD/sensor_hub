@@ -9,8 +9,8 @@
 #include "lidar_drivers/input/input.h"
 #include "cyber/record/record_reader.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 using apollo::cyber::record::RecordReader;
 
@@ -33,5 +33,5 @@ class CyberInput : public LidarInput {
   int sleeptime_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

@@ -1,6 +1,6 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author:  Feng DING / JianFei JIANG
+// Author:  Feng DING
 // Description: lidar parser PandarP40
 
 #pragma once
@@ -10,8 +10,8 @@
 #include "common/common.h"
 #include "lidar_drivers/parser/pandar/pandar.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class LidarParserP40 : public LidarParserPandar {
  public:
@@ -48,5 +48,5 @@ class LidarParserP40 : public LidarParserPandar {
     };
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

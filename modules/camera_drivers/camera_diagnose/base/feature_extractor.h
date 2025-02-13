@@ -3,8 +3,8 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/persistence.hpp>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class FeatureExtractor {
  public:
@@ -12,5 +12,5 @@ class FeatureExtractor {
   virtual ~FeatureExtractor() {}
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

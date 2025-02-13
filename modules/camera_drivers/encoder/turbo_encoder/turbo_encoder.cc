@@ -5,8 +5,8 @@
 
 #include "camera_drivers/encoder/turbo_encoder/turbo_encoder.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool TurboEncoder::init(const EncoderConfig& config) {
   config_ = config;
@@ -32,5 +32,5 @@ int32_t TurboEncoder::encode(const cv::Mat& image, unsigned char** encode_buffer
   return static_cast<int32_t>(jpeg_size);
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

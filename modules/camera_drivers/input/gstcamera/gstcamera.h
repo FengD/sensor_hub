@@ -1,6 +1,6 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: LINLIN WANG
+// Author: Feng DING
 // Description: camera input gstcamera
 
 #pragma once
@@ -11,8 +11,8 @@
 #include "common/common.h"
 #include "camera_drivers/input/input.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class GstCamera : public CameraInput {
  public:
@@ -32,5 +32,5 @@ class GstCamera : public CameraInput {
   void get_data();
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

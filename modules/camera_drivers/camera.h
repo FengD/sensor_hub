@@ -1,6 +1,6 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING, Zilou Cao
+// Author: Feng DING
 // Description: camera
 
 #pragma once
@@ -37,8 +37,8 @@ using Level = diagnostic_msgs::msg::DiagnosticStatus;
 #define MODULE "CameraDriver"
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class Camera : public common::Thread {
  public:
@@ -221,5 +221,5 @@ class Camera : public common::Thread {
   FRIEND_TEST(CameraDriverTest, dill_encode_image_test);
 #endif
 };
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

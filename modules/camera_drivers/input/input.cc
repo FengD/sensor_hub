@@ -7,8 +7,8 @@
 #include "camera_drivers/input/input.h"
 
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool CameraInput::init(const CameraInputConfig& config) {
     is_running_.store(false);
@@ -115,5 +115,5 @@ void CameraInput::matching_fps_by_sleep(const uint64_t& start, const uint64_t& e
     std::this_thread::sleep_for(std::chrono::microseconds(period_ - end + start));
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

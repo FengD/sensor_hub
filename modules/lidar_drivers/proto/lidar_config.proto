@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package crdc.airi;
+package sensor.hub;
 
 message SocketConfig {
   optional int32 poll_timeout = 1 [default = 100];

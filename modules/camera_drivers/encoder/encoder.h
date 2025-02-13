@@ -15,8 +15,8 @@
 #include "cyber/sensor_proto/image.pb.h"
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class Encoder {
  public:
@@ -52,5 +52,5 @@ class Encoder {
 REGISTER_COMPONENT(Encoder);
 #define REGISTER_ENCODER(name) REGISTER_CLASS(Encoder, name)
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

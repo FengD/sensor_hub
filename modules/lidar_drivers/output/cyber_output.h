@@ -13,8 +13,8 @@
 #include "cyber/sensor_proto/lidar.pb.h"
 #include "cyber/sensor_proto/eth_packet.pb.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class LidarCyberOutput {
  public:
@@ -36,7 +36,7 @@ class LidarCyberOutput {
     }
 
     LOG(INFO) << "[LIDAR_OUTPUT] Node name: " << node_name;
-    node_ = apollo::cyber::CreateNode(node_name, "crdc");
+    node_ = apollo::cyber::CreateNode(node_name, "sensor");
     CHECK(node_);
     cloud_writer_ptr_.reset(new ChannelWriter<PointCloud2>(node_));
     packets_writer_ptr_.reset(new ChannelWriter<Packets>(node_));
@@ -111,5 +111,5 @@ class LidarCyberOutput {
   std::shared_ptr<ChannelWriter<PointClouds2>> fusion_clouds_writer_ptr_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

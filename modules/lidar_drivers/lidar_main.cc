@@ -14,18 +14,18 @@ DEFINE_string(config_file, "params/drivers/lidar/test/lidar_config.prototxt",
               "path of config file");
 DEFINE_bool(use_product_name, true, "use product_name to splicing config_file");
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace lidar {
 
 int main(int argc, char* argv[]) {
     // gflags command setting
     google::ParseCommandLineFlags(&argc, &argv, true);
 
-    if (!std::getenv("CRDC_WS")) {
-        LOG(FATAL) << "[LIDAR_MAIN] CRDC_WS not setting!";
+    if (!std::getenv("MAIN_WS")) {
+        LOG(FATAL) << "[LIDAR_MAIN] MAIN_WS not setting!";
     } else {
-        LOG(INFO) << "[LIDAR_MAIN] Current CRDC_WS: " << std::string(std::getenv("CRDC_WS"));
+        LOG(INFO) << "[LIDAR_MAIN] Current MAIN_WS: " << std::string(std::getenv("MAIN_WS"));
     }
 
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
@@ -38,23 +38,23 @@ int main(int argc, char* argv[]) {
     auto product_name = get_product_name();
     LOG(INFO) << "[" << MODULE << "] Product name is " << product_name;
     if (FLAGS_use_product_name) {
-      config = std::string(std::getenv("CRDC_WS")) + "/params/drivers/lidar/" +
+      config = std::string(std::getenv("MAIN_WS")) + "/params/drivers/lidar/" +
                 product_name + "/lidar_config.prototxt";
     } else {
-      config = std::string(std::getenv("CRDC_WS")) + "/" +
+      config = std::string(std::getenv("MAIN_WS")) + "/" +
                 FLAGS_config_file;
     }
 #else
-    std::string config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+    std::string config = std::string(std::getenv("MAIN_WS")) + '/' + FLAGS_config_file;
 #endif
     LOG(INFO) << "[LIDAR_MAIN] Use proto config: " << config;
 
-    if (!crdc::airi::util::is_path_exists(config)) {
-        LOG(FATAL) << "[LIDAR_MAIN] CRDC not exists, please setup environment first.";
+    if (!sensor::hub::util::is_path_exists(config)) {
+        LOG(FATAL) << "[LIDAR_MAIN] MAIN not exists, please setup environment first.";
         return 1;
     }
 
-    if (!crdc::airi::util::get_proto_from_file(config, &lidar_component)) {
+    if (!sensor::hub::util::get_proto_from_file(config, &lidar_component)) {
         LOG(FATAL) << "[LIDAR_MAIN] failed to read lidar config proto.";
         return 1;
     }
@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 }  // namespace lidar
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
-int main(int argc, char* argv[]) { return crdc::airi::lidar::main(argc, argv); }
+int main(int argc, char* argv[]) { return sensor::hub::lidar::main(argc, argv); }

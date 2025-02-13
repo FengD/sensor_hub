@@ -1,13 +1,13 @@
 // Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: liping.liu
+// Author: Feng DING
 // Description: input pcap
 #include "lidar_drivers/input/pcap/pcap_input.h"
 #include <arpa/inet.h>
 #include <utility>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 PcapInput::~PcapInput() {
   pcap_close(pcap_);
@@ -152,5 +152,5 @@ void PcapInput::set_receive_len(const int& receive_len) {
 int PcapInput::get_receive_len() {
     return receive_len_;
 }
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

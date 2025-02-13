@@ -1,15 +1,15 @@
 #include "camera_drivers/camera_diagnose/camera_diagnose.h"
 #include <utility>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 CameraDiagnoser::CameraDiagnoser(const CameraDiagnoseConfig& cfg) {
   initialize_status_mappings();
-  green_screen_detector_ = std::make_unique<crdc::airi::GreenScreenDetector>(cfg);
-  facula_detector_ = std::make_unique<crdc::airi::FaculaDetector>(cfg);
-  dark_detector_ = std::make_unique<crdc::airi::DarkDetector>(cfg);
-  blocked_detector_ = std::make_unique<crdc::airi::BlockedDetector>(cfg);
-  blur_detector_ = std::make_unique<crdc::airi::BlurDetector>(cfg);
+  green_screen_detector_ = std::make_unique<sensor::hub::GreenScreenDetector>(cfg);
+  facula_detector_ = std::make_unique<sensor::hub::FaculaDetector>(cfg);
+  dark_detector_ = std::make_unique<sensor::hub::DarkDetector>(cfg);
+  blocked_detector_ = std::make_unique<sensor::hub::BlockedDetector>(cfg);
+  blur_detector_ = std::make_unique<sensor::hub::BlurDetector>(cfg);
 }
 
 void CameraDiagnoser::green_screen_diagnose(const cv::Mat& image, const cv::Mat& gray) {
@@ -146,5 +146,5 @@ void CameraDiagnoser::reset_diagnose_results() {
   diagnose_results_.at(CameraDiagnoseStatus::BLOCKED) = -1;
   diagnose_results_.at(CameraDiagnoseStatus::BLUR) = -1;
 }
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

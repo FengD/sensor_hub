@@ -7,8 +7,8 @@
 #include <opencv2/core/mat.hpp>
 #include "camera_drivers/proto/camera_diagnose_config.pb.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class DetectorBase {
  public:
@@ -18,5 +18,5 @@ class DetectorBase {
   virtual void init_cfg(const CameraDiagnoseConfig& cfg) = 0;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

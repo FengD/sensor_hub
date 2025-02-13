@@ -1,13 +1,13 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING, Zilou Cao
+// Author: Feng DING
 // Description: input socket
 
 #include <utility>
 #include "lidar_drivers/input/socket/socket.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 SocketInput::~SocketInput() {
   for (auto i = 0; i < socket_num_; ++i) {
@@ -204,5 +204,5 @@ int32_t SocketInput::get_lidar_data(Packet** packet) {
   return DeviceStatus::NO_ERROR;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

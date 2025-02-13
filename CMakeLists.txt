@@ -28,7 +28,7 @@ if (WITH_ROS2)
   find_package(geometry_msgs REQUIRED)
   find_package(rosbag2_cpp REQUIRED)
 
-  set(sensor_msg_DIR ${CMAKE_CURRENT_BINARY_DIR}/modules/crdc_airi_common/share/sensor_msg/cmake)
+  set(sensor_msg_DIR ${CMAKE_CURRENT_BINARY_DIR}/modules/common/share/sensor_msg/cmake)
   find_package(sensor_msg REQUIRED)
   if(NOT sensor_msg_FOUND)
     message(WARNING "sensor_msg Not Found")

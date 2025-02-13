@@ -5,8 +5,8 @@
 
 #include "lidar_drivers/input/socket/write.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 SocketWrite::SocketWrite() {
   MessageNumber = 0;
@@ -217,5 +217,5 @@ void SocketWrite::BuildHeader(uint32_t &MessageNumber, uint32_t unCmdType,
 }
 
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

@@ -6,8 +6,8 @@
 #include "camera_drivers/encoder/cv_encoder/cv_encoder.h"
 #include <opencv2/imgcodecs/legacy/constants_c.h>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool CvEncoder::init(const EncoderConfig& config) {
   config_ = config;
@@ -33,5 +33,5 @@ int32_t CvEncoder::encode(const cv::Mat& image, unsigned char** encode_buffer) {
   return compressed_buffer_.size();
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

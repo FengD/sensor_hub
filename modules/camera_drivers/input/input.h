@@ -12,8 +12,8 @@
 #include "common/common.h"
 #include "camera_drivers/proto/camera_config.pb.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 struct CameraRawData {
   float exposure_time_ = 0;
@@ -142,5 +142,5 @@ class CameraInput {
 REGISTER_COMPONENT(CameraInput);
 #define REGISTER_CAMERA_INPUT(name) REGISTER_CLASS(CameraInput, name)
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

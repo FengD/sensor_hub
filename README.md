@@ -58,7 +58,6 @@ Options:
 ### 1.3. Coverage check
 ``` shell
 function gen_coverage() {
-  export LD_LIBRARY_PATH=${WS}/build/modules/crdc_airi_common/lib/
   cd ${WS}
   rm -rf cov
   mkdir -p cov
@@ -77,7 +76,7 @@ function gen_coverage() {
 ## EXECUTE
 
 ``` shell
-export CRDC_WS=
+export MAIN_WS=
 execute_camera_drivers.sh
 execute_lidar_drivers.sh
 execute_radar_drivers.sh

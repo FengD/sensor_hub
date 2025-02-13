@@ -16,18 +16,18 @@ DEFINE_string(config_file, "params/drivers/camera/default/camera_config.prototxt
 DEFINE_string(tiovx_config, "TIOVX_CONFIG", "The tiovx config file path");
 DEFINE_bool(use_product_name, true, "use product_name to splicing config_file");
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace camera {
 
 int main(int argc, char* argv[]) {
     // gflags command setting
     google::ParseCommandLineFlags(&argc, &argv, true);
 
-    if (!std::getenv("CRDC_WS")) {
-        LOG(FATAL) << "[CAMERA_MAIN] CRDC_WS not setting!";
+    if (!std::getenv("MAIN_WS")) {
+        LOG(FATAL) << "[CAMERA_MAIN] MAIN_WS not setting!";
     } else {
-        LOG(INFO) << "[CAMERA_MAIN] Current CRDC_WS: " << std::string(std::getenv("CRDC_WS"));
+        LOG(INFO) << "[CAMERA_MAIN] Current MAIN_WS: " << std::string(std::getenv("MAIN_WS"));
     }
 
     apollo::cyber::GlobalData::Instance()->SetProcessGroup(MODULE);
@@ -40,34 +40,34 @@ int main(int argc, char* argv[]) {
     auto product_name = get_product_name();
     LOG(INFO) << "[" << MODULE << "] Product name is " << product_name;
     if (FLAGS_use_product_name) {
-        config = std::string(std::getenv("CRDC_WS")) + "/params/drivers/camera/"+
+        config = std::string(std::getenv("MAIN_WS")) + "/params/drivers/camera/"+
                 product_name + "/camera_config.prototxt";
-        std::string tiovx_config = std::string(std::getenv("CRDC_WS"))
+        std::string tiovx_config = std::string(std::getenv("MAIN_WS"))
                 + "/params/drivers/camera/" + product_name + "/app_multi_cam.cfg";
         set_env(FLAGS_tiovx_config, tiovx_config);
     } else {
-        config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+        config = std::string(std::getenv("MAIN_WS")) + '/' + FLAGS_config_file;
     }
 #else
-    std::string config = std::string(std::getenv("CRDC_WS")) + '/' + FLAGS_config_file;
+    std::string config = std::string(std::getenv("MAIN_WS")) + '/' + FLAGS_config_file;
 #endif
     LOG(INFO) << "[CAMERA_MAIN] Use proto config: " << config;
 
-    if (!crdc::airi::util::is_path_exists(config)) {
-        LOG(FATAL) << "[CAMERA_MAIN] CRDC not exists, please setup environment first.";
+    if (!sensor::hub::util::is_path_exists(config)) {
+        LOG(FATAL) << "[CAMERA_MAIN] MAIN not exists, please setup environment first.";
         return 1;
     }
 
-    if (!crdc::airi::util::get_proto_from_file(config, &camera_component)) {
+    if (!sensor::hub::util::get_proto_from_file(config, &camera_component)) {
         LOG(FATAL) << "[CAMERA_MAIN] failed to read camera config proto.";
         return 1;
     }
 
     LOG(INFO) << camera_component.DebugString();
 
-    std::vector<std::shared_ptr<crdc::airi::Camera>> cameras;
+    std::vector<std::shared_ptr<sensor::hub::Camera>> cameras;
     for (const auto& config : camera_component.component_config()) {
-        std::shared_ptr<crdc::airi::Camera> camera = std::make_shared<crdc::airi::Camera>(config);
+        std::shared_ptr<sensor::hub::Camera> camera = std::make_shared<sensor::hub::Camera>(config);
         cameras.emplace_back(camera);
     }
 
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 }
 
 }  // namespace camera
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
-int main(int argc, char* argv[]) { return crdc::airi::camera::main(argc, argv); }
+int main(int argc, char* argv[]) { return sensor::hub::camera::main(argc, argv); }

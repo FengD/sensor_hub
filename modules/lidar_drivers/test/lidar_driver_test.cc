@@ -12,8 +12,8 @@
 #include "lidar_drivers/parser/velodyne/velodyne_vlp16.h"
 #include "lidar_drivers/parser/arbe/Phoenix_A0.h"
 #include "lidar_drivers/proto/lidar_config.pb.h"
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 REGISTER_LIDAR_INPUT(CyberInput);
 REGISTER_LIDAR_PARSER(LidarParserRSRuby);
@@ -27,7 +27,7 @@ TEST_F(LidarTest, robosense_packet_test) {
   std::string config_file_path =
       "../../../../modules/lidar_drivers/params/drivers/lidar/gtest/lidar_RSrubylite.prototxt";
   LidarConfig config;
-  crdc::airi::util::get_proto_from_file(config_file_path, &config);
+  sensor::hub::util::get_proto_from_file(config_file_path, &config);
   auto s = LidarInputFactory::get(config.input_config().name());
   s->config_ = config.input_config();
   Packet *packet;
@@ -49,7 +49,7 @@ TEST_F(LidarTest, innovizone_parser_test) {
   std::string config_file_path =
       "../../../../modules/lidar_drivers/params/drivers/lidar/gtest/lidar_innovizone.prototxt";
   LidarConfig config;
-  crdc::airi::util::get_proto_from_file(config_file_path, &config);
+  sensor::hub::util::get_proto_from_file(config_file_path, &config);
   auto s = LidarInputFactory::get(config.input_config().name());
   s->config_ = config.input_config();
   Packet *packet;
@@ -89,7 +89,7 @@ TEST_F(LidarTest, vlp16_packet_test) {
   std::string config_file_path =
       "../../../../modules/lidar_drivers/params/drivers/lidar/gtest/lidar_velodyne.prototxt";
   LidarConfig config;
-  crdc::airi::util::get_proto_from_file(config_file_path, &config);
+  sensor::hub::util::get_proto_from_file(config_file_path, &config);
   auto s = LidarInputFactory::get(config.input_config().name());
   Packet *packet;
   // test CyberInput::init
@@ -114,7 +114,7 @@ TEST_F(LidarTest, phoenixA0_packet_test) {
   std::string config_file_path =
       "../../../../modules/lidar_drivers/params/drivers/lidar/gtest/radar_cyber.prototxt";
   LidarConfig config;
-  crdc::airi::util::get_proto_from_file(config_file_path, &config);
+  sensor::hub::util::get_proto_from_file(config_file_path, &config);
   auto s = LidarInputFactory::get(config.input_config().name());
   Packet *packet;
   // test CyberInput::init
@@ -131,8 +131,8 @@ TEST_F(LidarTest, phoenixA0_packet_test) {
   EXPECT_EQ(sizeof(TPointCloud), l.config_.lidar_packet_config().block_offset());
 }
 
-} // namespace airi
-} // namespace crdc
+} // namespace hub
+} // namespace sensor
 
 int main(int argc, char *argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

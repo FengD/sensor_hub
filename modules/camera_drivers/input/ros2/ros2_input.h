@@ -17,8 +17,8 @@
 #endif
 
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class Ros2Input : public CameraInput {
  public:
@@ -43,5 +43,5 @@ class Ros2Input : public CameraInput {
   void get_data();
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

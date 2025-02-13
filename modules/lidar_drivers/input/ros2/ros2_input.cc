@@ -5,8 +5,8 @@
 
 #include "lidar_drivers/input/ros2/ros2_input.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool ROS2Input::init(const LidarInputConfig& config) {
   config_ = config;
@@ -83,5 +83,5 @@ int ROS2Input::get_lidar_data(Packet** packet) {
   return DeviceStatus::NO_ERROR;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

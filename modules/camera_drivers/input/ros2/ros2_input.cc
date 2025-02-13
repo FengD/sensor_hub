@@ -1,7 +1,7 @@
 #include "camera_drivers/input/ros2/ros2_input.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool Ros2Input::camera_init() {
   if (!config_.has_ros2_config()) {
@@ -134,5 +134,5 @@ void Ros2Input::get_data() {
   LOG(FATAL) << "Read ros2 Files Finished!";
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

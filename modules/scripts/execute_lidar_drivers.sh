@@ -3,9 +3,9 @@ if [ -z ${CYBER_PATH} ];then
     echo "CYBER_PATH not given. Use default path ${CYBER_PATH}"
 fi
 
-if [ -z ${CRDC_WS} ];then
-    export CRDC_WS=../
-    echo "CRDC_WS not given. Use default path ${CRDC_WS}"
+if [ -z ${MAIN_WS} ];then
+    export MAIN_WS=../
+    echo "MAIN_WS not given. Use default path ${MAIN_WS}"
 fi
 
 if [ -z ${VIN} ];then

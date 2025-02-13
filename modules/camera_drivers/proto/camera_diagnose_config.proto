@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package crdc.airi;
+package sensor.hub;
 
 
 message CameraDiagnoseGreenScreenConfig {

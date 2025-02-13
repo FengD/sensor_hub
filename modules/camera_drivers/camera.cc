@@ -1,6 +1,6 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING, Zilou Cao
+// Author: Feng DING
 // Description: camera
 // Contributor: shichong.wang
 
@@ -12,8 +12,8 @@
 #include "camera_drivers/output/cyber_output.h"
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 Camera::Camera(const CameraComponentConfig& config) : common::Thread(true) {
     config_ = config;
@@ -44,30 +44,30 @@ Camera::Camera(const CameraComponentConfig& config) : common::Thread(true) {
         set_priority(config_.priority());
     }
 
-    std::string config_file_path = std::string(std::getenv("CRDC_WS"))
+    std::string config_file_path = std::string(std::getenv("MAIN_WS"))
                                    + '/' + config_.config_file();
-    if (!crdc::airi::util::is_path_exists(config_file_path)) {
+    if (!sensor::hub::util::is_path_exists(config_file_path)) {
         LOG(FATAL) << "[" << get_thread_name() << "] proto file not exits: "
                    << config_file_path;
         return;
     }
 
-    if (!crdc::airi::util::get_proto_from_file(config_file_path,
+    if (!sensor::hub::util::get_proto_from_file(config_file_path,
                                               &camera_config_)) {
         LOG(FATAL) << "[" << get_thread_name() << "] failed to read camera proto config: "
                    << config_file_path;
         return;
     }
     if (config_.has_diagnose_config_file()) {
-      std::string diagnose_config_file_path = std::string(std::getenv("CRDC_WS"))
+      std::string diagnose_config_file_path = std::string(std::getenv("MAIN_WS"))
                                     + '/' + config_.diagnose_config_file();
-      if (!crdc::airi::util::is_path_exists(diagnose_config_file_path)) {
+      if (!sensor::hub::util::is_path_exists(diagnose_config_file_path)) {
           LOG(FATAL) << "[" << get_thread_name() << "] proto file not exits: "
                     << diagnose_config_file_path;
           return;
       }
 
-      if (!crdc::airi::util::get_proto_from_file(diagnose_config_file_path,
+      if (!sensor::hub::util::get_proto_from_file(diagnose_config_file_path,
                                                 &diagnose_config_)) {
           LOG(FATAL) << "[" << get_thread_name() << "] failed to read camera proto config: "
                     << diagnose_config_file_path;
@@ -75,7 +75,7 @@ Camera::Camera(const CameraComponentConfig& config) : common::Thread(true) {
       }
     }
 
-    camera_diagnoser_ = std::make_shared<crdc::airi::CameraDiagnoser>(diagnose_config_);
+    camera_diagnoser_ = std::make_shared<sensor::hub::CameraDiagnoser>(diagnose_config_);
 
     validate_calib_ = false;
     cam_intrinsic_param_ = std::make_shared<CamIntrinsicParam>();
@@ -84,7 +84,7 @@ Camera::Camera(const CameraComponentConfig& config) : common::Thread(true) {
 #ifdef WITH_TDA4
     if (config_.has_calibration_config()) {
       calibrate_process_ = std::make_shared<Calibrate>();
-      std::string calib_config_file_path = std::string(std::getenv("CRDC_WS"))
+      std::string calib_config_file_path = std::string(std::getenv("MAIN_WS"))
                                    + '/' + config_.calibration_config();
       calibrate_process_->init(calib_config_file_path,
                                camera_config_.input_config().width(),
@@ -502,5 +502,5 @@ void Camera::run() {
   input_->release_camera_data();
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

@@ -10,8 +10,8 @@
 #include <opencv2/opencv.hpp>
 #include "common/common.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 struct CameraSensorConfig {
     std::string distortion_type_;
@@ -61,5 +61,5 @@ class Undistortion {
 REGISTER_COMPONENT(Undistortion);
 #define REGISTER_UNDISTORTION(name) REGISTER_CLASS(Undistortion, name)
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

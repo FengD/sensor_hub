@@ -8,8 +8,8 @@
 #include <string>
 #include "camera_drivers/undistortion/undistortion.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class CvUndistortion : public Undistortion {
  public:
@@ -29,5 +29,5 @@ class CvUndistortion : public Undistortion {
   cv::Mat map_y_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

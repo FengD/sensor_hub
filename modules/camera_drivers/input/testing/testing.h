@@ -9,8 +9,8 @@
 #include "common/common.h"
 #include "camera_drivers/input/input.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class TestingCamera : public CameraInput {
  public:
@@ -24,5 +24,5 @@ class TestingCamera : public CameraInput {
   void get_data();
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

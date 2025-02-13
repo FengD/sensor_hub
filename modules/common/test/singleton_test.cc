@@ -1,8 +1,8 @@
 #include "common/singleton.h"
 #include <gtest/gtest.h>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 
 class SampleSingleton {
@@ -31,8 +31,8 @@ TEST_F(SingletonTest, SingletonInstance) {
 }
 
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);

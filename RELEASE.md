@@ -76,9 +76,9 @@
 5. (all): update the directory structure
 
 # v2.9.0 (20221202) feng.ding
-1. (tools): transform 2D and 3D ground truth from apollo to crdc
+1. (tools): transform 2D and 3D ground truth from apollo to sensor
 2. (pcapinput): pcap file offline replay
-3. (tool): transform apollo message to crdc message
+3. (tool): transform apollo message to sensor message
 4. (robosense):add parser for RS-Ruby-80V
 5. (camera): modify topic name
 6. (parser): modify PointField arrange of intensity

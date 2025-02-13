@@ -89,7 +89,6 @@ function check_code() {
 }
 
 function gen_coverage() {
-  export LD_LIBRARY_PATH=${WS}/build/modules/crdc_airi_common/lib/
   cd ${WS}
   rm -rf cov
   mkdir -p cov

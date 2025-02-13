@@ -11,8 +11,8 @@
 #include "camera_drivers/camera_diagnose/blocked_detector.h"
 #include "camera_drivers/camera_diagnose/blur_detector.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 enum CameraDiagnoseStatus : std::uint8_t {
   GREEN_SCREEN,
@@ -59,5 +59,5 @@ class CameraDiagnoser {
   std::unordered_map<int, DeviceStatus> device_status_map_;
   std::unordered_map<int, int> diagnose_results_;
 };
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

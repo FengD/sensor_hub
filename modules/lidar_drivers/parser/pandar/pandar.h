@@ -9,8 +9,8 @@
 #include "common/common.h"
 #include "lidar_drivers/parser/parser.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class LidarParserPandar: public LidarParser {
  public:
@@ -24,5 +24,5 @@ class LidarParserPandar: public LidarParser {
   virtual void init_lidar_parser_calib_info();
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

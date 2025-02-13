@@ -3,8 +3,8 @@
 #include "camera_drivers/camera_diagnose/sky_mask_extractor.h"
 
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 SkyMaskExtractor::SkyMaskExtractor(const cv::Mat& cfg) : cfg_(cfg) {}
 
@@ -176,5 +176,5 @@ SimilarityData SkyMaskExtractor::get_color_similarity(const cv::Mat& img,
   return sim_data;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

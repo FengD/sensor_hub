@@ -11,8 +11,8 @@
 using google::protobuf::Message;
 using google::protobuf::TextFormat;
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace util {
 
 class FileTest : public ::testing::Test {
@@ -164,8 +164,8 @@ TEST_F(FileTest, TestListSubPaths) {
 }
 
 }  // namespace util
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

@@ -8,8 +8,8 @@
 #include <glog/logging.h>
 #include "common/thread.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 void Thread::start() {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -68,5 +68,5 @@ void Thread::set_priority(int priority) {
   priority_ = priority;
 }
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

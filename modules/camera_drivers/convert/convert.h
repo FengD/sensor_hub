@@ -8,8 +8,8 @@
 #include <string>
 #include "common/common.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class Convert {
  public:
@@ -82,5 +82,5 @@ class Convert {
   }
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

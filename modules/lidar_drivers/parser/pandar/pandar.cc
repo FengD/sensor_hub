@@ -5,8 +5,8 @@
 
 #include "lidar_drivers/parser/pandar/pandar.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 void LidarParserPandar::calibrate_point(LidarParserInfo& parser_info) {
     parser_info.distance_ = parser_info.pixel_distance_ * distance_resolution_;
@@ -67,5 +67,5 @@ void LidarParserPandar::init_lidar_parser_calib_info() {
     }
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

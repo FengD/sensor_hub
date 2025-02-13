@@ -32,8 +32,8 @@ using Packet = sensor_msg::msg::Packet;
 using Packets = sensor_msg::msg::Packets;
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 #ifndef WITH_ROS2
 #define ADD_FIELD(cloud, name, datatype, offset, count)   \
@@ -404,5 +404,5 @@ class LidarParser {
 REGISTER_COMPONENT(LidarParser);
 #define REGISTER_LIDAR_PARSER(name) REGISTER_CLASS(LidarParser, name)
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

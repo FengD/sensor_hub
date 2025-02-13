@@ -5,8 +5,8 @@
 #include <tuple>
 #include <vector>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 FaculaDetector::FaculaDetector(const CameraDiagnoseConfig& cfg) {
   init_cfg(cfg);
 }
@@ -88,5 +88,5 @@ int FaculaDetector::sum_mask(cv::Mat img) {
   return area_sum;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

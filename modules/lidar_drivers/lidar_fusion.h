@@ -34,8 +34,8 @@
 using PointClouds2 = sensor_msg::msg::PointClouds2;
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 struct CloudArray {
   bool stricted_strategy_;
@@ -85,6 +85,6 @@ class LidarFusion : public common::Thread {
   common::ThreadSafeQueue<std::vector<std::shared_ptr<LidarPointCloud>>> clouds_queue_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 

@@ -19,8 +19,8 @@
 #include "google/protobuf/text_format.h"
 #include "gflags/gflags.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace util {
 
 // @brief file type: file or directory
@@ -80,5 +80,5 @@ std::vector<std::string> list_sub_paths(const std::string &directory_path,
                                         const unsigned char& d_type = DT_DIR);
 
 }  // namespace util
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

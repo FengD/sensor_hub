@@ -14,8 +14,8 @@
 #include "rosbag2_cpp/reader.hpp"
 #include "rosbag2_cpp/readers/sequential_reader.hpp"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 
 class ROS2Input : public LidarInput {
@@ -38,5 +38,5 @@ class ROS2Input : public LidarInput {
   int sleeptime_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

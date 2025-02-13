@@ -59,15 +59,12 @@ endif()
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
-    ${DEPENDENCIES_PATH}/crdc_airi_common/include
     ${DEPENDENCIES_PATH}/perception_tiovx_pipelines/include/app_tiovx_camera
-    ${DEPENDENCIES_PATH}/crdc_airi_common/include/sensor_msg
     ${DEPENDENCIES_PATH}/perception_algorithm_lib/include
     ${sensor_msg_INCLUDE_DIRS}
 )
 
 link_directories(
-    ${DEPENDENCIES_PATH}/crdc_airi_common/lib
     ${DEPENDENCIES_PATH}/perception_tiovx_pipelines/lib
     ${DEPENDENCIES_PATH}/perception_algorithm_lib/lib
     ${sensor_msg_LIBS}

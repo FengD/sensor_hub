@@ -5,8 +5,8 @@
 #include <tuple>
 #include <vector>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 BlurDetector::BlurDetector(const CameraDiagnoseConfig& cfg) {
   init_cfg(cfg);
 }
@@ -116,5 +116,5 @@ int BlurDetector::classify_an_image(const cv::Mat& img, const cv::Mat& gray) {
     return 0;
   }
 }
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

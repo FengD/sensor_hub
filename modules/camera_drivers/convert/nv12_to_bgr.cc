@@ -10,8 +10,8 @@
 #include "camera_drivers/convert/convert.h"
 #include <opencv2/opencv.hpp>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 #ifdef WITH_IPC
 bool Convert::nv12_to_bgr(const unsigned char *src, unsigned char *dst,
@@ -208,5 +208,5 @@ bool nv12_to_bgr(const unsigned char *src, unsigned char *dst,
 }
 #endif
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

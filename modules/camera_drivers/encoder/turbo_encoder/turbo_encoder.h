@@ -11,8 +11,8 @@
 #include "common/common.h"
 #include "camera_drivers/encoder/encoder.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class TurboEncoder : public Encoder {
  public:
@@ -31,5 +31,5 @@ class TurboEncoder : public Encoder {
   tjhandle jpeg_compressor_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

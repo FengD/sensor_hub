@@ -5,8 +5,8 @@
 
 #include "lidar_drivers/input/cyber/cyber_input.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool CyberInput::init(const LidarInputConfig& config) {
   config_ = config;
@@ -25,7 +25,7 @@ bool CyberInput::init(const LidarInputConfig& config) {
   reader_ = std::make_shared<RecordReader>(config_.cyber_config().file_path(file_index_));
   const auto &type = reader_->GetMessageType(config_.cyber_config().channel());
   if (!type.empty()) {
-    CHECK_EQ(type, "crdc.airi.Packets");
+    CHECK_EQ(type, "sensor.hub.Packets");
   } else {
     LOG(ERROR) << "[" << config_.frame_id() << "] "
            << "Failed to get message type for " << config_.cyber_config().channel();
@@ -80,5 +80,5 @@ int CyberInput::get_lidar_data(Packet** packet) {
   return DeviceStatus::NO_ERROR;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

@@ -23,8 +23,8 @@ using Packet = sensor_msg::msg::Packet;
 using Packets = sensor_msg::msg::Packets;
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class LidarInput {
  public:
@@ -137,5 +137,5 @@ class LidarInput {
 REGISTER_COMPONENT(LidarInput);
 #define REGISTER_LIDAR_INPUT(name) REGISTER_CLASS(LidarInput, name)
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

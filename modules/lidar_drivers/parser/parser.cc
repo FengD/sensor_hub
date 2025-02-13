@@ -11,8 +11,8 @@
 #endif
 #define GAP_SHREHOLD 500
 #define TIME_DIFF_SHREHOLD 50000
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool LidarParser::init(const ParserConfig& config) {
   config_ = config;
@@ -332,5 +332,5 @@ void LidarParser::calculate_points_data_xyz(const LidarParserInfo& parser_info, 
   pt.z_ = parser_info.distance_ * calib_info_[parser_info.laser_].elevation_sin_;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

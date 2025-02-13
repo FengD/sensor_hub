@@ -32,7 +32,7 @@ environment_variables = [
   {key = "EXEC_MANIFEST", value = "./etc/MANIFEST"},
   {key = "LD_LIBRARY_PATH", value = "/usr/lib"},
   {key = "CYBER_PATH", value = "/usr/apollo/cyber"},
-  {key = "CRDC_WS", value = "/apps/sensor_hub/camera_drivers"},
+  {key = "MAIN_WS", value = "/apps/sensor_hub/camera_drivers"},
 ]
 
 startup_options = [

@@ -1,6 +1,6 @@
 // Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: CHUNXIAO HUANG
+// Author: Feng DING
 
 #include <string>
 #include <gtest/gtest.h>
@@ -8,8 +8,8 @@
 #include "camera_drivers/undistortion/undistortion.h"
 #include <opencv2/opencv.hpp>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 REGISTER_UNDISTORTION(Undistortion);
 REGISTER_UNDISTORTION(CvUndistortion);
 
@@ -53,8 +53,8 @@ TEST_F(CvUndistortionTest, cv_undistortion_process_test) {
 }
 
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

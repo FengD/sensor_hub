@@ -1,12 +1,12 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: LINLIN WANG
+// Author: Feng DING
 // Description: camera input gstcamera
 
 #include "camera_drivers/input/gstcamera/gstcamera.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 GstCamera::~GstCamera() {
   if (is_running_.load()) {
@@ -188,5 +188,5 @@ void GstCamera::get_data() {
   }
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

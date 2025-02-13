@@ -5,8 +5,8 @@
  * @param A image
  * @return 1 means False, 0 means True
  */
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 DarkDetector::DarkDetector(const CameraDiagnoseConfig& cfg) {
   init_cfg(cfg);
 }
@@ -34,5 +34,5 @@ int DarkDetector::classify_an_image(const cv::Mat& img, const cv::Mat& gray) {
   }
   return 0;
 }
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

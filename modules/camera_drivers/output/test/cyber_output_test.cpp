@@ -1,6 +1,6 @@
 // Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: Zilou Cao
+// Author: Feng DING
 
 #include <gtest/gtest.h>
 #include <stdlib.h>
@@ -9,8 +9,8 @@
 #include "cyber/sensor_proto/image.pb.h"
 #include "camera_drivers/output/cyber_output.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 void construct_image(const int &width, const int &height, std::shared_ptr<Image2> &image_data) {
   cv::Mat image(height, width, CV_8UC3);
@@ -41,8 +41,8 @@ TEST_F(CameraCyberOutputTest, cyber_output_write_image_test) {
   EXPECT_EQ("CameraDriver", test_image->mutable_header()->module_name());
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

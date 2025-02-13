@@ -7,8 +7,8 @@
 #include "glog/logging.h"
 #include "common/io/file.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace util {
 
 bool set_proto_to_ascii_file(const google::protobuf::Message& message,
@@ -45,7 +45,7 @@ bool get_proto_from_ascii_file(const std::string& file_name,
     int file_descriptor = open(file_name.c_str(), O_RDONLY);
     if (file_descriptor < 0) {
         if (file_name[0] != '/') {
-            const char *work_root = gflags::StringFromEnv("CRDC_WOEK_ROOT", "crdc/common");
+            const char *work_root = gflags::StringFromEnv("MAIN_WOEK_ROOT", "sensor/common");
             std::string proto_file_path = get_absolute_path(work_root, file_name);
             file_descriptor = open(proto_file_path.c_str(), O_RDONLY);
         }
@@ -77,7 +77,7 @@ bool get_proto_from_binary_file(const std::string& file_name,
     std::fstream input(file_name, std::ios::in | std::ios::binary);
     if (!input.good()) {
         if (file_name[0] != '/') {
-            const char *work_root = gflags::StringFromEnv("CRDC_WOEK_ROOT", "crdc/common");
+            const char *work_root = gflags::StringFromEnv("MAIN_WOEK_ROOT", "sensor/common");
             std::string proto_file_path = get_absolute_path(work_root, file_name);
             input.open(file_name, std::ios::in | std::ios::binary);
         }
@@ -288,5 +288,5 @@ std::vector<std::string> list_sub_paths(const std::string &directory_path,
 }
 
 }  // namespace util
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

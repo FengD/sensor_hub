@@ -13,8 +13,8 @@
 #include <string>
 #include "common/common.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 class Thread {
  public:
@@ -74,5 +74,5 @@ class Thread {
   DISALLOW_COPY_AND_ASSIGN(Thread);
 };
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

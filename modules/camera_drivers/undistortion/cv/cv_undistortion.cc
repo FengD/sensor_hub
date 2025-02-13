@@ -5,8 +5,8 @@
 
 #include "camera_drivers/undistortion/cv/cv_undistortion.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool CvUndistortion::init(const CameraSensorConfig& config) {
     return true;
@@ -17,5 +17,5 @@ bool CvUndistortion::process(const cv::Mat& img, cv::Mat& img_distorted) {
     return true;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

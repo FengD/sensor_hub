@@ -1,12 +1,12 @@
 // Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: Zilou CAO
+// Author: Feng DING
 // Description: camera encoder h264
 
 #include "camera_drivers/encoder/h264_encoder/h264_encoder.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool H264Encoder::init(const EncoderConfig& config) {
   config_ = config;
@@ -39,5 +39,5 @@ int32_t H264Encoder::encode(const cv::Mat& image, unsigned char** encode_buffer)
   return static_cast<int32_t>(size_);
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

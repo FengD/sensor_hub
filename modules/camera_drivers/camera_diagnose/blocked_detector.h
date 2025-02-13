@@ -10,8 +10,8 @@
 /**
  * @brief This function is used to determine whether the image is blocked
  */
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class BlockedDetector : public DetectorBase {
  public:
@@ -39,5 +39,5 @@ class BlockedDetector : public DetectorBase {
   double sub_mask_max_value_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

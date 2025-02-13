@@ -38,13 +38,13 @@
 #ifdef WITH_ROS2
 using Level = sensor_msg::msg::Level;
 using Packet = sensor_msg::msg::Packet;
-using LidarOutput = crdc::airi::LidarAFOutput;
+using LidarOutput = sensor::hub::LidarAFOutput;
 #else
-using LidarOutput = crdc::airi::LidarCyberOutput;
+using LidarOutput = sensor::hub::LidarCyberOutput;
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class Lidar : public common::Thread {
  public:
@@ -159,5 +159,5 @@ class Lidar : public common::Thread {
                                  std::function<bool(const std::string&, const T&)> write_func);
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

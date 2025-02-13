@@ -12,8 +12,8 @@
 #include "common/macros.h"
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 DEFINE_TYPE_TRAIT(HasLess, operator<)  // NOLINT
 
@@ -33,7 +33,7 @@ LessThan(const Value& val, const End& end) {
 
 #define FOR_EACH(i, begin, end)           \
   for (auto i = (true ? (begin) : (end)); \
-    crdc::airi::common::LessThan(i, (end)); ++i)
+    sensor::hub::common::LessThan(i, (end)); ++i)
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

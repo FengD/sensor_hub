@@ -5,8 +5,8 @@
 
 #include "camera_drivers/input/testing/testing.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 TestingCamera::~TestingCamera() {
   if (is_running_.load()) {
@@ -47,5 +47,5 @@ void TestingCamera::get_data() {
   }
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

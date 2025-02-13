@@ -12,8 +12,8 @@
 #include "common/common.h"
 #include "lidar_drivers/proto/lidar_config.pb.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 #define PACKET_PREFIX             0xA55A
 #define API_SET_TH_PARAMS_NUM     4
@@ -201,5 +201,5 @@ class SocketWrite {
   LidarInputConfig config_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

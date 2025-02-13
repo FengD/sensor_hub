@@ -1,7 +1,7 @@
 /**
   * Copyright (C) 2022 FengD
   * License: Modified BSD Software License Agreement
-  * Author: Liping.liu
+  * Author: Feng DING
   * Description: This file used to define the udp input
   */
 #pragma once
@@ -14,8 +14,8 @@
 #include "lidar_drivers/input/input.h"
 
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class PcapInput : public LidarInput {
  public:
@@ -50,5 +50,5 @@ class PcapInput : public LidarInput {
   uint64_t timestamp_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

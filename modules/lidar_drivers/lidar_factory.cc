@@ -20,8 +20,8 @@
 #include "lidar_drivers/parser/arbe/Phoenix_A0.h"
 #include "lidar_drivers/parser/falcon/falcon.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 #ifndef CALIBRATE
 REGISTER_LIDAR_INPUT(SocketInput);
 #endif
@@ -41,5 +41,5 @@ REGISTER_LIDAR_PARSER(LidarParserLds50cs);
 REGISTER_LIDAR_PARSER(RadarParserPhoenixA0);
 REGISTER_LIDAR_PARSER(LidarParserFalcon);
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

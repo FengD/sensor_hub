@@ -15,8 +15,8 @@
 #include "common/for_each.h"
 
 #define unlikely(x) __builtin_expect(!!(x), 0)
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 template <typename T>
 class CCObjectPool : public std::enable_shared_from_this<CCObjectPool<T>> {
@@ -132,5 +132,5 @@ void CCObjectPool<T>::ReleaseObject(T *object) {
                                              std::memory_order_acquire));
 }
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

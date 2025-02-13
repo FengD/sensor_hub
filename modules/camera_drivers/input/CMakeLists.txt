@@ -14,15 +14,6 @@ if (WITH_IPC)
   set(INPUT_GSTCAMERA_LIB camera_drivers_input_gstcamera)
 endif()
 
-if (WITH_TDA4)
-  add_subdirectory(tiovx_camera)
-  set(INPUT_TIOVX_CAMERA_LIB camera_drivers_input_tiovx_camera)
-endif()
-
-if (WITH_A6)
-  add_subdirectory(mxc)
-  set(INPUT_MXC_LIB camera_drivers_input_mxc)
-endif()
 
 file(GLOB SRCS *.cc)
 add_library(${PROJECT_NAME} STATIC ${SRCS})

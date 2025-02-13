@@ -2,8 +2,8 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 
 class ForEachTest : public ::testing::Test {
@@ -31,8 +31,8 @@ TEST_F(ForEachTest, Integer) {
 }
 
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);

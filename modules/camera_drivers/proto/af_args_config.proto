@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package crdc.airi;
+package sensor.hub;
 
 message AFArgsConfig {
   optional string log_dir = 1 [default = "/data/log/perception/"];

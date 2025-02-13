@@ -3,8 +3,8 @@
 #include <vector>
 #include "camera_drivers/camera_diagnose/base/feature_extractor.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 struct SatisfiedData {
   int first = -1;
@@ -38,5 +38,5 @@ class SkyMaskExtractor : public FeatureExtractor {
   std::vector<double> sim_list_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

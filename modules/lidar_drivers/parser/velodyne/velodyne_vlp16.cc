@@ -5,8 +5,8 @@
 
 #include "lidar_drivers/parser/velodyne/velodyne_vlp16.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool LidarParserVlp16::init_lidar_parser() {
   distance_resolution_ = 0.002f;
@@ -114,5 +114,5 @@ bool LidarParserVlp16::is_lidar_packet_valid(const Packet* packet) {
   return true;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

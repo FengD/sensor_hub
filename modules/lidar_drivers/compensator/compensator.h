@@ -19,8 +19,8 @@
 #include "lidar_drivers/parser/parser.h"
 #include "lidar_drivers/proto/lidar_component_config.pb.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 struct CompensationInfo {
   bool translation_only;
@@ -80,5 +80,5 @@ class Compensator {
   bool xytransfrom_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

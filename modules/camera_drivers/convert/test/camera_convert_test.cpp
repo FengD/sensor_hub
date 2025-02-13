@@ -1,13 +1,13 @@
 // Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: Yangyang LIU
+// Author: Feng DING
 
 #include <gtest/gtest.h>
 #include "camera_drivers/convert/convert.h"
 #include <opencv2/opencv.hpp>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class CameraConvertTest : public ::testing::Test {};
 
@@ -51,8 +51,8 @@ TEST_F(CameraConvertTest, camera_yuyv_to_bgr_test) {
   EXPECT_EQ(false, convert_test.yuyv_to_bgr(src, dst, width, height, sensor));
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char *argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

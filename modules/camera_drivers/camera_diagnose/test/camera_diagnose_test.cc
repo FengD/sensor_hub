@@ -17,16 +17,16 @@
   data = (datatype *)malloc(sizeof(datatype) * num); \
   memset(data, 0, sizeof(datatype) * num);
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 class CameraDiagnoseTest : public ::testing::Test {};
 
 void read_config(const std::string &config_path, CameraDiagnoseConfig& config) {
-  if (!crdc::airi::util::is_path_exists(config_path)) {
+  if (!sensor::hub::util::is_path_exists(config_path)) {
     LOG(FATAL) << "[TEST] Path of " << config_path << " not exists.";
     return;
   }
-  if (!crdc::airi::util::get_proto_from_file(config_path, &config)) {
+  if (!sensor::hub::util::get_proto_from_file(config_path, &config)) {
     LOG(FATAL) << "[TEST] Failed to get proto from " << config_path << ".";
     return;
   }
@@ -146,8 +146,8 @@ TEST_F(CameraDiagnoseTest, camera_diagnose_blur_test) {
   EXPECT_EQ(diagnose_description, "camera_image_data_is_blurry");
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

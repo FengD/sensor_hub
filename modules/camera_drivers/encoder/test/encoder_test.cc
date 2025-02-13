@@ -9,8 +9,8 @@
 #include "camera_drivers/encoder/turbo_encoder/turbo_encoder.h"
 #include "camera_drivers/proto/encoder_config.pb.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 REGISTER_ENCODER(CvEncoder);
 REGISTER_ENCODER(TurboEncoder);
@@ -72,8 +72,8 @@ TEST_F(CameraEncoderTest, turbo_encoder_init_test) {
   EXPECT_EQ(true, turbo_encoder_test.init(config));
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

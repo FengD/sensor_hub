@@ -5,8 +5,8 @@
 
 #include "lidar_drivers/lidar_fusion.h"
 #include <utility>
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 LidarFusion::~LidarFusion() {
   clouds_queue_.break_all_wait();
@@ -266,16 +266,16 @@ void LidarFusion::calibrate(const std::vector<std::shared_ptr<LidarPointCloud>> 
 void LidarFusion::vehicle_module_judge() {
   if (config_.has_calibrate_module()) {
 #ifdef WITH_TDA4
-    std::string calibration_config = std::string(std::getenv("CRDC_WS")) + "/params/" +
+    std::string calibration_config = std::string(std::getenv("MAIN_WS")) + "/params/" +
                                      "lidars_calibration/" + "hav3g/" +
                                      "/lidars_calibration.prototxt";
     lidars_calibration_ = std::make_shared<Calibrate>();
 #else
-    std::string calibration_config = std::string(std::getenv("CRDC_WS")) + "params/" +
+    std::string calibration_config = std::string(std::getenv("MAIN_WS")) + "params/" +
                                      std::getenv("vehicle_type") + "/lidars_calibration.prototxt";
     lidars_calibration_ = std::make_shared<LidarsCalibration>();
 #endif
-    if (!crdc::airi::util::is_path_exists(calibration_config)) {
+    if (!sensor::hub::util::is_path_exists(calibration_config)) {
       LOG(FATAL) << "Calibration_config not exists.";
     }
     lidars_calibration_->init(calibration_config);
@@ -404,5 +404,5 @@ void LidarFusion::run() {
     }
   }
 }
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

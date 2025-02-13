@@ -14,8 +14,8 @@
  *  @ingroup THREAD
  *  @brief thread pool implementation
  */
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 /**
  * @class ConcurrentQueue
@@ -210,5 +210,5 @@ class FixedSizeConQueue : public ConcurrentQueue<Data> {
 };
 
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

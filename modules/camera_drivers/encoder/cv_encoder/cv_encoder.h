@@ -10,8 +10,8 @@
 #include "common/common.h"
 #include "camera_drivers/encoder/encoder.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class CvEncoder : public Encoder {
  public:
@@ -30,5 +30,5 @@ class CvEncoder : public Encoder {
   std::vector<uint8_t> compressed_buffer_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

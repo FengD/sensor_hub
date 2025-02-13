@@ -1,8 +1,8 @@
 #include "common/factory.h"
 #include <gtest/gtest.h>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class ComponentA {
  public:
@@ -29,8 +29,8 @@ TEST(ComponentFactoryTest, TestComponentCreation) {
   ASSERT_EQ(component_b->GetName(), "ComponentB");
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);

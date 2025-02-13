@@ -1,6 +1,6 @@
 // Copyright (C) 2022 FengD
 // License: Modified BSD Software License Agreement
-// Author: CHUNXIAO HUANG
+// Author: Feng DING
 
 #include <gtest/gtest.h>
 #include "camera_drivers/input/input.h"
@@ -9,8 +9,8 @@
 #include "camera_drivers/proto/camera_component_config.pb.h"
 #include <opencv2/opencv.hpp>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 REGISTER_CAMERA_INPUT(CameraInput);
 REGISTER_CAMERA_INPUT(GstCamera);
@@ -54,8 +54,8 @@ TEST_F(GstCameraInputTest, gstcamera_camera_stop_test) {
   EXPECT_EQ(false, s->stop());
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

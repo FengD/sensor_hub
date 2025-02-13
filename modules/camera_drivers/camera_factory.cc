@@ -25,8 +25,8 @@
 #include "camera_drivers/input/tiovx_camera/tiovx_camera.h"
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 REGISTER_ENCODER(CvEncoder);
 REGISTER_ENCODER(TurboEncoder);
@@ -52,6 +52,6 @@ REGISTER_CAMERA_INPUT(TiovxCamera);
 REGISTER_CAMERA_INPUT(MxcCamera);
 #endif
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 

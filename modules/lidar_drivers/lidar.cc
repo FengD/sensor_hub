@@ -1,12 +1,12 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING, Zilou Cao
+// Author: Feng DING
 // Description: lidar
 
 #include "lidar_drivers/lidar.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 Lidar::Lidar(const LidarComponentConfig& config) : common::Thread(true) {
     config_ = config;
@@ -53,15 +53,15 @@ Lidar::Lidar(const LidarComponentConfig& config) : common::Thread(true) {
         set_priority(config_.priority());
     }
 
-    std::string config_file_path = std::string(std::getenv("CRDC_WS"))
+    std::string config_file_path = std::string(std::getenv("MAIN_WS"))
                                    + '/' + config_.config_file();
-    if (!crdc::airi::util::is_path_exists(config_file_path)) {
+    if (!sensor::hub::util::is_path_exists(config_file_path)) {
         LOG(FATAL) << "[" << get_thread_name() << "] proto file not exits: "
                    << config_file_path;
         return;
     }
 
-    if (!crdc::airi::util::get_proto_from_file(config_file_path,
+    if (!sensor::hub::util::get_proto_from_file(config_file_path,
                                                &lidar_config_)) {
         LOG(FATAL) << "[" << get_thread_name() << "] failed to read lidar proto config: "
                    << config_file_path;
@@ -321,5 +321,5 @@ void Lidar::run() {
     }
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

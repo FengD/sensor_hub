@@ -14,8 +14,8 @@
 #include <gtest/gtest.h>
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class CameraCyberOutput {
  public:
@@ -37,7 +37,7 @@ class CameraCyberOutput {
     }
 
     LOG(INFO) << "[CAMERA_OUTPUT] Node name: " << node_name;
-    node_ = apollo::cyber::CreateNode(node_name, "crdc");
+    node_ = apollo::cyber::CreateNode(node_name, "sensor");
     CHECK(node_);
     image_writer_ptr_.reset(new ChannelWriter<Image2>(node_));
     return true;
@@ -91,5 +91,5 @@ class CameraCyberOutput {
   #endif
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

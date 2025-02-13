@@ -1,12 +1,12 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING / JianFei JIANG
+// Author: Feng DING
 // Description: lidar parser Pandarxt32
 
 #include "lidar_drivers/parser/pandar/pandar_xt32.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool LidarParserPxt32::init_lidar_parser() {
   init_lidar_parser_params();
@@ -74,5 +74,5 @@ uint64_t LidarParserPxt32::get_packet_timestamp(const Packet* packet) {
   return timestamp / 1000;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

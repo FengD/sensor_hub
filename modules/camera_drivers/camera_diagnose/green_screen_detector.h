@@ -2,8 +2,8 @@
 
 #include "camera_drivers/camera_diagnose/base/detector_base.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class GreenScreenDetector : public DetectorBase {
  public:
@@ -16,5 +16,5 @@ class GreenScreenDetector : public DetectorBase {
   cv::Vec3b target_value_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

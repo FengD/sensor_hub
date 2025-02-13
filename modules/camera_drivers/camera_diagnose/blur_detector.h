@@ -6,8 +6,8 @@
 /**
  * @brief This function is used to determine whether the image is blur
  */
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 class BlurDetector : public DetectorBase {
  public:
@@ -28,5 +28,5 @@ class BlurDetector : public DetectorBase {
   double sub_mask_max_value_;
 };
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

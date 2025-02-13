@@ -9,8 +9,8 @@
 #include "lidar_drivers/input/cyber/cyber_input.h"
 #include "lidar_drivers/proto/lidar_config.pb.h"
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 REGISTER_LIDAR_INPUT(SocketInput);
 REGISTER_LIDAR_INPUT(CyberInput);
@@ -38,7 +38,7 @@ TEST_F(LidarInputTest, cyber_init_test) {
   std::string config_file_path =
       "../../../../../modules/lidar_drivers/params/drivers/lidar/gtest/cyber_input_test.prototxt";
   LidarConfig config;
-  crdc::airi::util::get_proto_from_file(config_file_path, &config);
+  sensor::hub::util::get_proto_from_file(config_file_path, &config);
   s.config_ = config.input_config();
   auto file_index_ = 0;
   auto reader_ = std::make_shared<RecordReader>(s.config_.cyber_config().file_path(file_index_));
@@ -49,8 +49,8 @@ TEST_F(LidarInputTest, cyber_init_test) {
   EXPECT_EQ(true, s.init(config.input_config()));
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

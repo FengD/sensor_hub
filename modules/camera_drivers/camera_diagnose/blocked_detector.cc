@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <vector>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 BlockedDetector::BlockedDetector(const CameraDiagnoseConfig& cfg) {
   init_cfg(cfg);
 }
@@ -214,5 +214,5 @@ int BlockedDetector::classify_an_image(const cv::Mat& img, const cv::Mat& gray) 
     return 0;
   }
 }
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

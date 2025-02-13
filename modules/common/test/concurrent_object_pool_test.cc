@@ -3,8 +3,8 @@
 #include <thread>
 #include <vector>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 
 class TestObject {
@@ -21,7 +21,7 @@ class TestObject {
 
 TEST(CCObjectPoolTest, TestObjectPoolFunctionality) {
   constexpr uint32_t kPoolSize = 100;
-  auto object_pool = std::make_shared<crdc::airi::common::CCObjectPool<TestObject>>(kPoolSize);
+  auto object_pool = std::make_shared<sensor::hub::common::CCObjectPool<TestObject>>(kPoolSize);
   object_pool->ConstructAll(42);
 
   // get object
@@ -47,7 +47,7 @@ TEST(CCObjectPoolTest, TestObjectPoolFunctionality) {
 TEST(CCObjectPoolTest, TestObjectPoolMultiThreaded) {
   constexpr uint32_t kPoolSize = 100;
   constexpr uint32_t kThreadCount = 10;
-  auto object_pool = std::make_shared<crdc::airi::common::CCObjectPool<TestObject>>(kPoolSize);
+  auto object_pool = std::make_shared<sensor::hub::common::CCObjectPool<TestObject>>(kPoolSize);
   object_pool->ConstructAll(42);
 
   auto test_func = [&object_pool]() {
@@ -71,7 +71,7 @@ TEST(CCObjectPoolTest, TestObjectPoolMultiThreaded) {
 
 TEST(CCObjectPoolTest, TestConstructObject) {
   constexpr uint32_t kPoolSize = 100;
-  auto object_pool = std::make_shared<crdc::airi::common::CCObjectPool<TestObject>>(kPoolSize);
+  auto object_pool = std::make_shared<sensor::hub::common::CCObjectPool<TestObject>>(kPoolSize);
 
   std::vector<std::shared_ptr<TestObject>> objects;
   for (uint32_t i = 0; i < kPoolSize; ++i) {
@@ -92,27 +92,27 @@ TEST(CCObjectPoolTest, TestConstructObject) {
 }
 
 // TEST(CCObjectPoolTest, TestEmptyPool) {
-//   auto object_pool = std::make_shared<crdc::airi::common::CCObjectPool<TestObject>>(0);
+//   auto object_pool = std::make_shared<sensor::hub::common::CCObjectPool<TestObject>>(0);
 //   auto obj = object_pool->GetObject();
 //   ASSERT_EQ(obj, nullptr);
 // }
 
 // TEST(CCObjectPoolTest, TestMaxPoolSize) {
 //   constexpr uint32_t kMaxPoolSize = std::numeric_limits<uint32_t>::max();
-//   auto object_pool = std::make_shared<crdc::airi::common::CCObjectPool<TestObject>>(kMaxPoolSize);
+//   auto object_pool = std::make_shared<sensor::hub::common::CCObjectPool<TestObject>>(kMaxPoolSize);
 // }
 
 // TEST(CCObjectPoolTest, TestReleaseUnallocatedObject) {
 //   constexpr uint32_t kPoolSize = 100;
-//   auto object_pool = std::make_shared<crdc::airi::common::CCObjectPool<TestObject>>(kPoolSize);
+//   auto object_pool = std::make_shared<sensor::hub::common::CCObjectPool<TestObject>>(kPoolSize);
 //   TestObject unallocated_object;
 
 //   // object_pool->ReleaseObject(&unallocated_object);
 // }
 
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

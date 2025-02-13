@@ -11,8 +11,8 @@
 #include <thread>
 #include <utility>
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 namespace common {
 template <typename T>
 class ThreadSafeQueue {
@@ -97,5 +97,5 @@ class ThreadSafeQueue {
   std::condition_variable cv_;
 };
 }  // namespace common
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor

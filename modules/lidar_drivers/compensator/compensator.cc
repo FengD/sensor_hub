@@ -1,6 +1,6 @@
 // Copyright (C) 2020 FengD
 // License: Modified BSD Software License Agreement
-// Author: Feng DING, Zilou Cao
+// Author: Feng DING
 // Description: compensator
 
 #include <algorithm>
@@ -9,8 +9,8 @@
 #include "common/util.h"
 #endif
 
-namespace crdc {
-namespace airi {
+namespace sensor {
+namespace hub {
 
 bool Compensator::init(const LidarComponent& config) {
   config_ = config;
@@ -23,7 +23,7 @@ bool Compensator::init(const LidarComponent& config) {
   }
   int lidar_num = config_.component_config_size();
   for (int i = 0; i < lidar_num; ++i) {
-    calibration_path_.push_back(std::string(std::getenv("CRDC_WS")) + "/../"
+    calibration_path_.push_back(std::string(std::getenv("MAIN_WS")) + "/../"
          + std::string("vehicle_configuration/") + vehicle_id + "/"
          + config_.component_config(i).frame_id() + ".prototxt");
     lidar_transforms_[config_.component_config(i).frame_id()] =
@@ -62,7 +62,7 @@ bool Compensator::init(const LidarComponentConfig& config) {
   } else {
     LOG(INFO) << "[Compensator] Current VIN: "<< std::string(std::getenv("VIN"));
   }
-  cali_path_ = std::string(std::getenv("CRDC_WS")) + "/../"
+  cali_path_ = std::string(std::getenv("MAIN_WS")) + "/../"
              + std::string("vehicle_configuration/") + vehicle_id + "/"
              + config.frame_id() + ".prototxt";
 #endif
@@ -73,7 +73,7 @@ bool Compensator::init(const LidarComponentConfig& config) {
 Eigen::Matrix4f Compensator::calibration_transform_matrix(
                       const std::string& config_file_path) {
   CalibrationConfig lidar_config;
-  if (!crdc::airi::util::get_proto_from_file(config_file_path, &lidar_config)) {
+  if (!sensor::hub::util::get_proto_from_file(config_file_path, &lidar_config)) {
     LOG(FATAL) << "[Compensator] failed to read lidar calibration proto config: "
                << config_file_path;
   }
@@ -181,5 +181,5 @@ bool Compensator::motion_compensation(const std::vector<std::shared_ptr<LidarPoi
   return true;
 }
 
-}  // namespace airi
-}  // namespace crdc
+}  // namespace hub
+}  // namespace sensor
